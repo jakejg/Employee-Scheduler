@@ -1,0 +1,30 @@
+Tables:
+    Users
+    Jobs
+    Users_Jobs
+
+Users
+-id,
+-username,
+-password,
+-first name,
+-last name,
+-admin status,
+-current wage,
+-position,
+-years at company
+
+Jobs
+-id
+-start datetime,
+-end datetime,
+-title,
+-possible staff,
+-# of staff needed,
+-notes
+
+Users_Jobs: Many to many relationship for users and Jobs
+-id,
+-job id,
+-user id,
+-role/position
