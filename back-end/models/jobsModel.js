@@ -27,6 +27,9 @@ class Job {
             `SELECT * from jobs 
             WHERE id=$1`, [id]
         )
+        //join query for users. Ready to add when user data is set up
+        // `SELECT * FROM users JOIN users_jobs ON users_jobs.user_id = users.id JOIN jobs ON jobs.id = users_jobs.job_id
+        // WHERE users.id = $1`
         let job = results.rows[0];
         if (!job) throw new ExpressError(`Job with id ${id} not found`, 400);
         else return new Job(job);
