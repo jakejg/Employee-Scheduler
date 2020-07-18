@@ -1,15 +1,15 @@
 import React from 'react';
-import './App.css';
-import Calender from './Calender';
 import NavBar from './NavBar';
+import Routes from './Routes'
+import JobList from './JobList';
 
 function App() {
 
     return (
         <div className="App">
             <NavBar/>
-            <Calender />        
-
+            <JobList />
+            <Routes />      
         </div>
         );
 }
