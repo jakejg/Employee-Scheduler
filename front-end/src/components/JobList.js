@@ -4,16 +4,8 @@ import { useDispatch, useSelector } from 'react-redux';
 
 const JobList = () => {
     const jobs = useSelector(state => state) || {}
-    console.log(jobs)
-    const dispatch = useDispatch();
 
-    useEffect(() => {
-        const getJobs = async () => {
-            await dispatch(loadJobsFromAPI())
-        }
-        getJobs();
-    }, [dispatch])
-
+ 
 
   return (
     <div >
