@@ -19,6 +19,7 @@ CREATE TABLE users (
 CREATE TABLE jobs (
     id SERIAL PRIMARY KEY,
     title TEXT NOT NULL,
+    "group" INTEGER NOT NUll,
     start_date TIMESTAMP,
     end_date TIMESTAMP,
     possible_staff TEXT,
@@ -32,5 +33,6 @@ CREATE TABLE users_jobs (
     staff_id INTEGER NOT NULL REFERENCES users ON DELETE CASCADE
 );
 
-INSERT INTO jobs (title, start_date, end_date, possible_staff, staff_needed, notes) VALUES ('15 day Mountain', '7-12-20', '7-15-20', 'jake', 2, 'test');
+INSERT INTO jobs (title, start_date, end_date, possible_staff, staff_needed, notes, "group") VALUES ('15 day Mountain', '7-12-20', '7-15-20', 'jake', 2, 'test', 1);
+INSERT INTO jobs (title, start_date, end_date, possible_staff, staff_needed, notes, "group") VALUES ('20 day Mountain', '7-14-20', '7-20-20', 'jon', 3, 'test2', 1);
 
