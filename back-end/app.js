@@ -1,9 +1,7 @@
-
 const express = require("express");
-
 const ExpressError = require("./helpers/expressError");
-
 const morgan = require("morgan");
+const cors = require("cors");
 
 const app = express();
 
@@ -11,6 +9,7 @@ const jobRoutes = require('./routes/jobs');
 const userRoutes = require('./routes/users');
 // const { authorize } = require('./middleware/auth');
 
+app.use(cors());
 app.use(express.json());
 
 // add logging system
