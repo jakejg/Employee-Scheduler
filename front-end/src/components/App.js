@@ -3,11 +3,10 @@ import NavBar from './NavBar';
 import Routes from './Routes'
 import JobList from './JobList';
 import { loadJobsFromAPI } from '../actions/jobs';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch} from 'react-redux';
 import { loadStaffFromAPI } from '../actions/staff';
 
 function App() {
-    const jobs = useSelector(state => state) || {}
     const dispatch = useDispatch();
 
     useEffect(() => {

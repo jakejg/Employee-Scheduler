@@ -1,7 +1,6 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 import Calender from './Calender';
-import JobList from './JobList';
 import Job from './Job';
 
 const Routes = () => {

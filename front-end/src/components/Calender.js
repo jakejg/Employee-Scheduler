@@ -4,8 +4,6 @@ import Timeline from 'react-calendar-timeline'
 import 'react-calendar-timeline/lib/Timeline.css'
 import { useSelector, useDispatch } from 'react-redux';
 import moment from 'moment'
-import { TextareaAutosize } from '@material-ui/core';
-import Tit from './Job'
 import {useHistory} from 'react-router-dom';
 import {editJobOnAPI, editJob} from '../actions/jobs';
 

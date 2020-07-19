@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react';
 import {useParams} from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import {getJobFromAPI, editJob, addJob} from '../actions/jobs';
+import {getJobFromAPI} from '../actions/jobs';
 
 const Job = () => {
    const { id } = useParams();

@@ -10,8 +10,10 @@ const jobsReducer = (state={}, action) => {
 
         case EDIT_STAFF:
             return {...state, [action.id]: {...action.job}}
+    
+    default:
+        return state
     }
-    return state
 }
 
 export default jobsReducer;

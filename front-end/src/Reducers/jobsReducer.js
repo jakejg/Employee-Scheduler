@@ -22,8 +22,10 @@ const jobsReducer = (state={}, action) => {
             
         case ADD_JOB:
             return {...state, [action.id]: {...action.job}}
+    
+        default:
+            return state
     }
-    return state
 }
 
 export default jobsReducer;

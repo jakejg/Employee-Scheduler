@@ -52,7 +52,7 @@ export const editJobOnAPI = (ID, jobToEdit) => {
     jobToEdit.end_date = moment(jobToEdit.end_time).format();
     return async (dispatch) => {
         try {
-            let res = await axios.patch(`${BASE_URL}/jobs/${ID}`, jobToEdit);
+            await axios.patch(`${BASE_URL}/jobs/${ID}`, jobToEdit);
         }
         catch(e) {
             console.log(e)
