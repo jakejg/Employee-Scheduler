@@ -7,8 +7,7 @@ import moment from 'moment'
 import { TextareaAutosize } from '@material-ui/core';
 import Tit from './Job'
 import {useHistory} from 'react-router-dom';
-import {editJobOnAPI} from '../actions/jobs';
-import {editJob} from '../actions/jobs';
+import {editJobOnAPI, editJob} from '../actions/jobs';
 
 const Calender = () => {
     const jobs = useSelector(state => state.jobs);
