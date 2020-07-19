@@ -25,8 +25,13 @@ const Calender = () => {
         history.push(`/job/${itemId}`)
     }
     const handleMove = (itemId, newStartTime, newGroupOrder) =>{
-        console.log(moment(newStartTime).format())
-       dispatch(editJobOnAPI(itemId, newStartTime))
+        let job = jobs[itemId];
+
+        let {start_time, end_time } = job;
+        job.end_time = newStartTime + (end_time - start_time)
+        job.start_time = newStartTime;
+      
+       dispatch(editJobOnAPI(itemId, job))
     }
     
 
