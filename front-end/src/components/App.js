@@ -4,17 +4,18 @@ import Routes from './Routes'
 import JobList from './JobList';
 import { loadJobsFromAPI } from '../actions/jobs';
 import { useDispatch, useSelector } from 'react-redux';
+import { loadStaffFromAPI } from '../actions/staff';
 
 function App() {
     const jobs = useSelector(state => state) || {}
-    console.log(jobs)
     const dispatch = useDispatch();
 
     useEffect(() => {
-        const getJobs = async () => {
-            await dispatch(loadJobsFromAPI())
+        const getData = async () => {
+            dispatch(loadJobsFromAPI())
+            dispatch(loadStaffFromAPI())
         }
-        getJobs();
+        getData();
     }, [dispatch])
 
     return (

@@ -4,13 +4,13 @@ import './index.css';
 import App from './components/App';
 import { BrowserRouter } from 'react-router-dom';
 import * as serviceWorker from './serviceWorker';
-import jobsReducer from './Reducers/jobsReducer';
+import rootReducer from './Reducers/rootReducer';
 import {createStore, applyMiddleware, compose} from "redux";
 import thunk from "redux-thunk";
 import {Provider} from "react-redux";
 
 const store = createStore(
-      jobsReducer,
+      rootReducer,
       compose(
         applyMiddleware(thunk),
         window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()

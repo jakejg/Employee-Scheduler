@@ -1,14 +1,14 @@
 import {
-    LOAD_JOBS,
-    EDIT_JOB
+    LOAD_STAFF,
+    EDIT_STAFF
 } from '../actions/actionTypes';
 
 const jobsReducer = (state={}, action) => {
     switch(action.type){
-        case LOAD_JOBS:
-            return {...state, ...action.jobs}
+        case LOAD_STAFF:
+            return {...state, ...action.staff}
 
-        case EDIT_JOB:
+        case EDIT_STAFF:
             return {...state, [action.id]: {...action.job}}
     }
     return state

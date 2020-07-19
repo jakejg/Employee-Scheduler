@@ -3,7 +3,7 @@ import { loadJobsFromAPI } from '../actions/jobs';
 import { useDispatch, useSelector } from 'react-redux';
 
 const JobList = () => {
-    const jobs = useSelector(state => state) || {}
+    const jobs = useSelector(state => state.jobs)
 
  
 

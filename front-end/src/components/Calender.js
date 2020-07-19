@@ -11,7 +11,7 @@ import {editJobOnAPI} from '../actions/jobs';
 import {editJob} from '../actions/jobs';
 
 const Calender = () => {
-    const jobs = useSelector(state => state) || {};
+    const jobs = useSelector(state => state.jobs);
     const history = useHistory();
     const dispatch = useDispatch();
 
