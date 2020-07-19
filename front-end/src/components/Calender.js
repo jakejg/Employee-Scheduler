@@ -8,6 +8,7 @@ import { TextareaAutosize } from '@material-ui/core';
 import Tit from './Job'
 import {useHistory} from 'react-router-dom';
 import {editJobOnAPI} from '../actions/jobs';
+import {editJob} from '../actions/jobs';
 
 const Calender = () => {
     const jobs = useSelector(state => state) || {};
@@ -26,12 +27,15 @@ const Calender = () => {
     }
     const handleMove = (itemId, newStartTime, newGroupOrder) =>{
         let job = jobs[itemId];
-
+       
         let {start_time, end_time } = job;
-        job.end_time = newStartTime + (end_time - start_time)
+        job.end_time = newStartTime + (end_time - start_time);
         job.start_time = newStartTime;
       
-       dispatch(editJobOnAPI(itemId, job))
+        //change redux state
+        dispatch(editJob(itemId, job))
+        // change in database
+        dispatch(editJobOnAPI(itemId, job))
     }
     
 

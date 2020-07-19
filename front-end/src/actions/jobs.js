@@ -53,13 +53,13 @@ export const editJobOnAPI = (ID, jobToEdit) => {
         try {
             let res = await axios.patch(`${BASE_URL}/jobs/${ID}`, jobToEdit);
             console.log(res.data)
-            let {id, title, start_date, end_date, possible_staff, staff_needed, notes} = res.data.job;
-            // /* create an object of nested objects with data keyed by id,
-            // change date format,
-            // add group property */
-            const job = {id, title, start_time: moment(start_date), end_time: moment(end_date), possible_staff, staff_needed, notes, group: id};
+            // let {id, title, start_date, end_date, possible_staff, staff_needed, notes} = res.data.job;
+            // // /* create an object of nested objects with data keyed by id,
+            // // change date format,
+            // // add group property */
+            // const job = {id, title, start_time: moment(start_date), end_time: moment(end_date), possible_staff, staff_needed, notes, group: id};
           
-            dispatch(editJob(id, job))
+            // dispatch(editJob(id, job))
         }
         catch(e) {
             console.log(e)
