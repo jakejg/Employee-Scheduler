@@ -2,7 +2,7 @@ const db = require('../db');
 const ExpressError = require('../helpers/expressError');
 
 class Job {
-    constructor({id, title, start_date, end_date, possible_staff, staff_needed, notes }) {
+    constructor({id, title, start_date, end_date, possible_staff, staff_needed, notes, staff}) {
         this.id = id;
         this.title = title;
         this.start_date = start_date;
@@ -10,6 +10,7 @@ class Job {
         this.possible_staff = possible_staff
         this.staff_needed = staff_needed;
         this.notes = notes;
+        this.staff= staff;
     }
 
     /* Method to retrieve all jobs */
@@ -27,12 +28,17 @@ class Job {
             `SELECT * from jobs 
             WHERE id=$1`, [id]
         )
-        //join query for users. Ready to add when user data is set up
-        // `SELECT * FROM users JOIN users_jobs ON users_jobs.user_id = users.id JOIN jobs ON jobs.id = users_jobs.job_id
-        // WHERE users.id = $1`
         let job = results.rows[0];
         if (!job) throw new ExpressError(`Job with id ${id} not found`, 400);
-        else return new Job(job);
+        // join query for users/staff associated with job
+        const staff = await db.query(
+            `SELECT users.id, users.first_name FROM users 
+            JOIN users_jobs ON users_jobs.user_id = users.id 
+            JOIN jobs ON jobs.id = users_jobs.job_id
+            WHERE jobs.id = $1`, [id])
+        job.staff = staff.rows;
+
+        return new Job(job);
     }
 
     /* Method to retrieve create a new job instance */
