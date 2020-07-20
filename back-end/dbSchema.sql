@@ -65,3 +65,6 @@ VALUES (2,2);
 
 INSERT INTO users_jobs (job_id, user_id) 
 VALUES (1,1);
+
+INSERT INTO users_jobs (job_id, user_id) 
+VALUES (3,1);

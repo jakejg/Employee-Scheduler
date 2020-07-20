@@ -43,7 +43,7 @@ class User {
     static async findJobsForUser(userId) {
         // join query for users/staff associated with job
         const jobs = await db.query(
-            `SELECT jobs.id, jobs.title FROM jobs 
+            `SELECT jobs.id, jobs.title, jobs.start_date, jobs.end_date FROM jobs 
             JOIN users_jobs ON users_jobs.job_id = jobs.id
             JOIN users ON users.id = users_jobs.user_id
             WHERE users.id = $1`, [userId])
