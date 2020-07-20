@@ -1,20 +1,20 @@
 import React, {useEffect} from 'react';
 import {useParams} from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import {getJobFromAPI} from '../actions/jobs';
+import {getStaffFromAPI} from '../actions/staff';
 
 const Staff = () => {
    const { id } = useParams();
    const dispatch = useDispatch();
    const staff = useSelector(state => state.staff[id]) || {};
-   const allJobs = useSelector(state => state.staff);
+   const allJobs = useSelector(state => state.jobs);
   
 
    useEffect(() => {
-    const getJob = async () => {
-        dispatch(getJobFromAPI(id));
+    const getStaff = async () => {
+        dispatch(getStaffFromAPI(id));
     }
-    getJob();
+    getStaff();
 }, [dispatch, id])
    
     return (

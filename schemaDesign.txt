@@ -13,6 +13,7 @@ Users
 -current wage,
 -position,
 -years at company
+-skills?
 
 Jobs
 -id
@@ -22,9 +23,11 @@ Jobs
 -possible staff,
 -# of staff needed,
 -notes
+-staff_filled?
 
 Users_Jobs: Many to many relationship for users and Jobs
 -id,
 -job id,
 -user id,
 -role/position
+- user_status?

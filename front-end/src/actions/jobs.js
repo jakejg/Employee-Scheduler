@@ -13,7 +13,6 @@ export const loadJobsFromAPI = () => {
     return async (dispatch) => {
         try {
             let res = await axios.get(`${BASE_URL}/jobs`);
-            console.log(res)
             /* create an object of nested objects with data keyed by id,
             change date format,
             add group property */
