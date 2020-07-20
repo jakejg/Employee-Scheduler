@@ -13,15 +13,17 @@ class Job {
         this.staff= staff;
     }
 
-    /* Method to retrieve all jobs */
+    /* Method to retrieve an overview of all jobs */
 
     static async findAll() {
         const results = await db.query(
-            `SELECT * FROM jobs
+            `SELECT id, title, start_date, end_date FROM jobs
             ORDER BY start_date`
         )
         return results.rows
     }
+
+    /* Method to retrieve details for one job */
 
     static async findOne(id) {
         const results = await db.query(
@@ -30,18 +32,26 @@ class Job {
         )
         let job = results.rows[0];
         if (!job) throw new ExpressError(`Job with id ${id} not found`, 400);
+
+        job.staff = await this.findAllStaffWorkingJob(id);
+
+        return new Job(job);
+    }
+
+    /* Method to retrieve all staff assigned to a job */
+
+    static async findAllStaffWorkingJob(jobId) {
         // join query for users/staff associated with job
         const staff = await db.query(
             `SELECT users.id, users.first_name FROM users 
             JOIN users_jobs ON users_jobs.user_id = users.id 
             JOIN jobs ON jobs.id = users_jobs.job_id
-            WHERE jobs.id = $1`, [id])
-        job.staff = staff.rows;
-
-        return new Job(job);
+            WHERE jobs.id = $1`, [jobId])
+        
+        return staff.rows;
     }
 
-    /* Method to retrieve create a new job instance */
+    /* Method to create a new job instance */
 
     static create(jobObj){
         return new Job(jobObj) 

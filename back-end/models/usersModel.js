@@ -13,11 +13,12 @@ class User {
         this.is_admin = is_admin;
     }
 
-    /* Method to retrieve all users */
+    /* Method to retrieve overview of all users that aren't admin */
 
     static async findAll() {
         const results = await db.query(
-            `SELECT * FROM users
+            `SELECT id, username, first_name, last_name FROM users
+            WHERE is_admin=false
             ORDER BY first_name`
         )
         return results.rows
@@ -28,12 +29,25 @@ class User {
             `SELECT * from users 
             WHERE id=$1`, [id]
         )
-        //join query for users. Ready to add when user data is set up
-        // `SELECT * FROM users JOIN users_jobs ON users_jobs.user_id = users.id JOIN users ON users.id = users_jobs.job_id
-        // WHERE users.id = $1`
         let user = results.rows[0];
         if (!user) throw new ExpressError(`User with id ${id} not found`, 400);
-        else return new User(user);
+
+        user.jobs = this.findJobsForUser(id);
+
+        return new User(user);
+    }
+
+    /* Method to retrieve all jobs a user has ever worked or is scheduled to work */
+
+    static async findJobsForUser(userId) {
+        // join query for users/staff associated with job
+        const jobs = await db.query(
+            `SELECT job.id, job.title_name FROM jobs 
+            JOIN users_jobs ON users_jobs.job_id = job.id
+            JOIN users ON users.id = users_jobs.user_id
+            WHERE user.id = $1`, [userId])
+        
+        return jobs.rows;
     }
 
     /* Method to retrieve create a new user instance */
