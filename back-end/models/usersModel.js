@@ -2,7 +2,7 @@ const db = require('../db');
 const ExpressError = require('../helpers/expressError');
 
 class User {
-    constructor({id, password, username, first_name, last_name, current_wage, years_at_company, is_admin}) {
+    constructor({id, password, username, first_name, last_name, current_wage, years_at_company, is_admin, jobs}) {
         this.id = id;
         this.password = password;
         this.username = username;
@@ -11,6 +11,7 @@ class User {
         this.current_wage = current_wage
         this.years_at_company = years_at_company;
         this.is_admin = is_admin;
+        this.jobs = jobs;
     }
 
     /* Method to retrieve overview of all users that aren't admin */
@@ -32,8 +33,8 @@ class User {
         let user = results.rows[0];
         if (!user) throw new ExpressError(`User with id ${id} not found`, 400);
 
-        user.jobs = this.findJobsForUser(id);
-
+        user.jobs = await this.findJobsForUser(id);
+    
         return new User(user);
     }
 
@@ -42,11 +43,11 @@ class User {
     static async findJobsForUser(userId) {
         // join query for users/staff associated with job
         const jobs = await db.query(
-            `SELECT job.id, job.title_name FROM jobs 
-            JOIN users_jobs ON users_jobs.job_id = job.id
+            `SELECT jobs.id, jobs.title FROM jobs 
+            JOIN users_jobs ON users_jobs.job_id = jobs.id
             JOIN users ON users.id = users_jobs.user_id
-            WHERE user.id = $1`, [userId])
-        
+            WHERE users.id = $1`, [userId])
+       
         return jobs.rows;
     }
 
