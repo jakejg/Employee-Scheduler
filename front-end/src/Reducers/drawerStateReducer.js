@@ -2,7 +2,7 @@ import {
     CHANGE_DRAWER
 } from '../actions/actionTypes';
 
-const dawerStateReducer = (state=true, action) => {
+const dawerStateReducer = (state=false, action) => {
     switch(action.type){
         case CHANGE_DRAWER:
     

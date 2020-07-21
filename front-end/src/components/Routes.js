@@ -4,6 +4,7 @@ import Calender from './Calender';
 import Job from './Job';
 import Dashboard from './Dashboard';
 import Staff from './Staff';
+import AddForm from './AddForm'
 
 const Routes = () => {
  
@@ -22,7 +23,9 @@ const Routes = () => {
             <Route exact path='/dashboard'>
                 <Dashboard />
             </Route> 
-            
+            <Route exact path='/form'>
+                <AddForm />
+            </Route> 
 
 
         </Switch>

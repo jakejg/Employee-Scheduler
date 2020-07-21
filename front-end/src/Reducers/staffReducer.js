@@ -21,7 +21,6 @@ const staffReducer = (state={}, action) => {
                                     scheduled_jobs: [...action.staff.scheduled_jobs]
                                 }
                     }
-    
     default:
         return state
     }

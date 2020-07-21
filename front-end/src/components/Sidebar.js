@@ -138,6 +138,8 @@ export default function PersistentDrawerLeft() {
       <div className={clsx(classes.content, {
           [classes.contentShift]: open,
         })} >
+            <Container>
+            <h1 style={{textAlign: 'center'}}>Dashboard</h1>
             <Grid container spacing={3} className={classes.drawerHeader} >
                 <Grid item xs>
                     <Paper>
@@ -151,7 +153,8 @@ export default function PersistentDrawerLeft() {
                 </Grid>
                
              </Grid>
-             </div>
+             </Container>
+      </div>
       
     </div>
   );
