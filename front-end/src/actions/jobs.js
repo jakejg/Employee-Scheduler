@@ -45,6 +45,22 @@ export const loadJobs = (jobs) => {
     return {type: LOAD_JOBS, jobs}
 }
 
+export const addJobOnAPI = (jobToAdd) => {
+    console.log(jobToAdd)
+    // change dates to string format for database
+    // jobToAdd.start_date = moment(jobToAdd.start_time).format();
+    // jobToAdd.end_date = moment(jobToAdd.end_time).format();
+    return async (dispatch) => {
+        // try {
+        //     let res = await axios.post(`${BASE_URL}/jobs/`, jobToAdd);
+        //     console.log(res.data)
+        // }
+        // catch(e) {
+        //     console.log(e)
+        // }
+    }
+}
+
 export const editJobOnAPI = (ID, jobToEdit) => {
     // change dates to string format for database
     jobToEdit.start_date = moment(jobToEdit.start_time).format();

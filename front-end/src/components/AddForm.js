@@ -1,5 +1,6 @@
 import React, { useState, useContext } from 'react';
 import { useHistory } from 'react-router-dom';
+import {useDispatch} from 'react-redux';
 import {
     Grid,
     TextField,
@@ -9,8 +10,9 @@ import {
 } from '@material-ui/core';
 
 
-const AddForm = ({
-                    fields = ['Title', 'Start Date','End Date', 'Number of Staff Needed', 'Notes'],
+const AddForm = ({  type,
+                    fields,
+                    addToDb
                 }) => {
 
     // set up form state from fields passed in
@@ -19,9 +21,9 @@ const AddForm = ({
         INITIAL_STATE[field] = ""; 
     }
     
-
     const [formData, setFormData] = useState(INITIAL_STATE);
     const [errors, setErrors] = useState([]);
+    const dispatch = useDispatch()
     
     const history = useHistory();
 
@@ -33,8 +35,7 @@ const AddForm = ({
     
     const handleSubmit = async (e, method) => {
         e.preventDefault();
-
-
+       dispatch(addToDb(formData));
     }
 
    
@@ -61,7 +62,7 @@ const AddForm = ({
                                                     />
                                     </Grid>
                 )}
-                <Button variant="contained" color="primary" onClick={handleSumbit}>Add Job</Button>
+                <Button variant="contained" color="primary" onClick={handleSubmit}>Add {type}</Button>
                 </Box>
             </Grid> 
             </Paper> 

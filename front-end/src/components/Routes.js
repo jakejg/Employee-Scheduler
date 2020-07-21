@@ -4,7 +4,7 @@ import Calender from './Calender';
 import Job from './Job';
 import Dashboard from './Dashboard';
 import Staff from './Staff';
-import AddForm from './AddForm'
+import Form from './Form'
 
 const Routes = () => {
  
@@ -24,7 +24,7 @@ const Routes = () => {
                 <Dashboard />
             </Route> 
             <Route exact path='/form'>
-                <AddForm />
+                <Form />
             </Route> 
 
 
