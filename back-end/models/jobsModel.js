@@ -15,10 +15,12 @@ class Job {
 
     /* Method to retrieve an overview of all jobs */
 
-    static async findAll() {
+    static async findAll(comp_id) {
+        console.log(comp_id)
         const results = await db.query(
-            `SELECT id, title, start_date, end_date FROM jobs
-            ORDER BY start_date`
+            `SELECT id, title, start_date, end_date FROM jobs 
+            WHERE comp_id=$1
+            ORDER BY start_date`, [comp_id]
         )
         return results.rows
     }

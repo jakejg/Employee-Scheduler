@@ -3,12 +3,11 @@ const router = new express.Router();
 const Job = require('../models/jobsModel')
 const ExpressError = require('../helpers/expressError.js');
 
-/* Route to get all jobs */
+/* Route to get company by id */
 
 router.get('/', async (req, res, next) => {
     try{
-        console.log(req.params)
-        const jobs = await Job.findAll(req.params.comp_id);
+        const jobs = await Job.findAll();
         return res.json({jobs});
     }
     catch(e) {
@@ -68,5 +67,3 @@ router.delete('/:id', async (req, res, next) => {
 
 
 module.exports = router;
-
-

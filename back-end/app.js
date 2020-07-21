@@ -16,10 +16,10 @@ app.use(express.json());
 app.use(morgan("tiny"));
 
 // allow every route to check if correct JWT token was sent
-// use(authorize);app.
+// app.use(authorize);
 
 app.use('/jobs', jobRoutes);
-app.use('/users', userRoutes);
+app.use('/users/:comp_id', userRoutes);
 
 
 /** 404 handler */
