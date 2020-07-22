@@ -2,7 +2,7 @@ const db = require('../db');
 const ExpressError = require('../helpers/expressError');
 
 class User {
-    constructor({id, password, username, first_name, last_name, current_wage, years_at_company, is_admin, jobs}) {
+    constructor({id, password, username, first_name, last_name, current_wage, years_at_company, is_admin, jobs, comp_id}) {
         this.id = id;
         this.password = password;
         this.username = username;
@@ -12,15 +12,17 @@ class User {
         this.years_at_company = years_at_company;
         this.is_admin = is_admin;
         this.jobs = jobs;
+        this.comp_id = comp_id;
     }
 
     /* Method to retrieve overview of all users that aren't admin */
 
-    static async findAll() {
+    static async findAll(comp_id) {
         const results = await db.query(
             `SELECT id, username, first_name, last_name FROM users
-            WHERE is_admin=false
-            ORDER BY first_name`
+            WHERE is_admin=false AND
+            WHERE comp_id=$1
+            ORDER BY first_name`, [comp_id]
         )
         return results.rows
     }
@@ -87,10 +89,11 @@ class User {
         if (!this.id) {
             try{
                 const results = await db.query(`INSERT INTO users
-                (username, password, first_name, last_name, current_wage, years_at_company, is_admin)
-                VALUES ($1, $2, $3, $4, $5, $6, $7)
+                (username, password, first_name, last_name, current_wage, years_at_company, is_admin, comp_id)
+                VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
                 RETURNING id`,
-                [this.username, this.password, this.first_name, this.last_name, this.current_wage, this.years_at_company, this.is_admin]);
+                [this.username, this.password, this.first_name, this.last_name, 
+                this.current_wage, this.years_at_company, this.is_admin, this.comp_id]);
 
                 this.id = results.rows[0].id;
             }

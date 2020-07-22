@@ -3,11 +3,11 @@ const router = new express.Router();
 const User = require('../models/usersModel')
 const ExpressError = require('../helpers/expressError.js');
 
-/* Route to get overview of all users that aren't admin*/
+/* Route to get overview of all users for a company that aren't admin*/
 
 router.get('/', async (req, res, next) => {
     try{
-        const users = await User.findAll();
+        const users = await User.findAll(req.query.comp_id);
         return res.json({users});
     }
     catch(e) {

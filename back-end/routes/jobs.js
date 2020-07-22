@@ -3,12 +3,11 @@ const router = new express.Router();
 const Job = require('../models/jobsModel')
 const ExpressError = require('../helpers/expressError.js');
 
-/* Route to get all jobs */
+/* Route to get all jobs by company id*/
 
 router.get('/', async (req, res, next) => {
     try{
-        console.log(req.params)
-        const jobs = await Job.findAll(req.params.comp_id);
+        const jobs = await Job.findAll(req.query.comp_id);
         return res.json({jobs});
     }
     catch(e) {
@@ -30,9 +29,10 @@ router.post('/', async (req, res, next) => {
     }
 })
 
-/* Route to get a job with id send it request parameters */
+/* Route to get a job by id sent in request parameters */
 
 router.get('/:id', async (req, res, next) => {
+    console.log(req.params)
     try{
         const job = await Job.findOne(req.params.id);
         return res.json({job});

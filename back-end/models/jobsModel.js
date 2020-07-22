@@ -2,7 +2,7 @@ const db = require('../db');
 const ExpressError = require('../helpers/expressError');
 
 class Job {
-    constructor({id, title, start_date, end_date, possible_staff, staff_needed, notes, staff}) {
+    constructor({id, title, start_date, end_date, possible_staff, staff_needed, notes, staff, comp_id}) {
         this.id = id;
         this.title = title;
         this.start_date = start_date;
@@ -11,6 +11,7 @@ class Job {
         this.staff_needed = staff_needed;
         this.notes = notes;
         this.staff= staff;
+        this.comp_id = comp_id;
     }
 
     /* Method to retrieve an overview of all jobs */
@@ -89,10 +90,10 @@ class Job {
         if (!this.id) {
             try{
                 const results = await db.query(`INSERT INTO jobs
-                (title, start_date, end_date, possible_staff, staff_needed, notes)
-                VALUES ($1, $2, $3, $4, $5, $6)
+                (title, start_date, end_date, possible_staff, staff_needed, notes, comp_id)
+                VALUES ($1, $2, $3, $4, $5, $6, $7)
                 RETURNING id`,
-                [this.title, this.start_date, this.end_date, this.possible_staff, this.staff_needed, this.notes]);
+                [this.title, this.start_date, this.end_date, this.possible_staff, this.staff_needed, this.notes, this.comp_id]);
 
                 this.id = results.rows[0].id;
             }
