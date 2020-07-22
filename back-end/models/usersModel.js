@@ -20,8 +20,7 @@ class User {
     static async findAll(comp_id) {
         const results = await db.query(
             `SELECT id, username, first_name, last_name FROM users
-            WHERE is_admin=false AND
-            WHERE comp_id=$1
+            WHERE is_admin=false AND comp_id=$1
             ORDER BY first_name`, [comp_id]
         )
         return results.rows
