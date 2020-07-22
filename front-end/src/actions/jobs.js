@@ -5,6 +5,7 @@ import {
     ADD_JOB
  } from './actionTypes';
 import moment from 'moment'
+import toLower from '../helpers/lowerCaseProperties';
 
 
 const BASE_URL = process.env.BASE_URL || `http://localhost:5000`;
@@ -12,7 +13,7 @@ const BASE_URL = process.env.BASE_URL || `http://localhost:5000`;
 export const loadJobsFromAPI = () => {
     return async (dispatch) => {
         try {
-            let res = await axios.get(`${BASE_URL}/jobs`);
+            let res = await axios.get(`${BASE_URL}/jobs?comp_id=1`);
             /* create an object of nested objects with data keyed by id,
             change date format,
             add group property */
@@ -46,18 +47,18 @@ export const loadJobs = (jobs) => {
 }
 
 export const addJobOnAPI = (jobToAdd) => {
-    console.log(jobToAdd)
-    // change dates to string format for database
-    // jobToAdd.start_date = moment(jobToAdd.start_time).format();
-    // jobToAdd.end_date = moment(jobToAdd.end_time).format();
+    // add company Id
+    jobToAdd.comp_id = 1
+
     return async (dispatch) => {
-        // try {
-        //     let res = await axios.post(`${BASE_URL}/jobs/`, jobToAdd);
-        //     console.log(res.data)
-        // }
-        // catch(e) {
-        //     console.log(e)
-        // }
+        try {
+            const res = await axios.post(`${BASE_URL}/jobs`, jobToAdd);
+            const {id} = res.data.job;
+            dispatch(addJob(id, res.data.job))
+        }
+        catch(e) {
+            console.log(e)
+        }
     }
 }
 

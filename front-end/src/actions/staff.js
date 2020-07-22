@@ -1,7 +1,8 @@
 import axios from 'axios';
 import { 
     LOAD_STAFF,
-    EDIT_STAFF
+    EDIT_STAFF,
+    ADD_STAFF
  } from './actionTypes';
 import sortJobs from '../helpers/sortStaffJobs'
 
@@ -11,7 +12,7 @@ const BASE_URL = process.env.BASE_URL || `http://localhost:5000`;
 export const loadStaffFromAPI = () => {
     return async (dispatch) => {
         try {
-            let res = await axios.get(`${BASE_URL}/users`);
+            let res = await axios.get(`${BASE_URL}/users?comp_id=1`);
             /* create an object of nested objects with data keyed by id */
             const staffData = {};
             for (let {id, username, first_name, last_name} of res.data.users) {
@@ -67,4 +68,24 @@ export const getStaffFromAPI = (ID) => {
 
 export const editStaff = (id, staff) => {
     return {type: EDIT_STAFF, id, staff}
+}
+
+export const addStaffOnAPI = (staffToAdd) => {
+    // add company Id
+    staffToAdd.comp_id = 1
+
+    return async (dispatch) => {
+        try {
+            const res = await axios.post(`${BASE_URL}/users`, staffToAdd);
+            const {id} = res.data.staff;
+            dispatch(addStaff(id, res.data.staff))
+        }
+        catch(e) {
+            console.log(e)
+        }
+    }
+}
+
+export const addStaff = (id, staff) => {
+    return {type: ADD_STAFF, id, staff}
 }

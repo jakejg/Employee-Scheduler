@@ -18,7 +18,7 @@ const AddForm = ({  type,
     // set up form state from fields passed in
     const INITIAL_STATE = {};
     for (let field of fields){ 
-        INITIAL_STATE[field] = ""; 
+        INITIAL_STATE[field.toLowerCase().replace(' ', '_')] = ""; 
     }
     
     const [formData, setFormData] = useState(INITIAL_STATE);
@@ -33,10 +33,13 @@ const AddForm = ({  type,
     }
 
     
+
+    
     const handleSubmit = async (e, method) => {
         e.preventDefault();
        dispatch(addToDb(formData));
     }
+
 
    
 
@@ -48,19 +51,21 @@ const AddForm = ({  type,
             <Paper>
             <Grid container >
                 <Box mx='auto' m={2}>
-                {fields.map(field => 
-                                    <Grid item> 
+                {fields.map(field => {
+                                    // change name format for sending to backend
+                                    const underscoreName = field.toLowerCase().replace(' ', '_');
+                                    return (<Grid item> 
                                         <TextField key={field}
                                                     id={field}
                                                     type={field.endsWith('Date') ? "date": "text"} 
                                                     label={field}
-                                                    name={field}
-                                                    value={formData.field}
+                                                    name={underscoreName}
+                                                    value={formData.underscoreName}
                                                     onChange={handleChange}
                                                     variant="outlined"
                                                     margin="normal"
                                                     />
-                                    </Grid>
+                                    </Grid>)}
                 )}
                 <Button variant="contained" color="primary" onClick={handleSubmit}>Add {type}</Button>
                 </Box>

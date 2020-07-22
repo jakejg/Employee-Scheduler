@@ -1,6 +1,7 @@
 import {
     LOAD_STAFF,
-    EDIT_STAFF
+    EDIT_STAFF,
+    ADD_STAFF
 } from '../actions/actionTypes';
 
 const staffReducer = (state={}, action) => {
@@ -21,6 +22,8 @@ const staffReducer = (state={}, action) => {
                                     scheduled_jobs: [...action.staff.scheduled_jobs]
                                 }
                     }
+        case ADD_STAFF:
+            return {...state, [action.id]: {...action.staff}}
     default:
         return state
     }
