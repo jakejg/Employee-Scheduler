@@ -1,11 +1,24 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
+import {Link} from 'react-router-dom';
 import {List, ListItem, ListItemText, Box, Typography } from '@material-ui/core';
-import moment from 'moment'
+import moment from 'moment';
+import { makeStyles } from '@material-ui/core/styles';
+
+const useStyles = makeStyles(() => ({
+    link: {
+      textDecoration: 'none',
+      color: 'black',
+      '&:hover': {
+        color: 'grey'
+      }
+    }
+}))
 
 
 const JobList = () => {
     const jobs = useSelector(state => state.jobs)
+    const classes = useStyles();
     
     let inProgress = {};
     let scheduled = {};
@@ -25,7 +38,7 @@ const JobList = () => {
             <List>
                 {Object.keys(inProgress).map(id => <ListItem key={id}>
                                                         <ListItemText align='center'>
-                                                            {inProgress[id].title}
+                                                            <Link className={classes.link} to={`job/${id}`}>{inProgress[id].title}</Link>
                                                         </ListItemText>
                                                     </ListItem>)}
             </List>
@@ -33,7 +46,7 @@ const JobList = () => {
             <List>
                 {Object.keys(scheduled).map(id => <ListItem key={id}>
                                                         <ListItemText align='center'>
-                                                            {scheduled[id].title}
+                                                        <Link className={classes.link} to={`job/${id}`}>{scheduled[id].title}</Link>
                                                         </ListItemText>
                                                     </ListItem>)}
             </List>
