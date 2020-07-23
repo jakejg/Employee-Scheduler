@@ -5,8 +5,6 @@ import {
     ADD_JOB
  } from './actionTypes';
 import moment from 'moment'
-import toLower from '../helpers/lowerCaseProperties';
-
 
 const BASE_URL = process.env.BASE_URL || `http://localhost:5000`;
 
