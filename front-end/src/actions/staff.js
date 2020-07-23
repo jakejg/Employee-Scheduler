@@ -72,13 +72,16 @@ export const editStaff = (id, staff) => {
 
 export const addStaffOnAPI = (staffToAdd) => {
     // add company Id
-    staffToAdd.comp_id = 1
+    staffToAdd.comp_id = 1;
+    // specify new staff is not an admin
+    staffToAdd.is_admin = false;
 
     return async (dispatch) => {
         try {
             const res = await axios.post(`${BASE_URL}/users`, staffToAdd);
-            const {id} = res.data.staff;
-            dispatch(addStaff(id, res.data.staff))
+          
+            const {id, username, first_name, last_name} = res.data.user;
+            dispatch(addStaff(id, {id, username, first_name, last_name, past_jobs: [], scheduled_jobs: []}))
         }
         catch(e) {
             console.log(e)

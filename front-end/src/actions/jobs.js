@@ -53,8 +53,17 @@ export const addJobOnAPI = (jobToAdd) => {
     return async (dispatch) => {
         try {
             const res = await axios.post(`${BASE_URL}/jobs`, jobToAdd);
-            const {id} = res.data.job;
-            dispatch(addJob(id, res.data.job))
+            const {id, title, start_date, end_date} = res.data.job;
+            let start_time = moment(start_date);
+            let end_time = moment(end_date);
+            dispatch(addJob(id, {
+                id, 
+                title, 
+                start_time,
+                end_time,
+                group: id,
+                staff: []
+            }))
         }
         catch(e) {
             console.log(e)

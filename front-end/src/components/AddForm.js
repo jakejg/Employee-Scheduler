@@ -44,18 +44,18 @@ const AddForm = ({  type,
    
 
     // const error = errors.map(error => <Alert key={error} color="danger" className="mt-3" >{error.replace('instance.', '')}</Alert>);
-
+    // mx={{sm:'auto'}} width={{sm:'40%'}} mt={3}
     return (
         <form>
-            <Box mx={{sm:'auto'}} width={{sm:'40%'}} mt={3} >
+            <Box  >
             <Paper>
             <Grid container >
-                <Box mx='auto' m={2}>
+                <Box  mx='auto' m={1}>
                 {fields.map(field => {
                                     // change name format for sending to backend
                                     const underscoreName = field.toLowerCase().replace(' ', '_');
-                                    return (<Grid item> 
-                                        <TextField key={field}
+                                    return (<Grid item key={field}> 
+                                        <TextField 
                                                     id={field}
                                                     type={field.endsWith('Date') ? "date": "text"} 
                                                     label={field}

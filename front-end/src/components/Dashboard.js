@@ -41,6 +41,9 @@ const Dashboard = () => {
       const theme = useTheme();
       const open = useSelector(state => state.drawer)
       const dispatch = useDispatch();
+
+      const jobFields = ['Title', 'Start Date','End Date', 'Staff Needed', 'Notes'];
+      const staffFields = ['Username', 'First Name','Last Name', 'Current Wage', 'Years At Company']
     
       const handleDrawerOpen = () => {
         dispatch(changeDrawer())
@@ -52,7 +55,7 @@ const Dashboard = () => {
     
       return (
         <div className={classes.root}>
-                      <Sidebar />
+                      <Sidebar jobFields={jobFields} staffFields={staffFields}/>
           <div className={clsx(classes.content, {
               [classes.contentShift]: open,
             })} >
