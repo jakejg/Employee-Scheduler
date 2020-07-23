@@ -3,7 +3,7 @@ const router = new express.Router();
 const Job = require('../models/jobsModel')
 const ExpressError = require('../helpers/expressError.js');
 
-/* Route to get all jobs by company id*/
+/* Route to get all jobs by company id */
 
 router.get('/', async (req, res, next) => {
     try{
@@ -20,6 +20,7 @@ router.get('/', async (req, res, next) => {
 
 router.post('/', async (req, res, next) => {
     try {
+        console.log(req.body)
         const job = Job.create(req.body);
         await job.save();
         return res.status(201).json({job})

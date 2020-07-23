@@ -1,5 +1,6 @@
 const db = require('../db');
 const ExpressError = require('../helpers/expressError');
+const moment = require('moment');
 
 class User {
     constructor({id, password, username, first_name, last_name, current_wage, years_at_company, is_admin, jobs, comp_id}) {
@@ -23,8 +24,39 @@ class User {
             WHERE is_admin=false AND comp_id=$1
             ORDER BY first_name`, [comp_id]
         )
+        // get list of users currently working
+        let workingUsers = await this.findAllWorking(comp_id)
+        const working = new Set(workingUsers.map(user => user.id));
+
+        // set isWorking property to true or false for each user based matching id
+        results.rows.map(user => {
+                user.isWorking = working.has(user.id)
+                return user
+            })
+        
         return results.rows
     }
+
+     /* Method to retrieve all id's of users currenty working */
+
+     static async findAllWorking(comp_id) {
+
+        const results = await db.query(
+            `SELECT users.id FROM users
+            JOIN users_jobs ON users_jobs.user_id = users.id 
+            JOIN jobs ON jobs.id = users_jobs.job_id
+            WHERE users.is_admin=false 
+            AND users.comp_id=$1 
+            AND jobs.start_date < $2
+            AND jobs.end_date > $2 
+            ORDER BY first_name`, [comp_id, moment()]
+        )
+        console.log(results.rows)
+        return results.rows
+    }
+
+
+    /* Method to retrieve details of one user */
 
     static async findOne(id) {
         const results = await db.query(
@@ -52,7 +84,7 @@ class User {
         return jobs.rows;
     }
 
-    /* Method to retrieve create a new user instance */
+    /* Method to create a new user instance */
 
     static create(userData){
         return new User(userData); 
@@ -97,8 +129,7 @@ class User {
                 this.id = results.rows[0].id;
             }
             catch(e) {
-                console.log(e)
-                return next(e);
+                console.log(e);
             }
         }
         else {
