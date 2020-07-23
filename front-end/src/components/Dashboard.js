@@ -1,15 +1,15 @@
 import React from 'react';
 import clsx from 'clsx';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
-import {changeDrawer} from '../actions/drawer';
 import { useSelector, useDispatch } from 'react-redux';
 import ItemList from './ItemList';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
-import Dialog from '@material-ui/core/Dialog';
 import Sidebar from './Sidebar';
-import AddForm from './AddForm'
+import JobList from './JobList';
+import StaffList from './StaffList';
+
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
@@ -37,48 +37,39 @@ const useStyles = makeStyles((theme) => ({
 
 const Dashboard = () => {
 
-      const classes = useStyles();
-      const theme = useTheme();
-      const open = useSelector(state => state.drawer)
-      const dispatch = useDispatch();
+    const classes = useStyles();
+    const theme = useTheme();
+    const open = useSelector(state => state.drawer)
+    const dispatch = useDispatch();
 
-      const jobFields = ['Title', 'Start Date','End Date', 'Staff Needed', 'Notes'];
-      const staffFields = ['Username', 'First Name','Last Name', 'Current Wage', 'Years At Company']
-    
-      const handleDrawerOpen = () => {
-        dispatch(changeDrawer())
-      };
-    
-      const handleDrawerClose = () => {
-        dispatch(changeDrawer())
-      };
-    
-      return (
-        <div className={classes.root}>
-                      <Sidebar jobFields={jobFields} staffFields={staffFields}/>
-          <div className={clsx(classes.content, {
-              [classes.contentShift]: open,
-            })} >
-                <Container>
-                <h1 style={{textAlign: 'center'}}>Dashboard</h1>
-                <Grid container spacing={3} className={classes.drawerHeader} >
-                    <Grid item xs>
-                        <Paper>
-                            <ItemList type='jobs' name='title' />
-                        </Paper>
+    const jobFields = ['Title', 'Start Date','End Date', 'Staff Needed', 'Notes'];
+    const staffFields = ['Username', 'First Name','Last Name', 'Current Wage', 'Years At Company']
+    return (
+      <div className={classes.root}>
+            <Sidebar jobFields={jobFields} staffFields={staffFields}/>
+        <div className={clsx(classes.content, {
+            [classes.contentShift]: open,
+          })} >
+              <Container>
+                    <h1 style={{textAlign: 'center'}}>Dashboard</h1>
+                    <Grid container spacing={3} className={classes.drawerHeader} >
+                         <Grid item xs>
+                             <Paper>
+                                <JobList />
+                             </Paper>
+                         </Grid>
+                         <Grid item xs>
+                             <Paper>
+                                <StaffList />
+                             </Paper>
+                         </Grid>
+
                     </Grid>
-                    <Grid item xs>
-                        <Paper>
-                            <ItemList type='staff' name='first_name' />
-                        </Paper>
-                    </Grid>
-                   
-                 </Grid>
-                 </Container>
-          </div>
-          
+               </Container>
         </div>
-      );
+      
+      </div>
+    );
 }
 
 export default Dashboard;

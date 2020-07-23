@@ -106,7 +106,7 @@ export default function ButtonAppBar() {
             <MenuIcon />
           </IconButton>:null}
           <Typography variant="h6" noWrap>
-            Persistent drawer
+            Employee Scheduler
           </Typography>
         </Toolbar>
       </AppBar>
