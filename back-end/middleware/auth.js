@@ -6,7 +6,7 @@ const { SECRET_KEY } = require('../config');
 function authorize(req, res, next) {
     try{
         
-        const payload = jwt.verify(req.body._token, SECRET_KEY);
+        const payload = jwt.verify(req.body.token, SECRET_KEY);
         req.user = payload;
         return next();
     }

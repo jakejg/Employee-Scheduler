@@ -8,6 +8,7 @@ const app = express();
 
 const jobRoutes = require('./routes/jobs');
 const userRoutes = require('./routes/users');
+const authRoutes = require('./routes/auth');
 // const { authorize } = require('./middleware/auth');
 
 app.use(cors());
@@ -18,6 +19,7 @@ app.use(morgan("tiny"));
 
 // allow every route to check if correct JWT token was sent
 // app.use(authorize);
+app.use('/auth', authRoutes);
 app.use('/jobs', jobRoutes);
 app.use('/users', userRoutes);
 

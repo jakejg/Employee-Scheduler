@@ -1,11 +1,13 @@
 const db = require('../db');
 const ExpressError = require('../helpers/expressError');
+const bcrypt = require('bcrypt');
+const { BCRYPT_WORK_FACTOR } = require('../config');
 const moment = require('moment');
 
 class User {
     constructor({id, password, username, first_name, last_name, current_wage, years_at_company, is_admin, jobs, comp_id}) {
         this.id = id;
-        this.password = password;
+        this.password = password
         this.username = username;
         this.first_name = first_name;
         this.last_name = last_name;
@@ -86,7 +88,12 @@ class User {
 
     /* Method to create a new user instance */
 
-    static create(userData){
+    static async create(userData){
+        // if user is an admin hash password
+        if (userData.is_admin){
+            userData.password = await bcrypt.hash(userData.password, BCRYPT_WORK_FACTOR)
+        }
+        
         return new User(userData); 
     }
     /* Method to update an existing user */
@@ -103,6 +110,29 @@ class User {
         return user
 
     }
+
+    /* Method to find a user's hashed password with a username */
+
+    static async findPassword(username) {
+        const results = await db.query(
+            `SELECT password from users 
+            WHERE username=$1`, [username]
+        )
+        const password = results.rows[0].password;
+        if (!password) throw new ExpressError(`User with username ${username} not found`, 400);
+        
+        return password
+    }
+     /* Method to authenticate a user */
+
+    static async authenticate(username, password){
+        const dbPassword = await this.findPassword(username);
+        console.log(dbPassword, password)
+        return await bcrypt.compare(password, dbPassword);
+    }
+
+
+     /* Method to delete a user */
 
     static async delete(id){
         const user = await this.findOne(id);

@@ -20,7 +20,7 @@ router.get('/', async (req, res, next) => {
 
 router.post('/', async (req, res, next) => {
     try {
-        const user = User.create(req.body);
+        const user = await User.create(req.body);
         await user.save();
         return res.status(201).json({user})
     }

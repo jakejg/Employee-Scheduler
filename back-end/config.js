@@ -2,7 +2,7 @@
 
 require("dotenv").config();
 
-const SECRET_KEY = process.env.SECRET_KEY;
+const SECRET_KEY = process.env.KEY;
 const BCRYPT_WORK_FACTOR = 12;
 
 // set which database to use for testing
@@ -16,5 +16,7 @@ const PORT = process.env.PORT || 5000;
 
 module.exports = {
     PORT,
-    DB_URI
+    DB_URI,
+    SECRET_KEY,
+    BCRYPT_WORK_FACTOR
 }
