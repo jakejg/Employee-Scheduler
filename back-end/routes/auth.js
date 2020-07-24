@@ -24,13 +24,14 @@ router.post('/register', async (req, res, next) => {
 router.post('/login', async (req, res, next) => {
     try{
         const { username, password } = req.body;
-        const isAuthorized = User.authenticate(username, password);
+        const isAuthorized = await User.authenticate(username, password);
 
-        if (!isAuthorized) return new ExpressError("Password and username do not match", 400);
+        if (!isAuthorized) throw new ExpressError("Password and username do not match", 400);
 
-        const token = createToken(username, true)
+        const adminStatus = await User.findAdminStatus(username)
+        const token = createToken(username, adminStatus)
+
         return res.json({token});
-        
     }
     catch(e){
         next(e);

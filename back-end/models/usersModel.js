@@ -53,7 +53,7 @@ class User {
             AND jobs.end_date > $2 
             ORDER BY first_name`, [comp_id, moment()]
         )
-        console.log(results.rows)
+        
         return results.rows
     }
 
@@ -118,17 +118,29 @@ class User {
             `SELECT password from users 
             WHERE username=$1`, [username]
         )
-        const password = results.rows[0].password;
-        if (!password) throw new ExpressError(`User with username ${username} not found`, 400);
+        if (!results.rows[0]) throw new ExpressError(`User with username ${username} not found`, 400);
         
-        return password
+        return results.rows[0].password
     }
      /* Method to authenticate a user */
 
     static async authenticate(username, password){
         const dbPassword = await this.findPassword(username);
-        console.log(dbPassword, password)
+      
         return await bcrypt.compare(password, dbPassword);
+    }
+
+     /* Method to retrieve admin status by username, returns boolean*/
+
+     static async findAdminStatus(username) {
+        const results = await db.query(
+            `SELECT is_admin  from users 
+            WHERE username=$1`, [username]
+        )
+        let user = results.rows[0];
+        if (!user) throw new ExpressError(`User with username ${username} not found`, 400);
+    
+        return user.is_admin;
     }
 
 
