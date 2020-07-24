@@ -12,7 +12,10 @@
 # production
 /build
 
+#environmental variables
+/back-end/.env
 # misc
+
 .DS_Store
 .env.local
 .env.development.local
