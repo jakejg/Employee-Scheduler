@@ -1,9 +1,8 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import {Link} from 'react-router-dom';
-import {List, ListItem, ListItemText, Box, Typography } from '@material-ui/core';
+import {List, ListItem, ListItemText, Box, Typography, makeStyles } from '@material-ui/core';
 import moment from 'moment';
-import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles(() => ({
     link: {
