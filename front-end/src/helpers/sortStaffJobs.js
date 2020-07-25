@@ -7,7 +7,7 @@ returns an object with two arrays of job ids and current job */
 function sortJobs(jobs) {
     let past = [];
     let future = [];
-    let current;
+    let current = false;
 
     for (let job of jobs) {
         if (moment(job.end_date) < moment()) {

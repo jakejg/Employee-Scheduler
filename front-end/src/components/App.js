@@ -1,8 +1,8 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import NavBar from './NavBar';
-import Routes from './Routes'
+import Routes from './Routes';
 
-function App() {
+const App = () => {
 
     return (
         <div className="App">
