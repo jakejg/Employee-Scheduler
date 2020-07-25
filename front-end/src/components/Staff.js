@@ -1,29 +1,86 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useParams} from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import {getStaffFromAPI} from '../actions/staff';
+import {loadJobsFromAPI} from '../actions/jobs';
+import {Paper, Box, Typography, makeStyles, Grid, List, ListItem, ListItemText, Button } from '@material-ui/core';
+import Loading from './Loading';
 
 const Staff = () => {
    const { id } = useParams();
    const dispatch = useDispatch();
-   const staff = useSelector(state => state.staff[id]) || {};
+   const staff = useSelector(state => state.staff[id])
    const allJobs = useSelector(state => state.jobs);
+   const [showPast, setShowPast] = useState(false);
+   const [showScheduled, setShowScheduled] = useState(false);
+   const loading = !staff
   
 
    useEffect(() => {
-    const getStaff = async () => {
+    const getData = async () => {
+        await dispatch(loadJobsFromAPI());
         dispatch(getStaffFromAPI(id));
     }
-    getStaff();
-}, [dispatch, id])
+    getData();
+    }, [dispatch, id])
+
+    if (loading) return <Loading />
    
     return (
-        <div className="item">
-            <div>{staff.first_name} {staff.last_name}</div>
-            <ul>
-                {staff.jobs ? staff.jobs.map(id => <li>{allJobs[id] ? allJobs[id].title: null}</li>): null}
-            </ul>
-        </div>
+            <Grid container>
+            <Grid item xs={1} sm={2}>
+            </Grid>
+            <Grid item xs={10} sm={8}>
+                <Paper elevation={5}>
+                    <Box m={4} py={2}>
+                    <Typography variant='h5' align='center'>{staff.first_name} {staff.last_name}</Typography>
+                    <List>
+                        <ListItem>
+                            <ListItemText >
+                                <b>Username:</b> {staff.username}
+                            </ListItemText>
+                        </ListItem>
+                        <ListItem>
+                            <ListItemText >
+                                <b>Current Wage:</b> ${staff.current_wage }
+                            </ListItemText>
+                        </ListItem>
+                        <ListItem>
+                            <ListItemText >
+                                <b>Years with "company name": </b> {staff.years_at_company}
+                            </ListItemText>
+                        </ListItem>
+                        <ListItem>
+                            <ListItemText>
+                                <b>Current Job:</b> {staff.current_job? allJobs[staff.current_job].title: 
+                                <Typography>Not currently working</Typography>} 
+                            </ListItemText>
+                         </ListItem>
+                
+                        <ListItem onClick={() => setShowScheduled(!showScheduled)}><b>Scheduled Jobs</b></ListItem> 
+                        {showScheduled &&
+                            <List>
+                                {staff.scheduled_jobs.map(id => <ListItem>{allJobs[id].title}</ListItem>)}
+                            </List>}
+                
+                        <ListItem onClick={() => setShowPast(!showPast)}><b>Work History</b></ListItem> 
+                        {showPast &&
+                            <List>
+                                {staff.past_jobs.map(id => <ListItem>{allJobs[id].title}</ListItem>)}
+                            </List>}
+                        <ListItem>
+                            <Button  variant='outlined' color='primary'>Edit Staff</Button>
+                        </ListItem>
+                                
+                    </List>
+                                
+                    </Box>
+                </Paper>
+                                
+            </Grid>
+            <Grid item xs={1} sm={2}>
+            </Grid>
+      </Grid>
         );
 }
 
