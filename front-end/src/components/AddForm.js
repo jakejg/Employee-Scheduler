@@ -18,7 +18,7 @@ const AddForm = ({  type,
     // set up form state from fields passed in
     const INITIAL_STATE = {};
     for (let field of fields){ 
-        INITIAL_STATE[field.toLowerCase().replace(' ', '_')] = ""; 
+        INITIAL_STATE[field.toLowerCase().replace(/\s/g, '_')] = ""; 
     }
     
     const [formData, setFormData] = useState(INITIAL_STATE);
@@ -53,7 +53,7 @@ const AddForm = ({  type,
                 <Box  mx='auto' m={1}>
                 {fields.map(field => {
                                     // change name format for sending to backend
-                                    const underscoreName = field.toLowerCase().replace(' ', '_');
+                                    const underscoreName = field.toLowerCase().replace(/\s/g, '_');
                                     return (<Grid item key={field}> 
                                         <TextField 
                                                     id={field}
