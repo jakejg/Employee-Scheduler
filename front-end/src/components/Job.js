@@ -1,16 +1,17 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useParams} from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import {getJobFromAPI} from '../actions/jobs';
 import {loadStaffFromAPI} from '../actions/staff';
-import {Paper, Box, Typography, makeStyles, Grid, List, ListItem, ListItemText, Button } from '@material-ui/core';
+import {Paper, Box, Typography, makeStyles, Grid, List, ListItem, ListItemText, Button, Dialog, DialogTitle } from '@material-ui/core';
 import Loading from './Loading';
+import AddStaffToJob from './AddStaffToJob';
 
 const Job = () => {
    const { id } = useParams();
+   const [isOpen, setIsOpen] = useState(false) 
    const dispatch = useDispatch();
    const job = useSelector(state => state.jobs[id]);
-   const allStaff = useSelector(state => state.staff);
    const loading = !job;
 
    useEffect(() => {
@@ -22,13 +23,11 @@ const Job = () => {
 }, [dispatch, id])
 
     if (loading) return <Loading/>
-
     
-    const staffOnJob = job.staff.map(id => {
-            if (allStaff[id]) return allStaff[id].first_name
-            })
+    const staffNames = job.staff.map(staff => `${staff.first_name} ${staff.last_name}`)
    
     return (
+        <>
         <Grid container>
             <Grid item xs={1} sm={2}>
             </Grid>
@@ -54,7 +53,7 @@ const Job = () => {
                         </ListItem>
                         <ListItem>
                             <ListItemText>
-                                <b>Staff:</b> {job.staff ? staffOnJob : 
+                                <b>Staff:</b> {job.staff.length ? staffNames : 
                                 <Typography>None</Typography>}
                             </ListItemText>
                          </ListItem>
@@ -68,9 +67,9 @@ const Job = () => {
                             {/* {getStaffingCost(staffOnJob)} */}
                         </ListItem>
                         <ListItem>
-                            <Button  variant='outlined' color='primary'>Edit Job</Button>
+                            <Button variant='outlined' color='primary'>Edit Job</Button>
+                            <Button onClick={() => setIsOpen(true)} variant='outlined' color='warning'>Change Staff</Button>
                         </ListItem>
-                        
                     </List>
                     
                     </Box>
@@ -80,6 +79,11 @@ const Job = () => {
             <Grid item xs={1} sm={2}>
             </Grid>
         </Grid>
+        <Dialog open={isOpen} onClose={() => setIsOpen(false)} fullWidth={true}>
+            <DialogTitle><Box textAlign='center' >Add or Remove Staff </Box></DialogTitle>
+            <AddStaffToJob job={job} />
+        </Dialog>
+        </>
         );
 }
 

@@ -104,7 +104,7 @@ export const getJobFromAPI = (ID) => {
                     possible_staff,
                     staff_needed,
                     notes,
-                    staff: staff.map(item => item.id),
+                    staff,
                     group: id,
                 }
                 dispatch(editJob(id, job))
@@ -120,3 +120,15 @@ export const addJob = (id, job) => {
 }
 
 
+export const AddStaffToJobOnAPI = (jobId, staffId) => {
+    return async (dispatch) => {
+        try {
+            let res = await axios.patch(`${BASE_URL}/jobs/add_staff/${jobId}`, staffId);
+            console.log(res.data)
+            
+        }
+        catch(e) {
+            console.log(e)
+        }
+    }
+}
