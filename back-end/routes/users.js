@@ -1,7 +1,7 @@
 const express = require('express');
 const router = new express.Router();
 const User = require('../models/usersModel')
-const {validateCreateUserJson} = require('../middleware/jsonValidation')
+const {validateCreateUserJson} = require('../middleware/jsonValidation');
 const ExpressError = require('../helpers/expressError.js');
 
 /* Route to get overview of all users for a company that aren't admin*/

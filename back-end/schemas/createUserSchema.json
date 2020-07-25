@@ -77,7 +77,7 @@
         },
         "current_wage": {
             "$id": "#/properties/current_wage",
-            "type": "integer",
+            "type": "string",
             "title": "The current_wage schema",
             "description": "An explanation about the purpose of this instance.",
             "default": 0,
@@ -87,7 +87,7 @@
         },
         "years_at_company": {
             "$id": "#/properties/years_at_company",
-            "type": "integer",
+            "type": "string",
             "title": "The years_at_company schema",
             "description": "An explanation about the purpose of this instance.",
             "default": 0,
