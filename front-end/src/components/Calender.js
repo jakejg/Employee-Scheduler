@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import Timeline from 'react-calendar-timeline'
 // make sure you include the timeline stylesheet or the timeline will not be styled
 import 'react-calendar-timeline/lib/Timeline.css'
@@ -6,11 +6,19 @@ import { useSelector, useDispatch } from 'react-redux';
 import moment from 'moment'
 import {useHistory} from 'react-router-dom';
 import {editJobOnAPI, editJob} from '../actions/jobs';
+import { loadJobsFromAPI } from '../actions/jobs';
 
 const Calender = () => {
     const jobs = useSelector(state => state.jobs);
     const history = useHistory();
     const dispatch = useDispatch();
+
+    useEffect(() => {
+        const getData = async () => {
+            dispatch(loadJobsFromAPI())
+        }
+        getData();
+    }, [dispatch])
 
     // calender takes two props an array of events/item objects and array of grouping
     let items = Object.keys(jobs).map(id => jobs[id]);

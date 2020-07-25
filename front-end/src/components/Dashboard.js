@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import clsx from 'clsx';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import { useSelector, useDispatch } from 'react-redux';
@@ -9,6 +9,8 @@ import Paper from '@material-ui/core/Paper';
 import Sidebar from './Sidebar';
 import JobList from './JobList';
 import StaffList from './StaffList';
+import { loadJobsFromAPI } from '../actions/jobs';
+import { loadStaffFromAPI } from '../actions/staff';
 
 const drawerWidth = 240;
 
@@ -36,11 +38,18 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Dashboard = () => {
-
     const classes = useStyles();
     const theme = useTheme();
     const open = useSelector(state => state.drawer)
     const dispatch = useDispatch();
+
+    useEffect(() => {
+      const getData = async () => {
+          dispatch(loadJobsFromAPI())
+          dispatch(loadStaffFromAPI())
+      }
+      getData();
+  }, [dispatch])
 
     const jobFields = ['Title', 'Start Date','End Date', 'Staff Needed', 'Notes'];
     const staffFields = ['Username', 'First Name','Last Name', 'Current Wage', 'Years At Company']

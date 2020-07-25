@@ -2,6 +2,7 @@ import React, {useEffect} from 'react';
 import {useParams} from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import {getJobFromAPI} from '../actions/jobs';
+import {Paper, Box, Typography, makeStyles } from '@material-ui/core';
 
 const Job = () => {
    const { id } = useParams();
