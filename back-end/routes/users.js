@@ -1,6 +1,7 @@
 const express = require('express');
 const router = new express.Router();
 const User = require('../models/usersModel')
+const {validateCreateUserJson} = require('../middleware/jsonValidation')
 const ExpressError = require('../helpers/expressError.js');
 
 /* Route to get overview of all users for a company that aren't admin*/
@@ -18,7 +19,7 @@ router.get('/', async (req, res, next) => {
 
 /* Route to create a user with json from request body */
 
-router.post('/', async (req, res, next) => {
+router.post('/', validateCreateUserJson, async (req, res, next) => {
     try {
         const user = await User.create(req.body);
         await user.save();

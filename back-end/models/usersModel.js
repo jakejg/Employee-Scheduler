@@ -62,7 +62,15 @@ class User {
 
     static async findOne(id) {
         const results = await db.query(
-            `SELECT * from users 
+            `SELECT id, 
+            username, 
+            first_name, 
+            last_name, 
+            is_admin, 
+            current_wage, 
+            years_at_company, 
+            comp_id 
+            FROM users 
             WHERE id=$1`, [id]
         )
         let user = results.rows[0];

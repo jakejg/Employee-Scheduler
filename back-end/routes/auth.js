@@ -4,7 +4,7 @@ const ExpressError = require('../helpers/expressError.js');
 const {createToken} = require('../helpers/createToken');
 const User = require('../models/usersModel');
 
-/* Route to register a new admin user */
+/* Route to register a new user */
 
 router.post('/register', async (req, res, next) => {
     try{
@@ -19,7 +19,7 @@ router.post('/register', async (req, res, next) => {
    
 })
 
-/* Route to login an admin user */
+/* Route to login a user */
 
 router.post('/login', async (req, res, next) => {
     try{

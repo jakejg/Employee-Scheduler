@@ -1,6 +1,7 @@
 const express = require('express');
 const router = new express.Router();
 const Job = require('../models/jobsModel')
+const {validateCreateJobJson} = require('../middleware/jsonValidation');
 const ExpressError = require('../helpers/expressError.js');
 
 /* Route to get all jobs by company id */
@@ -18,7 +19,7 @@ router.get('/', async (req, res, next) => {
 
 /* Route to create a job with json from request body */
 
-router.post('/', async (req, res, next) => {
+router.post('/', validateCreateJobJson, async (req, res, next) => {
     try {
         console.log(req.body)
         const job = Job.create(req.body);
