@@ -16,8 +16,6 @@ const StaffList = () => {
         }
         else available.push(staff[id].first_name);
     }
-    console.log(working)
-    console.log(available)
     return (
         <div>
             <Typography variant='h4' align='center'>Staff Currently Working</Typography>

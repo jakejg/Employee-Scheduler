@@ -4,12 +4,16 @@ import Calender from './Calender';
 import Job from './Job';
 import Dashboard from './Dashboard';
 import Staff from './Staff';
+import Home from './Home'
 
 const Routes = () => {
  
 
     return (
         <Switch>
+            <Route exact path='/'>
+                <Home />  
+            </Route> 
            <Route exact path='/calendar'>
                 <Calender />  
             </Route> 
