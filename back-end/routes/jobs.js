@@ -58,6 +58,8 @@ router.patch('/:id', async (req, res, next) => {
     }
 })
 
+/*Route to delete a job with id */
+
 router.delete('/:id', async (req, res, next) => {
     try {
         await Job.delete(req.params.id);
@@ -67,6 +69,19 @@ router.delete('/:id', async (req, res, next) => {
         return next(e);
     }
 })
+
+/*Route add a staff to a job with staff id in body and job id from request, params */
+
+router.post('/add_staff/:id', async (req, res, next) => {
+    try {
+        await Job.addStaff(req.params.id, req.body.staff_id);
+        return res.json(`Staff with id ${req.body.staff_id} add to job with id ${req.params.id}`)
+    }
+    catch(e){
+        return next(e);
+    }
+})
+
 
 
 module.exports = router;

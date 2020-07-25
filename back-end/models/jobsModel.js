@@ -46,7 +46,7 @@ class Job {
     static async findAllStaffWorkingJob(jobId) {
         // join query for users/staff associated with job
         const staff = await db.query(
-            `SELECT users.id, users.first_name FROM users 
+            `SELECT users.id, users.first_name, users.last_name FROM users 
             JOIN users_jobs ON users_jobs.user_id = users.id 
             JOIN jobs ON jobs.id = users_jobs.job_id
             WHERE jobs.id = $1`, [jobId])
@@ -80,7 +80,14 @@ class Job {
             `DELETE from jobs 
             WHERE id=$1`, [job.id]
         )
+    }
 
+    static async addStaff(job_id, user_id){
+        const results = await db.query(`INSERT INTO users_jobs
+        (job_id, user_id)
+        VALUES ($1, $2)
+        RETURNING id`,
+        [job_id, user_id]);
     }
 
     /* Method to add/update instance of job in the database */
