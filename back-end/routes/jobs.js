@@ -21,7 +21,6 @@ router.get('/', async (req, res, next) => {
 
 router.post('/', validateCreateJobJson, async (req, res, next) => {
     try {
-        console.log(req.body)
         const job = Job.create(req.body);
         await job.save();
         return res.status(201).json({job})
@@ -34,7 +33,6 @@ router.post('/', validateCreateJobJson, async (req, res, next) => {
 /* Route to get a job by id sent in request parameters */
 
 router.get('/:id', async (req, res, next) => {
-    console.log(req.params)
     try{
         const job = await Job.findOne(req.params.id);
         return res.json({job});
@@ -72,10 +70,20 @@ router.delete('/:id', async (req, res, next) => {
 
 /*Route add a staff to a job with staff id in body and job id from request, params */
 
-router.post('/add_staff/:id', async (req, res, next) => {
+router.post('/:id/add_staff', async (req, res, next) => {
     try {
-        await Job.addStaff(req.params.id, req.body.staff_id);
-        return res.json(`Staff with id ${req.body.staff_id} add to job with id ${req.params.id}`)
+        const staff = await Job.addStaff(req.params.id, req.body.user_id);
+        return res.json({staff})
+    }
+    catch(e){
+        return next(e);
+    }
+})
+
+router.post('/:id/remove_staff', async (req, res, next) => {
+    try {
+        const staff = await Job.removeStaff(req.params.id, req.body.user_id);
+        return res.json({staff})
     }
     catch(e){
         return next(e);

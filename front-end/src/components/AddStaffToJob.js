@@ -1,5 +1,5 @@
-import React, {useState} from 'react';
-import {useDispatch} from 'react-redux';
+import React, {useState, useEffect} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
 import {
     Grid,
     TextField,
@@ -12,30 +12,50 @@ import {
     Typography,
     List, 
     IconButton,
-    ListItemSecondaryAction
+    ListItemSecondaryAction,
+    MenuItem
 } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
+import Loading from './Loading';
+import {loadStaffFromAPI} from '../actions/staff';
+import {addStaffToJobOnAPI, removeStaffFromJobOnAPI} from '../actions/jobs';
+import filterStaffOnJob from '../helpers/createOptions';
 
 const AddStaffToJob = ({job}) => {
-    const INITIAL_STATE = {staff_id: ""};
-    
-    const [formData, setFormData] = useState(INITIAL_STATE);
+    const staff = useSelector(state => state.staff)
+    const loading = !staff
+    const [staffId, setStaffId] = useState("");
     // const [errors, setErrors] = useState([]);
     const dispatch = useDispatch()
 
+    useEffect(() => {
+
+        const getData = async () => {
+            dispatch(loadStaffFromAPI())
+        }
+        getData();
+    }, [dispatch])
+
+    if (loading) return <Loading />
+
     const handleChange = (e) => {
-        const { name, value } = e.target;
-        setFormData(formData => ({...formData, [name]: value}))
+        setStaffId(e.target.value)
     }
   
     const add = async (e) => {
         e.preventDefault();
-    //    dispatch(addStaffToJobOnAPI(job.id, formData));
+       dispatch(addStaffToJobOnAPI(job.id, +staffId));
     }
 
-    const remove = () => {
-        // dispatch(RemoveStaffFromJobOnAPI());
+    const remove = (id) => {
+        dispatch(removeStaffFromJobOnAPI(job.id, id));
     }
+    /*  Create a new array with just the info needed for the select field options,
+        if staff is already assigned to the job, don't show them as an option to be added again
+     */
+   
+    const options = filterStaffOnJob(staff, job.staff);
+
 
     // const error = errors.map(error => <Alert key={error} color="danger" className="mt-3" >{error.replace('instance.', '')}</Alert>);
     // mx={{sm:'auto'}} width={{sm:'40%'}} mt={3}
@@ -43,10 +63,10 @@ const AddStaffToJob = ({job}) => {
         <Box>
         <List>
             {job.staff.map(staff => 
-                <ListItem>
+                <ListItem key={staff.id}>
                     <ListItemText primary={`${staff.first_name} ${staff.last_name}`} />
                     <ListItemSecondaryAction>
-                        <IconButton onClick={remove} edge="end" aria-label="delete">
+                        <IconButton onClick={()=> remove(staff.id)} edge="end" aria-label="delete">
                           <DeleteIcon />
                         </IconButton>
                     </ListItemSecondaryAction>
@@ -55,14 +75,21 @@ const AddStaffToJob = ({job}) => {
             <ListItem>
                 <form>
                     <TextField
-                        label="Add Staff"
-                        name= "user_id"
-                        value={formData.user_id}
+                        label="Select Staff"
+                        select
+                        value={staffId}
                         onChange={handleChange}
                         variant="outlined"
                         margin="normal"
                         size="small"
-                        />
+                        fullWidth
+                        >
+                    {options.map(staff => 
+                    <MenuItem key={staff.id} value={staff.id}>
+                        {staff.full_name}
+                    </MenuItem>    
+                    )}     
+                    </TextField>        
                     <ListItemSecondaryAction>
                         <Button variant="contained" onClick={add}>Add</Button>
                     </ListItemSecondaryAction>

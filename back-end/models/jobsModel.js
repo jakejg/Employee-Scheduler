@@ -17,7 +17,7 @@ class Job {
     /* Method to retrieve an overview of all jobs */
 
     static async findAll(comp_id) {
-        console.log(comp_id)
+       
         const results = await db.query(
             `SELECT id, title, start_date, end_date FROM jobs 
             WHERE comp_id=$1
@@ -74,6 +74,8 @@ class Job {
 
     }
 
+     /* Method to delete an existing job */
+
     static async delete(id){
         const job = await this.findOne(id);
         const results = await db.query(
@@ -82,12 +84,31 @@ class Job {
         )
     }
 
+     /* Method to associate a staff with an existing job, returns the new staff list */
+
     static async addStaff(job_id, user_id){
-        const results = await db.query(`INSERT INTO users_jobs
+        await db.query(`INSERT INTO users_jobs
         (job_id, user_id)
         VALUES ($1, $2)
         RETURNING id`,
         [job_id, user_id]);
+
+        const staffList = await this.findAllStaffWorkingJob(job_id);
+        return staffList
+
+    }
+
+     /* Method to de-associate a staff with an existing job, returns the new staff list */
+
+     static async removeStaff(job_id, user_id){
+        await db.query(`
+        DELETE FROM users_jobs
+        WHERE job_id=$1 AND user_id=$2`,
+        [job_id, user_id]);
+
+        const staffList = await this.findAllStaffWorkingJob(job_id);
+        return staffList
+
     }
 
     /* Method to add/update instance of job in the database */

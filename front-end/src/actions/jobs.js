@@ -2,7 +2,8 @@ import axios from 'axios';
 import { 
     LOAD_JOBS,
     EDIT_JOB, 
-    ADD_JOB
+    ADD_JOB,
+    EDIT_JOB_STAFF
  } from './actionTypes';
 import moment from 'moment'
 
@@ -21,17 +22,15 @@ export const loadJobsFromAPI = () => {
                 let start_time = moment(start_date);
                 let end_time = moment(end_date);
                 
-            jobData[id] = {
-                id, 
-                title, 
-                start_time,
-                end_time,
-                group: id,
-                staff: []
+                jobData[id] = {
+                    id, 
+                    title, 
+                    start_time,
+                    end_time,
+                    group: id,
+                    staff: []
+                }
             }
-            
-            }
-      
             dispatch(loadJobs(jobData));
         }
         catch(e) {
@@ -120,15 +119,32 @@ export const addJob = (id, job) => {
 }
 
 
-export const AddStaffToJobOnAPI = (jobId, staffId) => {
+export const addStaffToJobOnAPI = (jobId, staffId) => {
     return async (dispatch) => {
         try {
-            let res = await axios.patch(`${BASE_URL}/jobs/add_staff/${jobId}`, staffId);
-            console.log(res.data)
+            let res = await axios.post(`${BASE_URL}/jobs/${jobId}/add_staff`, {user_id: staffId});
+            dispatch(editJobStaff(jobId, res.data.staff))
             
         }
         catch(e) {
             console.log(e)
         }
     }
+}
+
+export const removeStaffFromJobOnAPI = (jobId, staffId) => {
+    return async (dispatch) => {
+        try {
+            let res = await axios.post(`${BASE_URL}/jobs/${jobId}/remove_staff`, {user_id: staffId});
+            dispatch(editJobStaff(jobId, res.data.staff))
+            
+        }
+        catch(e) {
+            console.log(e)
+        }
+    }
+}
+
+export const editJobStaff = (id, staff) => {
+    return {type: EDIT_JOB_STAFF, id, staff}
 }
