@@ -1,5 +1,4 @@
 import React, { useState, useContext } from 'react';
-import { useHistory } from 'react-router-dom';
 import {useDispatch} from 'react-redux';
 import {
     Grid,
@@ -8,11 +7,13 @@ import {
     Paper,
     Button
 } from '@material-ui/core';
+import {useHistory} from 'react-router-dom';
 
 
 const AddForm = ({  type,
                     fields,
-                    addToDb
+                    addToDb,
+                    redirect
                 }) => {
 
     // set up form state from fields passed in
@@ -24,7 +25,6 @@ const AddForm = ({  type,
     const [formData, setFormData] = useState(INITIAL_STATE);
     const [errors, setErrors] = useState([]);
     const dispatch = useDispatch()
-    
     const history = useHistory();
 
     const handleChange = (e) => {
@@ -35,9 +35,11 @@ const AddForm = ({  type,
     
 
     
-    const handleSubmit = async (e, method) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-       dispatch(addToDb(formData));
+        await dispatch(addToDb(formData));
+       
+        if (redirect) history.push(redirect);
     }
 
 

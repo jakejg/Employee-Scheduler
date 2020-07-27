@@ -11,6 +11,7 @@ import JobList from './JobList';
 import StaffList from './StaffList';
 import { loadJobsFromAPI } from '../actions/jobs';
 import { loadStaffFromAPI } from '../actions/staff';
+import { decode } from "jsonwebtoken";
 
 const drawerWidth = 240;
 
@@ -40,13 +41,15 @@ const useStyles = makeStyles((theme) => ({
 const Dashboard = () => {
     const classes = useStyles();
     const theme = useTheme();
-    const open = useSelector(state => state.drawer)
+    const open = useSelector(state => state.application.drawer)
+    const token = useSelector(state => state.application.token)
     const dispatch = useDispatch();
 
     useEffect(() => {
       const getData = async () => {
-          dispatch(loadJobsFromAPI())
-          dispatch(loadStaffFromAPI())
+          const { comp_id } = decode(token);
+          dispatch(loadJobsFromAPI(comp_id))
+          dispatch(loadStaffFromAPI(comp_id))
       }
       getData();
   }, [dispatch])

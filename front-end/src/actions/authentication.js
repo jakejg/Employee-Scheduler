@@ -7,18 +7,17 @@ import {BASE_URL} from '../config';
 
 export const register = (data) => {
     
-    // designate admin user
-    data.is_admin = true
-    
     return async (dispatch) => {
         try {
             // create company
             let companyId = await addCompanyToAPI(data.company_name)
             // associate user with company
             data.comp_id = companyId
+            // designate admin user
+            data.is_admin = true
             //create admin user
             let res = await axios.post(`${BASE_URL}/auth/register`, data);
-            console.log(res.data.token)
+        
             dispatch(addToken(res.data.token));
         }
         catch(e) {
@@ -27,10 +26,11 @@ export const register = (data) => {
     }
 }
 
-export const login = () => {
+export const login = (data) => {
+
     return async (dispatch) => {
         try {
-            let res = await axios.post(`${BASE_URL}/login`);
+            let res = await axios.post(`${BASE_URL}/auth/login`, data);
             dispatch(addToken(res.data.token));
         }
         catch(e) {

@@ -72,9 +72,10 @@ const useStyles = makeStyles((theme) => ({
 export default function ButtonAppBar() {
 
   const classes = useStyles();
-  const open = useSelector(state => state.drawer)
+  const open = useSelector(state => state.application.drawer)
   const dispatch = useDispatch();
   const [onDashboard] = useState(window.location.pathname === '/dashboard')
+  console.log(window.location.pathname)
 
   const handleDrawerOpen = () => {
     dispatch(changeDrawer())

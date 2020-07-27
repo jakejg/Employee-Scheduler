@@ -7,10 +7,10 @@ import {
 import sortJobs from '../helpers/sortStaffJobs'
 import {BASE_URL} from '../config';
 
-export const loadStaffFromAPI = () => {
+export const loadStaffFromAPI = (comp_id) => {
     return async (dispatch) => {
         try {
-            let res = await axios.get(`${BASE_URL}/users?comp_id=1`);
+            let res = await axios.get(`${BASE_URL}/users?comp_id=${comp_id}`);
             /* create an object of nested objects with data keyed by id */
             const staffData = {};
             for (let {id, username, first_name, last_name, isWorking} of res.data.users) {

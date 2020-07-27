@@ -3,14 +3,20 @@ import {
     ADD_TOKEN
 } from '../actions/actionTypes';
 
-const applicationReducer = (state={drawer: false, token:""}, action) => {
+let INITIAL_STATE = {
+                        drawer: false, 
+                        token: JSON.parse(localStorage.getItem('token'))
+                    }
+
+const applicationReducer = (state=INITIAL_STATE, action) => {
     switch(action.type){
         case CHANGE_DRAWER:
     
             return {...state, drawer: !state.drawer}
 
         case ADD_TOKEN:
-    
+            // update local storage
+            localStorage.setItem('token', JSON.stringify(action.token))
             return {...state, token: action.token}
 
         default: 

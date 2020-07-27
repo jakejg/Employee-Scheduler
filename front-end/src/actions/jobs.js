@@ -8,10 +8,10 @@ import {
 import moment from 'moment'
 import {BASE_URL} from '../config';
 
-export const loadJobsFromAPI = () => {
+export const loadJobsFromAPI = (comp_id) => {
     return async (dispatch) => {
         try {
-            let res = await axios.get(`${BASE_URL}/jobs?comp_id=1`);
+            let res = await axios.get(`${BASE_URL}/jobs?comp_id=${comp_id}`);
             /* create an object of nested objects with data keyed by id,
             change date format,
             add group property */

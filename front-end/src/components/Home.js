@@ -27,7 +27,8 @@ const Home = () => {
                 <DialogTitle><Box textAlign='center' >Add Company </Box></DialogTitle>
             <AddForm type={dialog.type}
                     fields={dialog.type === 'Register' ? registerFields : loginFields}
-                    addToDb={dialog.type === 'Register' ? register : login }/>
+                    addToDb={dialog.type === 'Register' ? register : login }
+                    redirect='/dashboard'/>
         </Dialog>
         </div>
         );

@@ -86,7 +86,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Sidebar = ({jobFields, staffFields}) => {
-    const open = useSelector(state => state.drawer)
+    const open = useSelector(state => state.application.drawer)
     const [dialog, setDialog] = useState({isOpen: false, type:""}) 
     const classes = useStyles();
     const theme = useTheme();
