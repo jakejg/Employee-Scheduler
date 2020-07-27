@@ -9,6 +9,7 @@ const app = express();
 const jobRoutes = require('./routes/jobs');
 const userRoutes = require('./routes/users');
 const authRoutes = require('./routes/auth');
+const compRoutes = require('./routes/companies');
 // const { authorize } = require('./middleware/auth');
 
 app.use(cors());
@@ -22,8 +23,7 @@ app.use(morgan("tiny"));
 app.use('/auth', authRoutes);
 app.use('/jobs', jobRoutes);
 app.use('/users', userRoutes);
-
-
+app.use('/companies', compRoutes);
 
 /** 404 handler */
 
