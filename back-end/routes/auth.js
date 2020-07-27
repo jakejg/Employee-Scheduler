@@ -10,7 +10,7 @@ router.post('/register', async (req, res, next) => {
     try{
         const user = await User.create(req.body);
         await user.save();
-        const token = createToken(user.username, user.is_admin);
+        const token = createToken(user.username, user.is_admin, user.comp_id);
         return res.json({token});
     }
     catch(e) {
@@ -28,8 +28,8 @@ router.post('/login', async (req, res, next) => {
 
         if (!isAuthorized) throw new ExpressError("Password and username do not match", 400);
 
-        const adminStatus = await User.findAdminStatus(username)
-        const token = createToken(username, adminStatus)
+        const user = await User.findByUsername(username)
+        const token = createToken(user.username, user.is_admin, user.comp_id)
 
         return res.json({token});
     }

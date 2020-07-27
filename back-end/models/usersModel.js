@@ -138,17 +138,24 @@ class User {
         return await bcrypt.compare(password, dbPassword);
     }
 
-     /* Method to retrieve admin status by username, returns boolean*/
+     /* Method to retrieve find user by username */
 
-     static async findAdminStatus(username) {
+     static async findByUsername(username) {
         const results = await db.query(
-            `SELECT is_admin  from users 
+            `SELECT 
+            id, 
+            username, 
+            first_name, 
+            last_name, 
+            is_admin,  
+            comp_id 
+            FROM users 
             WHERE username=$1`, [username]
         )
         let user = results.rows[0];
         if (!user) throw new ExpressError(`User with username ${username} not found`, 400);
     
-        return user.is_admin;
+        return new User(user)
     }
 
 
