@@ -2,11 +2,11 @@ const express = require('express');
 const router = new express.Router();
 const Job = require('../models/jobsModel')
 const {validateCreateJobJson} = require('../middleware/jsonValidation');
-const ExpressError = require('../helpers/expressError.js');
+const { checkToken } = require('../middleware/auth');
 
 /* Route to get all jobs by company id */
 
-router.get('/', async (req, res, next) => {
+router.get('/', checkToken, async (req, res, next) => {
     try{
         const jobs = await Job.findAll(req.query.comp_id);
         return res.json({jobs});
@@ -19,7 +19,7 @@ router.get('/', async (req, res, next) => {
 
 /* Route to create a job with json from request body */
 
-router.post('/', validateCreateJobJson, async (req, res, next) => {
+router.post('/', checkToken, validateCreateJobJson, async (req, res, next) => {
     try {
         const job = Job.create(req.body);
         await job.save();

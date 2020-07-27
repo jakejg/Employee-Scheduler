@@ -3,18 +3,32 @@ const jwt = require('jsonwebtoken');
 const { SECRET_KEY } = require('../config');
 
 // checks for and verifies a JSON web token and adds the payload to the req object
+
 function authorize(req, res, next) {
     try{
-        
-        const payload = jwt.verify(req.body.token, SECRET_KEY);
+        const token = req.body.token || req.query.token;
+        const payload = jwt.verify(token, SECRET_KEY);
         req.user = payload;
         return next();
     }
     catch(e){
-        return next();
+       
+        return next()
     }
 }
 
+// checks that a token was sent
+
+function checkToken(req, res, next) {
+    try{
+        if (!req.user) throw new ExpressError("Unauthorized", 400); 
+        
+        return next();
+    }
+    catch(e){
+        return next(e);
+    }
+}
 // verifies the username sent in the url is the sames as the username sent in the token
 
 // function checkUsername(req, res, next) {
@@ -44,7 +58,8 @@ function authorize(req, res, next) {
 //     }
 // }
 module.exports = {
-    authorize
+    authorize,
+    checkToken
     // checkUsername,
     // checkAdminStatus
 }
