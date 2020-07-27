@@ -64,8 +64,8 @@ VALUES ('Kim', 'Kim', 'Miller', 120, 2, false, 1);
 INSERT INTO users (username, first_name, last_name, current_wage, years_at_company, is_admin, comp_id) 
 VALUES ('Stacy', 'Stacy', 'Lopez', 140, 4, false, 1);
 
-INSERT INTO users (username, first_name, last_name, current_wage, years_at_company, is_admin, comp_id) 
-VALUES ('Jake', 'Jake', 'Gerry', 140, 4, true, 1);
+INSERT INTO users (username, password, first_name, last_name, is_admin, comp_id) 
+VALUES ('Matt', '$2b$12$/D1ERcrzDjfy3QfHwRUgmO.Dyw091SAw19vWTNr.H4d6.PSn0ytFu', 'Matt', 'Olsen', true, 1);
 
 INSERT INTO users_jobs (job_id, user_id) 
 VALUES (2,1);
