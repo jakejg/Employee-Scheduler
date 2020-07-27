@@ -25,7 +25,7 @@ router.post('/login', async (req, res, next) => {
     try{
         const { username, password } = req.body;
         const isAuthorized = await User.authenticate(username, password);
-
+        
         if (!isAuthorized) throw new ExpressError("Password and username do not match", 400);
 
         const user = await User.findByUsername(username)

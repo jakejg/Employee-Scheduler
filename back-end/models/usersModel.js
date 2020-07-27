@@ -134,11 +134,11 @@ class User {
 
     static async authenticate(username, password){
         const dbPassword = await this.findPassword(username);
-      
+
         return await bcrypt.compare(password, dbPassword);
     }
 
-     /* Method to retrieve find user by username */
+     /* Method to find user by username */
 
      static async findByUsername(username) {
         const results = await db.query(
