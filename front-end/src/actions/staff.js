@@ -6,14 +6,15 @@ import {
  } from './actionTypes';
 import sortJobs from '../helpers/sortStaffJobs'
 import {BASE_URL} from '../config';
+import { send } from '../helpers/Api';
 
 export const loadStaffFromAPI = (comp_id) => {
     return async (dispatch) => {
         try {
-            let res = await axios.get(`${BASE_URL}/users?comp_id=${comp_id}`);
+            let data = await send('get', `users?comp_id=${comp_id}`);
             /* create an object of nested objects with data keyed by id */
             const staffData = {};
-            for (let {id, username, first_name, last_name, isWorking} of res.data.users) {
+            for (let {id, username, first_name, last_name, isWorking} of data.users) {
 
                 staffData[id] = {
                     id,
@@ -42,8 +43,8 @@ export const loadStaff = (staff) => {
 export const getStaffFromAPI = (ID) => {
     return async (dispatch) => {
         try {
-            let res = await axios.get(`${BASE_URL}/users/${ID}`);
-            let {id, username, first_name, last_name, current_wage, years_at_company, jobs} = res.data.user
+            let data = await send('get', `users/${ID}`);
+            let {id, username, first_name, last_name, current_wage, years_at_company, jobs} = data.user
 
             let staff = {
                     id,
@@ -56,7 +57,6 @@ export const getStaffFromAPI = (ID) => {
                     past_jobs: sortJobs(jobs).past,
                     scheduled_jobs: sortJobs(jobs).future
                 }
-                console.log(staff)
                 dispatch(editStaff(id, staff))
             }
         catch(e) {
@@ -77,9 +77,8 @@ export const addStaffOnAPI = (staffToAdd) => {
 
     return async (dispatch) => {
         try {
-            const res = await axios.post(`${BASE_URL}/users`, staffToAdd);
-          
-            const {id, username, first_name, last_name} = res.data.user;
+            let data = await send('post', `users`, staffToAdd);    
+            const {id, username, first_name, last_name} = data.user;
             dispatch(addStaff(id, {id, username, first_name, last_name, past_jobs: [], scheduled_jobs: []}))
         }
         catch(e) {

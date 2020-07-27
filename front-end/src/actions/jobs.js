@@ -7,17 +7,18 @@ import {
  } from './actionTypes';
 import moment from 'moment'
 import {BASE_URL} from '../config';
+import {send} from '../helpers/Api';
 
 export const loadJobsFromAPI = (comp_id) => {
     return async (dispatch) => {
         try {
-            let res = await axios.get(`${BASE_URL}/jobs?comp_id=${comp_id}`);
+            let data = await send('get', `jobs?comp_id=${comp_id}`);
             /* create an object of nested objects with data keyed by id,
             change date format,
             add group property */
             const jobData = {};
             // length: moment.duration(end_time - start_time), 
-            for (let {id, title, start_date, end_date} of res.data.jobs) {
+            for (let {id, title, start_date, end_date} of data.jobs) {
                 let start_time = moment(start_date);
                 let end_time = moment(end_date);
                 
@@ -48,8 +49,8 @@ export const addJobOnAPI = (jobToAdd) => {
 
     return async (dispatch) => {
         try {
-            const res = await axios.post(`${BASE_URL}/jobs`, jobToAdd);
-            const {id, title, start_date, end_date} = res.data.job;
+            let data = await send('post', `jobs`, jobToAdd);
+            const {id, title, start_date, end_date} = data.job;
             let start_time = moment(start_date);
             let end_time = moment(end_date);
             dispatch(addJob(id, {
@@ -73,7 +74,7 @@ export const editJobOnAPI = (ID, jobToEdit) => {
     jobToEdit.end_date = moment(jobToEdit.end_time).format();
     return async (dispatch) => {
         try {
-            await axios.patch(`${BASE_URL}/jobs/${ID}`, jobToEdit);
+            await send('patch', `jobs/${ID}`, jobToEdit );
         }
         catch(e) {
             console.log(e)
@@ -88,9 +89,9 @@ export const editJob = (id, job) => {
 export const getJobFromAPI = (ID) => {
     return async (dispatch) => {
         try {
-            let res = await axios.get(`${BASE_URL}/jobs/${ID}`);
+            let data = await send('get', `jobs/${ID}`);
 
-            let {id, title, start_date, end_date, possible_staff, staff_needed, notes, staff} = res.data.job
+            let {id, title, start_date, end_date, possible_staff, staff_needed, notes, staff} = data.job;
                 let start_time = moment(start_date);
                 let end_time = moment(end_date);
 
@@ -121,8 +122,8 @@ export const addJob = (id, job) => {
 export const addStaffToJobOnAPI = (jobId, staffId) => {
     return async (dispatch) => {
         try {
-            let res = await axios.post(`${BASE_URL}/jobs/${jobId}/add_staff`, {user_id: staffId});
-            dispatch(editJobStaff(jobId, res.data.staff))
+            let data = await send('post', `jobs/${jobId}/add_staff`, {user_id: staffId});
+            dispatch(editJobStaff(jobId, data.staff))
             
         }
         catch(e) {
@@ -134,8 +135,8 @@ export const addStaffToJobOnAPI = (jobId, staffId) => {
 export const removeStaffFromJobOnAPI = (jobId, staffId) => {
     return async (dispatch) => {
         try {
-            let res = await axios.post(`${BASE_URL}/jobs/${jobId}/remove_staff`, {user_id: staffId});
-            dispatch(editJobStaff(jobId, res.data.staff))
+            let data = await send('post', `jobs/${jobId}/remove_staff`, {user_id: staffId});
+            dispatch(editJobStaff(jobId, data.staff))
             
         }
         catch(e) {

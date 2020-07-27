@@ -20,18 +20,21 @@ import Loading from './Loading';
 import {loadStaffFromAPI} from '../actions/staff';
 import {addStaffToJobOnAPI, removeStaffFromJobOnAPI} from '../actions/jobs';
 import filterStaffOnJob from '../helpers/createOptions';
+import { decode } from "jsonwebtoken";
 
 const AddStaffToJob = ({job}) => {
     const staff = useSelector(state => state.staff)
     const loading = !staff
     const [staffId, setStaffId] = useState("");
+    const token = useSelector(state => state.application.token)
     // const [errors, setErrors] = useState([]);
     const dispatch = useDispatch()
 
     useEffect(() => {
 
         const getData = async () => {
-            dispatch(loadStaffFromAPI())
+            const { comp_id } = decode(token);
+            dispatch(loadStaffFromAPI(comp_id))
         }
         getData();
     }, [dispatch])

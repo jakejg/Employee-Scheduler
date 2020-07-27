@@ -5,6 +5,7 @@ import {getStaffFromAPI} from '../actions/staff';
 import {loadJobsFromAPI} from '../actions/jobs';
 import {Paper, Box, Typography, makeStyles, Grid, List, ListItem, ListItemText, Button } from '@material-ui/core';
 import Loading from './Loading';
+import { decode } from "jsonwebtoken";
 
 const Staff = () => {
    const { id } = useParams();
@@ -13,12 +14,14 @@ const Staff = () => {
    const allJobs = useSelector(state => state.jobs);
    const [showPast, setShowPast] = useState(false);
    const [showScheduled, setShowScheduled] = useState(false);
+   const token = useSelector(state => state.application.token)
    const loading = !staff
   
 
    useEffect(() => {
     const getData = async () => {
-        await dispatch(loadJobsFromAPI());
+        const { comp_id } = decode(token);
+        await dispatch(loadJobsFromAPI(comp_id));
         dispatch(getStaffFromAPI(id));
     }
     getData();
