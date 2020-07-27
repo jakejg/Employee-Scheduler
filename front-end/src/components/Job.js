@@ -8,18 +8,20 @@ import Loading from './Loading';
 import AddStaffToJob from './AddStaffToJob';
 
 const Job = () => {
-   const { id } = useParams();
-   const [isOpen, setIsOpen] = useState(false) 
-   const dispatch = useDispatch();
-   const job = useSelector(state => state.jobs[id]);
-   const loading = !job;
+    const { id } = useParams();
+    const [isOpen, setIsOpen] = useState(false) 
+    const dispatch = useDispatch();
+    const job = useSelector(state => state.jobs[id]);
+    const loading = !job;
 
-   useEffect(() => {
-    const getJob = async () => {
-        dispatch(getJobFromAPI(id));
-    }
-    getJob();
-}, [dispatch, id])
+
+
+    useEffect(() => {
+        const getJob = async () => {
+            dispatch(getJobFromAPI(id));
+        }
+        getJob();
+    }, [dispatch, id])
 
     if (loading) return <Loading/>
     
@@ -66,8 +68,8 @@ const Job = () => {
                             {/* {getStaffingCost(staffOnJob)} */}
                         </ListItem>
                         <ListItem>
-                            <Button variant='outlined' color='primary'>Edit Job</Button>
-                            <Button onClick={() => setIsOpen(true)} variant='outlined' color='warning'>Change Staff</Button>
+                            <Button variant='outlined'>Edit Job</Button>
+                            <Button onClick={() => setIsOpen(true)} variant='outlined'>Change Staff</Button>
                         </ListItem>
                     </List>
                     

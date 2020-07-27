@@ -7,15 +7,18 @@ import moment from 'moment'
 import {useHistory} from 'react-router-dom';
 import {editJobOnAPI, editJob} from '../actions/jobs';
 import { loadJobsFromAPI } from '../actions/jobs';
+import { decode } from 'jsonwebtoken';
 
 const Calender = () => {
     const jobs = useSelector(state => state.jobs);
+    const token = useSelector(state => state.application.token);
     const history = useHistory();
     const dispatch = useDispatch();
 
     useEffect(() => {
         const getData = async () => {
-            dispatch(loadJobsFromAPI())
+            const { comp_id } = decode(token);
+            dispatch(loadJobsFromAPI(comp_id));
         }
         getData();
     }, [dispatch])

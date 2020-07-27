@@ -1,6 +1,6 @@
 import {
     CHANGE_DRAWER,
-    ADD_TOKEN
+    ADD_OR_REMOVE_TOKEN
 } from '../actions/actionTypes';
 
 let INITIAL_STATE = {
@@ -14,7 +14,7 @@ const applicationReducer = (state=INITIAL_STATE, action) => {
     
             return {...state, drawer: !state.drawer}
 
-        case ADD_TOKEN:
+        case ADD_OR_REMOVE_TOKEN:
             // update local storage
             localStorage.setItem('token', JSON.stringify(action.token))
             return {...state, token: action.token}

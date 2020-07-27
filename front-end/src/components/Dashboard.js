@@ -48,14 +48,15 @@ const Dashboard = () => {
     useEffect(() => {
       const getData = async () => {
           const { comp_id } = decode(token);
-          dispatch(loadJobsFromAPI(comp_id))
-          dispatch(loadStaffFromAPI(comp_id))
+          dispatch(loadJobsFromAPI(comp_id));
+          dispatch(loadStaffFromAPI(comp_id));
       }
       getData();
   }, [dispatch])
 
     const jobFields = ['Title', 'Start Date','End Date', 'Staff Needed', 'Notes'];
-    const staffFields = ['Username', 'First Name','Last Name', 'Current Wage', 'Years At Company']
+    const staffFields = ['Username', 'First Name','Last Name', 'Current Wage', 'Years At Company'];
+    
     return (
       <div className={classes.root}>
             <Sidebar jobFields={jobFields} staffFields={staffFields}/>

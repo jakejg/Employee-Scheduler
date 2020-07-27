@@ -8,5 +8,5 @@ export const ADD_STAFF = "ADD_STAFF";
 export const EDIT_STAFF = "EDIT_STAFF";
 
 export const CHANGE_DRAWER = "CHANGE_DRAWER";
-export const ADD_TOKEN = "ADD_TOKEN";
+export const ADD_OR_REMOVE_TOKEN = "ADD_OR_REMOVE_TOKEN";
 

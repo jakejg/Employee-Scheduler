@@ -31,16 +31,16 @@ const StaffList = () => {
         <div>
             <Typography variant='h4' align='center'>Staff Currently Working</Typography>
                 <List>
-                    {working.map(staff => <ListItem>
-                                            <ListItemText align="center" key={staff.id}>
+                    {working.map(staff => <ListItem key={staff.id}>
+                                            <ListItemText align="center">
                                                 <Link className={classes.link} to={`staff/${staff.id}`}>{staff.name}</Link>
                                             </ListItemText>
                                         </ListItem>)}
                 </List>
             <Typography variant='h4' align='center'>Available Staff</Typography>
                 <List>
-                    {available.map(staff => <ListItem>
-                                                <ListItemText align="center" key={staff.id}>
+                    {available.map(staff => <ListItem key={staff.id}>
+                                                <ListItemText align="center">
                                                     <Link className={classes.link} to={`staff/${staff.id}`}>{staff.name}</Link>
                                                 </ListItemText>
                                             </ListItem>)}

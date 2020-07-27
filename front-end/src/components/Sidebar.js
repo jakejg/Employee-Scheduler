@@ -23,6 +23,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import {addJobOnAPI} from '../actions/jobs';
 import {addStaffOnAPI} from '../actions/staff'
 import AddForm from './AddForm'
+import { useHistory } from 'react-router-dom';
 
 
 
@@ -90,6 +91,7 @@ const Sidebar = ({jobFields, staffFields}) => {
     const [dialog, setDialog] = useState({isOpen: false, type:""}) 
     const classes = useStyles();
     const theme = useTheme();
+    const history = useHistory();
 
     const dispatch = useDispatch(); 
 
@@ -105,6 +107,11 @@ const Sidebar = ({jobFields, staffFields}) => {
         }
         if (e.target.innerText === "Add Staff"){
             setDialog(dialog => ({isOpen: true, type: "Staff"}))
+        }
+        if (e.target.innerText === "View Calendar"){
+          
+            dispatch(changeDrawer())
+            history.push('/calendar')
         }
     }
     const closeDialog = () => {
@@ -137,14 +144,12 @@ return (
                   ))}
                 </List>
                 <Divider />
-                <List>
+                <List onClick={handleSideBarClick}>
                     {['View Calendar'].map((text, index) => (
-                        <Link to='/calendar'>
                         <ListItem button key={text}>
                           <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
                           <ListItemText primary={text} />
                         </ListItem>
-                        </Link>
                     ))}
                 </List>
               </Drawer>
