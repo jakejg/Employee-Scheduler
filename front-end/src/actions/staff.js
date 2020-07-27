@@ -5,9 +5,7 @@ import {
     ADD_STAFF
  } from './actionTypes';
 import sortJobs from '../helpers/sortStaffJobs'
-
-
-const BASE_URL = process.env.BASE_URL || `http://localhost:5000`;
+import {BASE_URL} from '../config';
 
 export const loadStaffFromAPI = () => {
     return async (dispatch) => {

@@ -6,8 +6,7 @@ import {
     EDIT_JOB_STAFF
  } from './actionTypes';
 import moment from 'moment'
-
-const BASE_URL = process.env.BASE_URL || `http://localhost:5000`;
+import {BASE_URL} from '../config';
 
 export const loadJobsFromAPI = () => {
     return async (dispatch) => {

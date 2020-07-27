@@ -16,7 +16,6 @@ const Job = () => {
 
    useEffect(() => {
     const getJob = async () => {
-        dispatch(loadStaffFromAPI())
         dispatch(getJobFromAPI(id));
     }
     getJob();
@@ -25,7 +24,7 @@ const Job = () => {
     if (loading) return <Loading/>
     
     const staffNames = job.staff.map(staff => `${staff.first_name} ${staff.last_name}`)
-   
+ 
     return (
         <>
         <Grid container>

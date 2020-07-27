@@ -34,8 +34,8 @@ const Calender = () => {
         let job = jobs[itemId];
        
         let {start_time, end_time } = job;
-        job.end_time = newStartTime + (end_time - start_time);
-        job.start_time = newStartTime;
+        job.end_time = moment(newStartTime + (end_time - start_time));
+        job.start_time = moment(newStartTime);
       
         //change redux state
         dispatch(editJob(itemId, job))
