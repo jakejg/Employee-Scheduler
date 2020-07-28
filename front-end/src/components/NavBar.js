@@ -10,7 +10,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import {changeDrawer} from '../actions/drawer';
 import { useSelector, useDispatch } from 'react-redux';
 import { NavLink, useHistory } from 'react-router-dom';
-import { addOrRemoveToken } from '../actions/authentication';
+import {LOG_OUT} from '../actions/actionTypes';
 
 
 const drawerWidth = 240;
@@ -69,7 +69,8 @@ const NavBar = ({onDashboard=false}) => {
     };
 
     const logout = () => {
-        dispatch(addOrRemoveToken(null))
+        dispatch({type: LOG_OUT})
+        localStorage.removeItem('token');
         history.push('/')
     }
 

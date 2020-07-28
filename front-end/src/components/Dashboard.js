@@ -44,9 +44,12 @@ const Dashboard = () => {
     const open = useSelector(state => state.application.drawer)
     const token = useSelector(state => state.application.token)
     const dispatch = useDispatch();
+    console.log("rendering")
 
     useEffect(() => {
       const getData = async () => {
+          console.log("getting data")
+          console.log(decode(token))
           const { comp_id } = decode(token);
           dispatch(loadJobsFromAPI(comp_id));
           dispatch(loadStaffFromAPI(comp_id));
