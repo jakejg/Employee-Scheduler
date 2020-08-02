@@ -24,7 +24,7 @@ class Company {
     /* Method to create a new company instance */
 
     static create(name){
-        return new Company(name) 
+        return new Company({name}) 
     }
     /* Method to update an existing company */
 
@@ -65,8 +65,7 @@ class Company {
                 this.id = results.rows[0].id;
             }
             catch(e) {
-                console.log(e)
-                return next(e);
+                throw new ExpressError(e)
             }
         }
         else {

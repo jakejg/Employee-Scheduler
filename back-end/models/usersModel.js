@@ -191,9 +191,9 @@ class User {
         }
         else {
              const results = await db.query(
-            `UPDATE users SET username=$2, first_name=$3, last_name=$4, current_wage=$5, years_at_company=$6, is_admin=$7
+            `UPDATE users SET username=$2, first_name=$3, last_name=$4, current_wage=$5, years_at_company=$6, is_admin=$7, comp_id=$8
             WHERE id=$1`, 
-            [this.id, this.username, this.first_name, this.last_name, this.current_wage, this.years_at_company, this.is_admin]);
+            [this.id, this.username, this.first_name, this.last_name, this.current_wage, this.years_at_company, this.is_admin, this.comp_id]);
         
         }
     }

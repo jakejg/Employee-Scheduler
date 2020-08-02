@@ -30,7 +30,7 @@ router.post('/', validateCreateUserJson, async (req, res, next) => {
     }
 })
 
-/* Route to get a user with id send it request parameters */
+/* Route to get a user with id sent as request parameters */
 
 router.get('/:id', async (req, res, next) => {
     try{

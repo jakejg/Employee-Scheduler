@@ -17,7 +17,7 @@ CREATE TABLE users (
     is_admin boolean NOT NULL,
     current_wage INTEGER,
     years_at_company FLOAT,
-    comp_id INTEGER NOT NULL REFERENCES companies ON DELETE CASCADE
+    comp_id INTEGER REFERENCES companies ON DELETE CASCADE
 );
 
 
