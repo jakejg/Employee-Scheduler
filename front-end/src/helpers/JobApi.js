@@ -5,21 +5,11 @@ import moment from 'moment'
 
 const token = JSON.parse(localStorage.getItem('token'))
 
-export async function send(verb, endpoint, data={}) {
-    // add token to request
-    data.token = token
-    const res = await axios({
-        method: verb,
-        url: `${BASE_URL}/${endpoint}`,
-        [verb === "get" ? "params" : "data"]: data
-    })
-    return res.data
-}
-
 export class JobAPI {
     static async send(verb, endpoint, data={}) {
         // add token to request
         data.token = token
+        console.log(data)
         const res = await axios({
             method: verb,
             url: `${BASE_URL}/${endpoint}`,

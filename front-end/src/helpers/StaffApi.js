@@ -1,6 +1,5 @@
 import {BASE_URL} from '../config';
 import axios from 'axios';
-import moment from 'moment';
 import sortJobs from '../helpers/sortStaffJobs'
 
 const token = JSON.parse(localStorage.getItem('token'))
