@@ -7,8 +7,8 @@ import {
     Paper,
     Button
 } from '@material-ui/core';
+import Alert from '@material-ui/lab/Alert';
 import {useHistory} from 'react-router-dom';
-
 
 const AddForm = ({  type,
                     fields,
@@ -23,7 +23,7 @@ const AddForm = ({  type,
     }
     
     const [formData, setFormData] = useState(INITIAL_STATE);
-    const [errors, setErrors] = useState([]);
+    const [error, setError] = useState();
     const dispatch = useDispatch()
     const history = useHistory();
 
@@ -33,13 +33,17 @@ const AddForm = ({  type,
     }
 
     
-
-    
     const handleSubmit = async (e) => {
         e.preventDefault();
-        await dispatch(addToDb(formData));
+        let errorMsg = await dispatch(addToDb(formData));
+        if (errorMsg){
+            setError(errorMsg)
+        }
+        else{
+            if (redirect) history.push(redirect);
+        }
        
-        if (redirect) history.push(redirect);
+        
     }
 
 
@@ -53,6 +57,7 @@ const AddForm = ({  type,
             <Paper>
             <Grid container >
                 <Box  mx='auto' m={1}>
+                {error && <Alert severity="error">{error}</Alert>}
                 {fields.map(field => {
                                     // change name format for sending to backend
                                     const underscoreName = field.toLowerCase().replace(/\s/g, '_');

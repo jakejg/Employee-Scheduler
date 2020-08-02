@@ -3,11 +3,10 @@ import axios from 'axios';
 
 const token = JSON.parse(localStorage.getItem('token'))
 
-
-
 export async function send(verb, endpoint, data={}){
-
+        // add token to request
         data.token = token
+        console.log(data)
         const res = await axios({
             method: verb,
             url: `${BASE_URL}/${endpoint}`,
@@ -16,7 +15,6 @@ export async function send(verb, endpoint, data={}){
         return res.data
     }
     
-
 
 export async function addCompanyToAPI(name) {
         try {

@@ -69,8 +69,12 @@ const NavBar = ({onDashboard=false}) => {
     };
 
     const logout = () => {
-        dispatch({type: LOG_OUT})
+        
+        // clear local storage
         localStorage.removeItem('token');
+        // clear all redux data
+        dispatch({type: LOG_OUT})
+        
         history.push('/')
     }
 
