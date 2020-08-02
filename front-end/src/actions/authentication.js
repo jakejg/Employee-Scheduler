@@ -2,7 +2,7 @@ import axios from 'axios';
 import { 
     ADD_OR_REMOVE_TOKEN
  } from './actionTypes';
-import {addCompanyToAPI} from '../helpers/Api'
+import {addCompanyToAPI} from '../helpers/JobApi'
 import {BASE_URL} from '../config';
 
 

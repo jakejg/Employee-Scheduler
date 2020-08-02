@@ -5,7 +5,8 @@ import 'react-calendar-timeline/lib/Timeline.css'
 import { useSelector, useDispatch } from 'react-redux';
 import moment from 'moment'
 import {useHistory} from 'react-router-dom';
-import {editJobOnAPI, editJob} from '../actions/jobs';
+import {editJob} from '../actions/jobs';
+import {JobAPI} from '../helpers/JobApi';
 import { loadJobsFromAPI } from '../actions/jobs';
 import { decode } from 'jsonwebtoken';
 
@@ -43,7 +44,7 @@ const Calender = () => {
         //change redux state
         dispatch(editJob(itemId, job))
         // change in database
-        dispatch(editJobOnAPI(itemId, job))
+        JobAPI.editJob(itemId, job)
     }
     
 
