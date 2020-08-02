@@ -2,11 +2,10 @@ import {BASE_URL} from '../config';
 import axios from 'axios';
 import sortJobs from '../helpers/sortStaffJobs'
 
-const token = JSON.parse(localStorage.getItem('token'))
-
 
 export class StaffAPI {
     static async send(verb, endpoint, data={}) {
+        const token = JSON.parse(localStorage.getItem('token'))
         // add token to request
         data.token = token
         const res = await axios({

@@ -157,7 +157,7 @@ return (
                     <DialogTitle><Box textAlign='center' >Add a new {dialog.type}</Box></DialogTitle>
                     <AddForm type={dialog.type}
                       fields={dialog.type === 'Job' ? jobFields : staffFields}
-                      addToDb={dialog.type === 'Job' ? addJobOnAPI : addStaffOnAPI} />
+                      submit={dialog.type === 'Job' ? addJobOnAPI : addStaffOnAPI} />
                   </Dialog>
         </div>
 )

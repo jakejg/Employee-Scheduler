@@ -55,7 +55,7 @@ const Dashboard = () => {
           dispatch(loadStaffFromAPI(comp_id));
       }
       getData();
-  }, [dispatch])
+  }, [dispatch, token])
 
     const jobFields = ['Title', 'Start Date','End Date', 'Staff Needed', 'Notes'];
     const staffFields = ['Username', 'First Name','Last Name', 'Current Wage', 'Years At Company'];

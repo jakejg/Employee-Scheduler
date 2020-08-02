@@ -12,10 +12,9 @@ import {useHistory} from 'react-router-dom';
 
 const AddForm = ({  type,
                     fields,
-                    addToDb,
+                    doOnSubmit,
                     redirect
                 }) => {
-
     // set up form state from fields passed in
     const INITIAL_STATE = {};
     for (let field of fields){ 
@@ -35,7 +34,7 @@ const AddForm = ({  type,
     
     const handleSubmit = async (e) => {
         e.preventDefault();
-        let errorMsg = await dispatch(addToDb(formData));
+        let errorMsg = await dispatch(doOnSubmit(formData));
         if (errorMsg){
             setError(errorMsg)
         }

@@ -3,13 +3,14 @@ import axios from 'axios';
 import { addStaffToJobOnAPI } from '../actions/jobs';
 import moment from 'moment'
 
-const token = JSON.parse(localStorage.getItem('token'))
+
 
 export class JobAPI {
     static async send(verb, endpoint, data={}) {
+        const token = JSON.parse(localStorage.getItem('token')) 
         // add token to request
         data.token = token
-        console.log(data)
+        console.log(token)
         const res = await axios({
             method: verb,
             url: `${BASE_URL}/${endpoint}`,

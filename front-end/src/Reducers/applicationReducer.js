@@ -16,7 +16,9 @@ const applicationReducer = (state=INITIAL_STATE, action) => {
 
         case ADD_OR_REMOVE_TOKEN:
             // update local storage
+
             localStorage.setItem('token', JSON.stringify(action.token))
+            console.log("local storage updated")
             return {...state, token: action.token}
 
         default: 
