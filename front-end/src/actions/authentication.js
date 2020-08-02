@@ -19,7 +19,7 @@ export const register = (data) => {
             dispatch(addOrRemoveToken(res.data.token));
         }
         catch(e) {
-            console.log(e)
+            return e.response.data.message
         }
     }
 }
@@ -31,7 +31,6 @@ export const login = (data) => {
             dispatch(addOrRemoveToken(res.data.token));
         }
         catch(e) {
-            // console.log(e.response.data.message)
             return e.response.data.message
         }
     }
