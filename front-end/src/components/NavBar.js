@@ -58,6 +58,7 @@ const NavBar = ({onDashboard=false}) => {
     const open = useSelector(state => state.application.drawer)
     const dispatch = useDispatch();
     const history = useHistory();
+    const loggedIn = useSelector(state => state.application.token)
 
     // show full nav bar if not on the dashboard
     if (window.location.pathname !== '/dashboard' && open) {
@@ -77,6 +78,29 @@ const NavBar = ({onDashboard=false}) => {
         
         history.push('/')
     }
+    const loggedOutView = <>
+                            <Typography variant="h6" className={classes.title}>
+                                Employee Scheduler
+                            </Typography>
+                            </>
+    const loggedInView = <>
+                            {onDashboard &&
+                            <IconButton
+                              color="inherit"
+                              aria-label="open drawer"
+                              onClick={handleDrawerOpen}
+                              edge="start"
+                              className={clsx(classes.menuButton, open && classes.hide)}
+                            >
+                              <MenuIcon />
+                            </IconButton>}
+                            <Typography variant="h6" className={classes.title}>
+                                Employee Scheduler
+                            </Typography>
+                            <Box  className={classes.link} ><NavLink className={classes.link} to='/dashboard'>Dashboard </NavLink></Box>
+                            <Box onClick={logout} className={classes.link}>Logout</Box>
+                        </>
+
 
 
     return (
@@ -87,23 +111,10 @@ const NavBar = ({onDashboard=false}) => {
             [classes.appBarShift]: open,
         })}
         > 
-            <Toolbar>
-                {onDashboard &&
-                <IconButton
-                  color="inherit"
-                  aria-label="open drawer"
-                  onClick={handleDrawerOpen}
-                  edge="start"
-                  className={clsx(classes.menuButton, open && classes.hide)}
-                >
-                  <MenuIcon />
-                </IconButton>}
-                <Typography variant="h6" className={classes.title}>
-                    Employee Scheduler
-                </Typography>
-                <Box  className={classes.link} ><NavLink className={classes.link} to='/dashboard'>Dashboard </NavLink></Box>
-                <Box onClick={logout} className={classes.link}>Logout</Box>
-            </Toolbar>
+        <Toolbar>
+            {loggedIn ? loggedInView: loggedOutView}
+        </Toolbar>
+            
           </AppBar>
         </div>
         )
