@@ -29,37 +29,25 @@ function checkToken(req, res, next) {
         return next(e);
     }
 }
-// verifies the username sent in the url is the sames as the username sent in the token
-
-// function checkUsername(req, res, next) {
-//     try{
-//         if (!req.user) throw new ExpressError("Unauthorized", 400); 
-        
-//         if (req.params.username !== req.user.username) throw new ExpressError("Unauthorized", 400); 
-        
-//         return next();
-//     }
-//     catch(e){
-//         return next(e);
-//     }
-// }
 
 
-// function checkAdminStatus(req, res, next) {
-//     try{
-//         if (!req.user) throw new ExpressError("Unauthorized", 400); 
+// verifies the user requesting data is an admin
+function checkAdminStatus(req, res, next) {
+    try{
+        if (!req.user) throw new ExpressError("Unauthorized", 400); 
         
-//         if (!req.user.is_admin) throw new ExpressError("Need Admin Permissions", 400); 
+        if (!req.user.is_admin) throw new ExpressError("Need Admin Permissions", 400); 
         
-//         return next();
-//     }
-//     catch(e){
-//         next(e);
-//     }
-// }
+        return next();
+    }
+    catch(e){
+        next(e);
+    }
+}
 module.exports = {
     authorize,
-    checkToken
+    checkToken,
+    checkAdminStatus
     // checkUsername,
-    // checkAdminStatus
+    
 }

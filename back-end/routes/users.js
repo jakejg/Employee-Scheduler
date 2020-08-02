@@ -2,11 +2,12 @@ const express = require('express');
 const router = new express.Router();
 const User = require('../models/usersModel')
 const {validateCreateUserJson} = require('../middleware/jsonValidation');
+const { checkAdminStatus } = require('../middleware/auth.js');
 const ExpressError = require('../helpers/expressError.js');
 
 /* Route to get overview of all users for a company that aren't admin*/
 
-router.get('/', async (req, res, next) => {
+router.get('/', checkAdminStatus, async (req, res, next) => {
     try{
         const users = await User.findAll(req.query.comp_id);
         return res.json({users});
@@ -19,7 +20,7 @@ router.get('/', async (req, res, next) => {
 
 /* Route to create a user with json from request body */
 
-router.post('/', validateCreateUserJson, async (req, res, next) => {
+router.post('/', checkAdminStatus, validateCreateUserJson, async (req, res, next) => {
     try {
         const user = await User.create(req.body);
         await user.save();
@@ -45,7 +46,7 @@ router.get('/:id', async (req, res, next) => {
 
 /*Route to update a user with json from request body and id from request, params */
 
-router.patch('/:id', async (req, res, next) => {
+router.patch('/:id', checkAdminStatus, async (req, res, next) => {
     try {
         const user = await User.update(req.params.id, req.body);
         await user.save();
@@ -56,7 +57,7 @@ router.patch('/:id', async (req, res, next) => {
     }
 })
 
-router.delete('/:id', async (req, res, next) => {
+router.delete('/:id', checkAdminStatus, async (req, res, next) => {
     try {
         await User.delete(req.params.id);
         return res.json(`User with id ${req.params.id} deleted`)
