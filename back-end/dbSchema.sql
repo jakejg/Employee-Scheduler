@@ -43,13 +43,13 @@ INSERT INTO companies (name)
 VALUES ('Your Company Name');
 
 INSERT INTO jobs (title, start_date, end_date, possible_staff, staff_needed, notes, comp_id) 
-VALUES ('15 day Mountain', '7-12-20', '7-15-20', 'jake', 2, 'test', 1);
+VALUES ('15 day Mountain', '2020-07-04', '2020-07-19', 'jake', 2, 'test', 1);
 
 INSERT INTO jobs (title, start_date, end_date, possible_staff, staff_needed, notes, comp_id) 
-VALUES ('20 day Mountain', '7-14-20', '7-20-20', 'jon', 3, 'test2', 1);
+VALUES ('20 day Mountain', '2020-08-10', '2020-08-30', 'jon', 3, 'test2', 1);
 
 INSERT INTO jobs (title, start_date, end_date, possible_staff, staff_needed, notes, comp_id) 
-VALUES ('30 day Mountain', '7-01-20', '7-30-20', 'jon', 3, 'test3', 1);
+VALUES ('30 day Mountain', '2020-07-15', '2020-08-15', 'jon', 3, 'test3', 1);
 
 
 INSERT INTO users (username, password, first_name, last_name, is_admin, comp_id) 
