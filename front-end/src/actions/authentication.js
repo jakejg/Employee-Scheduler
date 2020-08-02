@@ -10,16 +10,12 @@ export const register = (data) => {
     
     return async (dispatch) => {
         try {
-            // create company
-            let companyId = await addCompanyToAPI(data.company_name)
-         
-            // associate user with company
-            data.comp_id = companyId
             // designate admin user
             data.is_admin = true
-            //create admin user
-            let res = await axios.post(`${BASE_URL}/auth/register`, data);
-         
+            // create admin user
+       
+            const res = await axios.post(`${BASE_URL}/auth/register`, data);
+       
             dispatch(addOrRemoveToken(res.data.token));
         }
         catch(e) {
