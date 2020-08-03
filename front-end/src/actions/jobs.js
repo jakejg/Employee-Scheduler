@@ -28,7 +28,7 @@ export const addJobOnAPI = (jobToAdd) => {
         try {
             let job = await JobAPI.addJob(jobToAdd)
             dispatch(addJob(job.id, job))
-          
+            return {message: "Job created Successfully", severity: "success"}
         }
         catch(e) {
             console.log(e)
@@ -40,21 +40,6 @@ export const addJob = (id, job) => {
     return {type: ADD_JOB, id, job}
 }
 
-
-// export const editJobOnAPI = (ID, jobToEdit) => {
-//     // change dates to string format for database
-//     jobToEdit.start_date = moment(jobToEdit.start_time).format();
-//     jobToEdit.end_date = moment(jobToEdit.end_time).format();
-//     return async (dispatch) => {
-//         try {
-//             await JobAPI.editJob(ID, jobToEdit)
-         
-//         }
-//         catch(e) {
-//             console.log(e)
-//         }
-//     }
-// }
 
 export const editJob = (id, job) => {
     return {type: EDIT_JOB, id, job}

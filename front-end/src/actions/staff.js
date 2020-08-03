@@ -49,7 +49,8 @@ export const addStaffOnAPI = (staffToAdd) => {
             return {message: "Staff created Successfully", severity: "success"}
         }
         catch(e) {
-            console.log(e)
+            console.log(e.message)
+            return {message: e.message, severity: "error"}
         }
     }
 }

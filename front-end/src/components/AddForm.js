@@ -67,11 +67,11 @@ const AddForm = ({  type,
                 field.error = false;
             }
             return field
-        })
+        });
         if (foundErrors) {
-            setFormFields(updated)
+            setFormFields(updated);
         }
-        return foundErrors
+        return foundErrors;
     }
 
     // mx={{sm:'auto'}} width={{sm:'40%'}} mt={3}
@@ -86,6 +86,8 @@ const AddForm = ({  type,
                                     let type = "text";
                                     if (field.name.endsWith('Date')) type = "date";
                                     if (field.name === "Password") type = "password";
+                                    if (field.name.endsWith('Wage')) type = "number";
+                                    if (field.name.endsWith('Company')) type = "number";
                                     return (<Grid item key={field.name}> 
                                         <TextField 
                                                     error={field.error ? true: false}
@@ -99,6 +101,9 @@ const AddForm = ({  type,
                                                     variant="outlined"
                                                     margin="normal"
                                                     helperText={field.error}
+                                                    InputLabelProps={{
+                                                        shrink: true,
+                                                      }}
                                                     />
                                     </Grid>)}
                 )}

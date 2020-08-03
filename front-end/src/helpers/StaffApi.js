@@ -18,8 +18,7 @@ export class StaffAPI {
             return res.data
         }
         catch(e){
-            console.log(e.response.data)
-            return e.response.data
+            throw new Error(e.response.data.message) 
         }
     }
 
@@ -61,6 +60,7 @@ export class StaffAPI {
     }
 
     static async addStaff(staffToAdd){
+        try{
         const token = JSON.parse(localStorage.getItem('token'))
         const {comp_id} = decode(token);
           // add company Id
@@ -72,5 +72,10 @@ export class StaffAPI {
         const {id, username, first_name, last_name} = data.user;
         const staff = {id, username, first_name, last_name, past_jobs: [], scheduled_jobs: []}
         return staff;
+        }
+        catch(e){
+            throw new Error(e.message)
+        }
+        
     }
 }
