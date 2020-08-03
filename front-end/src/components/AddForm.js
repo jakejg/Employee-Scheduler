@@ -9,20 +9,27 @@ import {
 } from '@material-ui/core';
 import Alert from '@material-ui/lab/Alert';
 import {useHistory} from 'react-router-dom';
+import underscoreName from '../helpers/underscoreName';
+
 
 const AddForm = ({  type,
                     fields,
                     doOnSubmit,
                     redirect
                 }) => {
-    // set up form state from fields passed in
-    const INITIAL_STATE = {};
+
+    // set up form state and error state from fields passed in
+    const INITIAL_FORM_STATE = {};
+    const INITIAL_FORM_FIELDS_STATE = [];
     for (let field of fields){ 
-        INITIAL_STATE[field.toLowerCase().replace(/\s/g, '_')] = ""; 
+        INITIAL_FORM_STATE[underscoreName(field)] = ""; 
+        INITIAL_FORM_FIELDS_STATE.push({name:field, error: false})
     }
+
     
-    const [formData, setFormData] = useState(INITIAL_STATE);
-    const [error, setError] = useState();
+    const [formData, setFormData] = useState(INITIAL_FORM_STATE);
+    const [formFields, setFormFields] = useState(INITIAL_FORM_FIELDS_STATE);
+    const [alert, setAlert] = useState();
     const dispatch = useDispatch()
     const history = useHistory();
 
@@ -31,49 +38,71 @@ const AddForm = ({  type,
         setFormData(formData => ({...formData, [name]: value}))
     }
 
+
     
     const handleSubmit = async (e) => {
         e.preventDefault();
-        let errorMsg = await dispatch(doOnSubmit(formData));
-        if (errorMsg){
-            setError(errorMsg)
+        if (!validate()){
+            let msg = await dispatch(doOnSubmit(formData));
+            if (msg){
+                setAlert(alert => msg)
+            }
+            else{
+                if (redirect) history.push(redirect);
+            }
         }
-        else{
-            if (redirect) history.push(redirect);
-        }
-       
         
     }
 
+    const validate = () => {
+        let foundErrors = false;
+        const updated = formFields.map(field => {
+            
+            if (!formData[underscoreName(field.name)]) {
+                field.error = "This field is required";
+                foundErrors = true;
+            }
+            // remove errors
+            else {
+                field.error = false;
+            }
+            return field
+        })
+        if (foundErrors) {
+            setFormFields(updated)
+        }
+        return foundErrors
+    }
 
-   
-
-    // const error = errors.map(error => <Alert key={error} color="danger" className="mt-3" >{error.replace('instance.', '')}</Alert>);
     // mx={{sm:'auto'}} width={{sm:'40%'}} mt={3}
     return (
-        <form>
+        <form onSubmit={handleSubmit} >
             <Box  >
             <Paper>
             <Grid container >
                 <Box  mx='auto' m={1}>
-                {error && <Alert severity="error">{error}</Alert>}
-                {fields.map(field => {
-                                    // change name format for sending to backend
-                                    const underscoreName = field.toLowerCase().replace(/\s/g, '_');
-                                    return (<Grid item key={field}> 
+                {alert && <Alert severity={alert.severity}>{alert.message}</Alert>}
+                {formFields.map(field => {
+                                    let type = "text";
+                                    if (field.name.endsWith('Date')) type = "date";
+                                    if (field.name === "Password") type = "password";
+                                    return (<Grid item key={field.name}> 
                                         <TextField 
-                                                    id={field}
-                                                    type={field.endsWith('Date') ? "date": "text"} 
-                                                    label={field}
-                                                    name={underscoreName}
+                                                    error={field.error ? true: false}
+                                                    id={field.name}
+                                                    type={type}
+                                                    label={field.name}
+                                                    // change name format for sending to backend
+                                                    name={underscoreName(field.name)}
                                                     value={formData.underscoreName}
                                                     onChange={handleChange}
                                                     variant="outlined"
                                                     margin="normal"
+                                                    helperText={field.error}
                                                     />
                                     </Grid>)}
                 )}
-                <Button variant="contained" color="primary" onClick={handleSubmit}>Add {type}</Button>
+                <Button variant="contained" color="primary" type="submit">Add {type}</Button>
                 </Box>
             </Grid> 
             </Paper> 

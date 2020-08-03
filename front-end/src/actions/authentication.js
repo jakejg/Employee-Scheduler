@@ -19,7 +19,7 @@ export const register = (data) => {
             dispatch(addOrRemoveToken(res.data.token));
         }
         catch(e) {
-            return e.response.data.message
+            return {message: e.response.data.message, severity: "error"}
         }
     }
 }
@@ -31,7 +31,7 @@ export const login = (data) => {
             dispatch(addOrRemoveToken(res.data.token));
         }
         catch(e) {
-            return e.response.data.message
+            return {message: e.response.data.message, severity: "error"}
         }
     }
 }

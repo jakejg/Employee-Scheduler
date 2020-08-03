@@ -1,7 +1,7 @@
 import {BASE_URL} from '../config';
 import axios from 'axios';
-import { addStaffToJobOnAPI } from '../actions/jobs';
 import moment from 'moment'
+import {decode} from 'jsonwebtoken';
 
 
 
@@ -10,13 +10,18 @@ export class JobAPI {
         const token = JSON.parse(localStorage.getItem('token')) 
         // add token to request
         data.token = token
-        console.log(token)
-        const res = await axios({
-            method: verb,
-            url: `${BASE_URL}/${endpoint}`,
-            [verb === "get" ? "params" : "data"]: data
-        })
-        return res.data
+        try{
+            const res = await axios({
+                method: verb,
+                url: `${BASE_URL}/${endpoint}`,
+                [verb === "get" ? "params" : "data"]: data
+            })
+            return res.data
+        }
+        catch(e){
+            console.log(e.response.data)
+            return e.response.data
+        }
     }
 
     static async loadJobs(comp_id) {
@@ -43,8 +48,10 @@ export class JobAPI {
     }
 
     static async addJob(jobToAdd) {
+        const token = JSON.parse(localStorage.getItem('token'));
+        const {comp_id} = decode(token);
          // add company Id
-        jobToAdd.comp_id = 1
+        jobToAdd.comp_id = comp_id;
 
         let data = await this.send('post', `jobs`, jobToAdd);
         const {id, title, start_date, end_date} = data.job;
@@ -100,13 +107,3 @@ export class JobAPI {
 }
 
     
-
-export async function addCompanyToAPI(name) {
-        try {
-            let res = await axios.post(`${BASE_URL}/companies`, {name});
-            return res.data.company.id
-        }
-        catch(e) {
-            console.log(e)
-        }
-    }

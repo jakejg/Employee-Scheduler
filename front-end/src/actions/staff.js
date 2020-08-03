@@ -28,6 +28,7 @@ export const getStaffFromAPI = (ID) => {
             let staff = await StaffAPI.getStaff(ID)
         
             dispatch(editStaff(staff.id, staff))
+            
             }
         catch(e) {
             console.log(e)
@@ -43,8 +44,9 @@ export const addStaffOnAPI = (staffToAdd) => {
    
     return async (dispatch) => {
         try {
-            const staff = await StaffAPI.addStaff(staffToAdd) ;
+            const staff = await StaffAPI.addStaff(staffToAdd);
             dispatch(addStaff(staff.id, staff))
+            return {message: "Staff created Successfully", severity: "success"}
         }
         catch(e) {
             console.log(e)

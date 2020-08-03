@@ -1,6 +1,7 @@
 import {BASE_URL} from '../config';
 import axios from 'axios';
 import sortJobs from '../helpers/sortStaffJobs'
+import {decode} from 'jsonwebtoken';
 
 
 export class StaffAPI {
@@ -8,12 +9,18 @@ export class StaffAPI {
         const token = JSON.parse(localStorage.getItem('token'))
         // add token to request
         data.token = token
-        const res = await axios({
-            method: verb,
-            url: `${BASE_URL}/${endpoint}`,
-            [verb === "get" ? "params" : "data"]: data
-        })
-        return res.data
+        try{
+            const res = await axios({
+                method: verb,
+                url: `${BASE_URL}/${endpoint}`,
+                [verb === "get" ? "params" : "data"]: data
+            })
+            return res.data
+        }
+        catch(e){
+            console.log(e.response.data)
+            return e.response.data
+        }
     }
 
     static async loadStaff(comp_id){
@@ -54,8 +61,10 @@ export class StaffAPI {
     }
 
     static async addStaff(staffToAdd){
+        const token = JSON.parse(localStorage.getItem('token'))
+        const {comp_id} = decode(token);
           // add company Id
-        staffToAdd.comp_id = 1;
+        staffToAdd.comp_id = comp_id
          // specify new staff is not an admin
         staffToAdd.is_admin = false;
 
