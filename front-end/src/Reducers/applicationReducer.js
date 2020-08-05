@@ -5,7 +5,8 @@ import {
 
 let INITIAL_STATE = {
                         drawer: false, 
-                        token: JSON.parse(localStorage.getItem('token'))
+                        token: JSON.parse(localStorage.getItem('token')),
+                        onDashboard: true
                     }
 
 const applicationReducer = (state=INITIAL_STATE, action) => {

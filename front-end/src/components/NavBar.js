@@ -7,7 +7,7 @@ import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
-import {changeDrawer} from '../actions/drawer';
+import {changeDrawer} from '../actions/application';
 import { useSelector, useDispatch } from 'react-redux';
 import { NavLink, useHistory } from 'react-router-dom';
 import {LOG_OUT} from '../actions/actionTypes';
@@ -53,12 +53,12 @@ const useStyles = makeStyles((theme) => ({
  
 }));
 
-const NavBar = ({onDashboard=false}) => {
+const NavBar = ({ onDashboard }) => {
     const classes = useStyles();
-    const open = useSelector(state => state.application.drawer)
+    const open = useSelector(state => state.application.drawer);
+    const loggedIn = useSelector(state => state.application.token)
     const dispatch = useDispatch();
     const history = useHistory();
-    const loggedIn = useSelector(state => state.application.token)
 
     // show full nav bar if not on the dashboard
     if (window.location.pathname !== '/dashboard' && open) {

@@ -6,7 +6,7 @@ import Dashboard from './Dashboard';
 import Staff from './Staff';
 import Home from './Home'
 import NavBar from './NavBar';
-import { changeDrawer } from '../actions/drawer';
+import ProtectedRoute from './ProtectedRoute';
 
 const Routes = () => {
 
@@ -19,21 +19,21 @@ const Routes = () => {
             </Route> 
            <Route exact path='/calendar'>
                 <NavBar/>
-                <Calender />  
+                <ProtectedRoute Component={Calendar} />
             </Route> 
             <Route exact path='/job/:id'>
                 <NavBar/>
-                <Job />  
+                <ProtectedRoute Component={Job} />
             </Route>
             <Route exact path='/staff/:id'>
                 <NavBar/>
-                <Staff />  
+                <ProtectedRoute Component={Staff} />
             </Route> 
             <Route exact path='/dashboard'>
-                <NavBar onDashboard={true}/>
-                <Dashboard />
-            </Route> 
-
+                <NavBar onDashboard={true} />
+                <ProtectedRoute Component={Dashboard} />
+            </Route>
+            
         </Switch>
         </>
         );

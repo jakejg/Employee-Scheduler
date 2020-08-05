@@ -18,7 +18,7 @@ import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
-import {changeDrawer} from '../actions/drawer';
+import {changeDrawer} from '../actions/application';
 import { useSelector, useDispatch } from 'react-redux';
 import {addJobOnAPI} from '../actions/jobs';
 import {addStaffOnAPI} from '../actions/staff'
