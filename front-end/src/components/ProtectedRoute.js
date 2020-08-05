@@ -10,9 +10,8 @@ const ProtectedRoute = ({Component}) => {
     const token = useSelector(state => state.application.token);
     let isAdmin;
     if (token){
-        isAdmin = decode(token).isAdmin;
+        isAdmin = decode(token).is_admin
     }
-    
 
     return isAdmin ? <Component /> : <Redirect to={{
         pathname: "/",

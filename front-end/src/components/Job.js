@@ -6,23 +6,29 @@ import {loadStaffFromAPI} from '../actions/staff';
 import {Paper, Box, Typography, makeStyles, Grid, List, ListItem, ListItemText, Button, Dialog, DialogTitle } from '@material-ui/core';
 import Loading from './Loading';
 import AddStaffToJob from './AddStaffToJob';
+import NotFound from './NotFound';
 
 const Job = () => {
     const { id } = useParams();
-    const [isOpen, setIsOpen] = useState(false) 
-    const dispatch = useDispatch();
+    const [isOpen, setIsOpen] = useState(false);
+    const [error, setError] = useState();
     const job = useSelector(state => state.jobs[id]);
+    const dispatch = useDispatch();
     const loading = !job;
 
 
 
     useEffect(() => {
         const getJob = async () => {
-            dispatch(getJobFromAPI(id));
+            let msg = await dispatch(getJobFromAPI(id));
+            if (msg) {
+                setError(msg)
+            }
         }
         getJob();
     }, [dispatch, id])
 
+    if (error) return <NotFound msg={error}/>
     if (loading) return <Loading/>
     
     const staffNames = job.staff.map(staff => `${staff.first_name} ${staff.last_name}`)

@@ -53,6 +53,7 @@ export const getJobFromAPI = (ID) => {
         }
         catch(e) {
             console.log(e)
+            return e.message
         }
     }
 }

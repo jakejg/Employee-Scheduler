@@ -32,6 +32,8 @@ export const getStaffFromAPI = (ID) => {
             }
         catch(e) {
             console.log(e)
+            return e.message
+
         }
     }
 }

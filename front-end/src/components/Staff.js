@@ -6,6 +6,7 @@ import {loadJobsFromAPI} from '../actions/jobs';
 import {Paper, Box, Typography, makeStyles, Grid, List, ListItem, ListItemText, Button } from '@material-ui/core';
 import Loading from './Loading';
 import { decode } from "jsonwebtoken";
+import NotFound from './NotFound';
 
 const Staff = () => {
    const { id } = useParams();
@@ -14,19 +15,23 @@ const Staff = () => {
    const allJobs = useSelector(state => state.jobs);
    const [showPast, setShowPast] = useState(false);
    const [showScheduled, setShowScheduled] = useState(false);
+   const [error, setError] = useState();
    const token = useSelector(state => state.application.token)
    const loading = !staff
   
-
    useEffect(() => {
     const getData = async () => {
         const { comp_id } = decode(token);
         await dispatch(loadJobsFromAPI(comp_id));
-        dispatch(getStaffFromAPI(id));
+        let msg = await dispatch(getStaffFromAPI(id));
+        if (msg){
+            setError(msg)       
+         }
     }
     getData();
     }, [dispatch, id])
 
+    if (error)  return <NotFound msg={error}/>
     if (loading) return <Loading />
    
     return (
