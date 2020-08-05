@@ -7,6 +7,7 @@ import Staff from './Staff';
 import Home from './Home'
 import NavBar from './NavBar';
 import ProtectedRoute from './ProtectedRoute';
+import NotFound from './NotFound';
 
 const Routes = () => {
 
@@ -33,6 +34,11 @@ const Routes = () => {
                 <NavBar onDashboard={true} />
                 <ProtectedRoute Component={Dashboard} />
             </Route>
+            <Route>
+                <NavBar />
+                <NotFound />
+            </Route>
+
             
         </Switch>
         </>
