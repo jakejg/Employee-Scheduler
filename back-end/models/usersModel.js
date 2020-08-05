@@ -3,6 +3,7 @@ const ExpressError = require('../helpers/expressError');
 const bcrypt = require('bcrypt');
 const { BCRYPT_WORK_FACTOR } = require('../config');
 const moment = require('moment');
+const { verify } = require('jsonwebtoken');
 
 class User {
     constructor({id, password, username, first_name, last_name, current_wage, years_at_company, is_admin, jobs, comp_id}) {
@@ -190,9 +191,6 @@ class User {
                 if (e.code === '23505'){
                     throw new ExpressError("Username already exists", 400)
                 }
-                else{
-                    throw new ExpressError(e.detail)
-                }
             }
         }
         else {
@@ -203,6 +201,7 @@ class User {
             [this.id, this.username, this.first_name, this.last_name, this.current_wage, this.years_at_company, this.is_admin, this.comp_id]);
             }
             catch(e){
+                console.log(e)
                 throw new ExpressError(e.detail)
             }
         }

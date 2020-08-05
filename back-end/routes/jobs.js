@@ -3,6 +3,7 @@ const router = new express.Router();
 const Job = require('../models/jobsModel')
 const {validateCreateJobJson} = require('../middleware/jsonValidation');
 const { checkAdminStatus } = require('../middleware/auth');
+const verify = require('../helpers/verify');
 
 /* Route to get all jobs by company id */
 
@@ -35,6 +36,7 @@ router.post('/', checkAdminStatus, validateCreateJobJson, async (req, res, next)
 router.get('/:id', async (req, res, next) => {
     try{
         const job = await Job.findOne(req.params.id);
+        verify(job.comp_id, req.user.comp_id);
         return res.json({job});
     }
     catch(e) {

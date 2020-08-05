@@ -4,6 +4,7 @@ const User = require('../models/usersModel')
 const {validateCreateUserJson} = require('../middleware/jsonValidation');
 const { checkAdminStatus } = require('../middleware/auth.js');
 const ExpressError = require('../helpers/expressError.js');
+const verify = require('../helpers/verify');
 
 /* Route to get overview of all users for a company that aren't admin*/
 
@@ -36,6 +37,7 @@ router.post('/', checkAdminStatus, validateCreateUserJson, async (req, res, next
 router.get('/:id', async (req, res, next) => {
     try{
         const user = await User.findOne(req.params.id);
+        verify(user.comp_id, req.user.comp_id);
         return res.json({user});
     }
     catch(e) {

@@ -43,11 +43,10 @@ function checkAdminStatus(req, res, next) {
     catch(e){
         next(e);
     }
+
 }
 module.exports = {
     authorize,
     checkToken,
     checkAdminStatus
-    // checkUsername,
-    
 }
