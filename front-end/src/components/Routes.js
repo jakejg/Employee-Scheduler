@@ -1,6 +1,6 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
-import Calender from './Calender';
+import Calendar from './Calendar';
 import Job from './Job';
 import Dashboard from './Dashboard';
 import Staff from './Staff';

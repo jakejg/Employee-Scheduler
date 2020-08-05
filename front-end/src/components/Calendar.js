@@ -10,7 +10,7 @@ import {JobAPI} from '../helpers/JobApi';
 import { loadJobsFromAPI } from '../actions/jobs';
 import { decode } from 'jsonwebtoken';
 
-const Calender = () => {
+const Calendar = () => {
     const jobs = useSelector(state => state.jobs);
     const token = useSelector(state => state.application.token);
     const history = useHistory();
@@ -61,5 +61,5 @@ return (
     />
 )
 }
-export default Calender;
+export default Calendar;
 
