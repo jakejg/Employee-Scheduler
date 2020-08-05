@@ -9,11 +9,11 @@ const jobsReducer = (state={}, action) => {
     switch(action.type){
         case LOAD_JOBS:
             // if object exists in store, don't replace it
-            for (let id of Object.keys(state)){
-                if (action.jobs[id]) {
-                    delete action.jobs[id]
-                }
-            }
+            // for (let id of Object.keys(state)){
+            //     if (action.jobs[id]) {
+            //         delete action.jobs[id]
+            //     }
+            // }
             return {...state, ...action.jobs}
 
         case EDIT_JOB:

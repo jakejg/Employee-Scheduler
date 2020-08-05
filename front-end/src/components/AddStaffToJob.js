@@ -47,11 +47,12 @@ const AddStaffToJob = ({job}) => {
   
     const add = async (e) => {
         e.preventDefault();
-       dispatch(addStaffToJobOnAPI(job.id, +staffId));
+        dispatch(addStaffToJobOnAPI(job.id, +staffId));
     }
 
     const remove = (id) => {
         dispatch(removeStaffFromJobOnAPI(job.id, id));
+
     }
     /*  Create a new array with just the info needed for the select field options,
         if staff is already assigned to the job, don't show them as an option to be added again
