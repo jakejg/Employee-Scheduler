@@ -14,6 +14,10 @@ import {
         Box
                 }from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
+import EventIcon from '@material-ui/icons/Event';
+import PersonAddIcon from '@material-ui/icons/PersonAdd';
+import WorkIcon from '@material-ui/icons/Work';
+import EventNoteIcon from '@material-ui/icons/EventNote';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
@@ -136,9 +140,14 @@ return (
                 </div>
                 <Divider />
                 <List onClick={handleSideBarClick}>
+
                   {['Add Job', 'Add Staff', 'Check Dates'].map((text, index) => (
                     <ListItem button key={text}>
-                      <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
+                      <ListItemIcon>
+                        {index === 0 && <WorkIcon /> }
+                        {index === 1 && <PersonAddIcon /> }
+                        {index === 2 && <EventNoteIcon /> }
+                        </ListItemIcon>
                       <ListItemText primary={text} />
                     </ListItem>
                   ))}
@@ -147,7 +156,7 @@ return (
                 <List onClick={handleSideBarClick}>
                     {['View Calendar'].map((text, index) => (
                         <ListItem button key={text}>
-                          <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
+                          <ListItemIcon><EventIcon /></ListItemIcon>
                           <ListItemText primary={text} />
                         </ListItem>
                     ))}

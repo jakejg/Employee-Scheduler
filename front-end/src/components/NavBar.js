@@ -6,7 +6,10 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
+import PermContactCalendarIcon from '@material-ui/icons/PermContactCalendar';
 import MenuIcon from '@material-ui/icons/Menu';
+import DashboardIcon from '@material-ui/icons/Dashboard';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import {changeDrawer} from '../actions/application';
 import { useSelector, useDispatch } from 'react-redux';
 import { NavLink, useHistory } from 'react-router-dom';
@@ -24,6 +27,7 @@ const useStyles = makeStyles((theme) => ({
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
     }),
+    backgroundColor: 'purple'
   },
   appBarShift: {
     width: `calc(100% - ${drawerWidth}px)`,
@@ -45,13 +49,18 @@ const useStyles = makeStyles((theme) => ({
     color: 'white',
     '&:hover': {
       color: 'grey'
-    }
+    },
+    cursor: 'pointer',
+    fontSize: '16px'
   },
   title: {
     flexGrow: 1,
+    marginLeft: '10px'
   },
- 
- 
+  dashboard: {
+    marginRight: '20px'
+  }
+
 }));
 
 const NavBar = ({ onDashboard }) => {
@@ -60,8 +69,7 @@ const NavBar = ({ onDashboard }) => {
     const loggedIn = useSelector(state => state.application.token)
     const dispatch = useDispatch();
     const history = useHistory();
-    console.log(loggedIn)
-    console.log(open)
+    
 
     // show full nav bar if not on the dashboard
       if (window.location.pathname !== '/dashboard' && open) {
@@ -81,9 +89,13 @@ const NavBar = ({ onDashboard }) => {
         history.push('/')
     }
     const loggedOutView = <>
-                            <Typography variant="h6" className={classes.title}>
-                                Employee Scheduler
-                            </Typography>
+                            
+                            <PermContactCalendarIcon fontSize='large' />
+                            
+                              <Typography variant="h6" className={classes.title}>
+                                Employee Scheduler 
+                              </Typography>
+                          
                             </>
     const loggedInView = <>
                             {onDashboard &&
@@ -96,11 +108,14 @@ const NavBar = ({ onDashboard }) => {
                             >
                               <MenuIcon />
                             </IconButton>}
+                            < PermContactCalendarIcon fontSize="large" />
                             <Typography variant="h6" className={classes.title}>
                                 Employee Scheduler
                             </Typography>
-                            <Box  className={classes.link} ><NavLink className={classes.link} to='/dashboard'>Dashboard </NavLink></Box>
-                            <Box onClick={logout} className={classes.link}>Logout</Box>
+                            <IconButton color='inherit'><DashboardIcon/></IconButton>
+                            <Typography  className={`${classes.link} ${classes.dashboard}`} ><NavLink className={classes.link} to='/dashboard'>Dashboard </NavLink></Typography>
+                            <IconButton color='inherit'><ExitToAppIcon/></IconButton>
+                            <Typography onClick={logout} className={classes.link}>Logout</Typography>
                         </>
 
 
