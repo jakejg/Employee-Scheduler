@@ -2,7 +2,6 @@ import axios from 'axios';
 import { 
     ADD_OR_REMOVE_TOKEN
  } from './actionTypes';
-import {addCompanyToAPI} from '../helpers/JobApi'
 import {BASE_URL} from '../config';
 
 
@@ -19,7 +18,10 @@ export const register = (data) => {
             dispatch(addOrRemoveToken(res.data.token));
         }
         catch(e) {
-            return {message: e.response.data.message, severity: "error"}
+            if (e.response){
+                return {message: e.response.data.message, severity: "error"}
+            }
+            else return {message: e.message, severity: "error"}
         }
     }
 }
@@ -31,7 +33,11 @@ export const login = (data) => {
             dispatch(addOrRemoveToken(res.data.token));
         }
         catch(e) {
-            return {message: e.response.data.message, severity: "error"}
+            if (e.response){
+                return {message: e.response.data.message, severity: "error"}
+            }
+            else return {message: e.message, severity: "error"}
+            
         }
     }
 }
