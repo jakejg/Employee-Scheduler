@@ -68,7 +68,7 @@ const Dashboard = () => {
             [classes.contentShift]: open,
           })} >
               <Container>
-                    <Box mb={3}><Typography variant='h3' align='center'>Dashboard</Typography></Box>
+                    <Box mb={3} mx={{sm:'auto'}}><Paper elevation={3}><Typography variant='h3' align='center'>Dashboard</Typography></Paper></Box>
                     <Grid container spacing={3} className={classes.drawerHeader} >
                          <Grid item xs>
                              <Paper elevation={3}>
