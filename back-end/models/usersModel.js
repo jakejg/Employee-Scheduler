@@ -3,7 +3,6 @@ const ExpressError = require('../helpers/expressError');
 const bcrypt = require('bcrypt');
 const { BCRYPT_WORK_FACTOR } = require('../config');
 const moment = require('moment');
-const { verify } = require('jsonwebtoken');
 
 class User {
     constructor({id, password, username, first_name, last_name, current_wage, years_at_company, is_admin, jobs, comp_id}) {
