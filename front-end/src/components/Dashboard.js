@@ -2,10 +2,11 @@ import React, {useEffect} from 'react';
 import clsx from 'clsx';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import { useSelector, useDispatch } from 'react-redux';
-import ItemList from './ItemList';
-import Container from '@material-ui/core/Container';
-import Grid from '@material-ui/core/Grid';
-import Paper from '@material-ui/core/Paper';
+import {Container,
+        Grid,
+        Paper,
+        Typography,
+        Box } from '@material-ui/core';
 import Sidebar from './Sidebar';
 import JobList from './JobList';
 import StaffList from './StaffList';
@@ -67,15 +68,15 @@ const Dashboard = () => {
             [classes.contentShift]: open,
           })} >
               <Container>
-                    <h1 style={{textAlign: 'center'}}>Dashboard</h1>
+                    <Box mb={3}><Typography variant='h3' align='center'>Dashboard</Typography></Box>
                     <Grid container spacing={3} className={classes.drawerHeader} >
                          <Grid item xs>
-                             <Paper>
+                             <Paper elevation={3}>
                                 <JobList />
-                             </Paper>
+                             </Paper >
                          </Grid>
                          <Grid item xs>
-                             <Paper>
+                             <Paper elevation={3}>
                                 <StaffList />
                              </Paper>
                          </Grid>

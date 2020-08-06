@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
 import AppBar from '@material-ui/core/AppBar';
@@ -11,6 +11,7 @@ import {changeDrawer} from '../actions/application';
 import { useSelector, useDispatch } from 'react-redux';
 import { NavLink, useHistory } from 'react-router-dom';
 import {LOG_OUT} from '../actions/actionTypes';
+import {addOrRemoveToken} from '../actions/authentication'
 
 
 const drawerWidth = 240;
@@ -59,21 +60,22 @@ const NavBar = ({ onDashboard }) => {
     const loggedIn = useSelector(state => state.application.token)
     const dispatch = useDispatch();
     const history = useHistory();
+    console.log(loggedIn)
+    console.log(open)
 
     // show full nav bar if not on the dashboard
-    if (window.location.pathname !== '/dashboard' && open) {
-      dispatch(changeDrawer())
-    }
+      if (window.location.pathname !== '/dashboard' && open) {
+        dispatch(changeDrawer());
+      }
+
 
     const handleDrawerOpen = () => {
       dispatch(changeDrawer())
     };
 
     const logout = () => {
-        
-        // clear local storage
-        localStorage.removeItem('token');
-        // clear all redux data
+    
+        dispatch(addOrRemoveToken(null))
         dispatch({type: LOG_OUT})
         
         history.push('/')

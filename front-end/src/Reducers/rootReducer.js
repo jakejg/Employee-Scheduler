@@ -10,7 +10,8 @@ const appReducer = combineReducers({jobs, staff, application})
 const rootReducer = (state, action) => {
     if (action.type === LOG_OUT){
        
-        state = undefined;
+        state.jobs = undefined;
+        state.staff = undefined;
         return state;
     }
 

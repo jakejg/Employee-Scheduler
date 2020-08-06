@@ -23,7 +23,7 @@ const AddForm = ({  type,
     const INITIAL_FORM_FIELDS_STATE = [];
     for (let field of fields){ 
         INITIAL_FORM_STATE[underscoreName(field)] = ""; 
-        INITIAL_FORM_FIELDS_STATE.push({name:field, error: false})
+        INITIAL_FORM_FIELDS_STATE.push({name: field, error: false})
     }
 
     
@@ -54,6 +54,7 @@ const AddForm = ({  type,
         
     }
 
+    // check that every field is filled out
     const validate = () => {
         let foundErrors = false;
         const updated = formFields.map(field => {

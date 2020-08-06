@@ -8,17 +8,18 @@ import {
 import Alert from '@material-ui/lab/Alert';
 import AddForm from './AddForm';
 import {register} from '../actions/authentication';
+import PopOver from './PopOver';
 import {login} from '../actions/authentication';
 import { useDispatch } from 'react-redux';
 import { useHistory, useLocation } from 'react-router-dom';
 
 
-const Home = (props) => {
+const Home = () => {
     const [dialog, setDialog] = useState({isOpen: false, type:""});
     const dispatch = useDispatch();
     const {state} = useLocation();
     const history = useHistory();
-    
+
     // show error message if redirected from protected route
     let error;
     if (state)  error = state.error;
@@ -43,13 +44,7 @@ const Home = (props) => {
             <Button variant='contained' onClick={()=> setDialog(dialog => ({isOpen: true, type: "Login"}))}>Login</Button>
             <Button variant='contained' onClick={loginDemo}>View Demo Version</Button>
 
-            <Dialog open={dialog.isOpen} onClose={() => setDialog(dialog => ({isOpen: false, type: ""}))} fullWidth={true}>
-                <DialogTitle><Box textAlign='center' >Add Company </Box></DialogTitle>
-            <AddForm type={dialog.type}
-                    fields={dialog.type === 'Register' ? registerFields : loginFields}
-                    doOnSubmit={dialog.type === 'Register' ? register : login }
-                    redirect='/dashboard'/>
-        </Dialog>
+            <PopOver dialog={dialog} setDialog={setDialog} />
         </div>
         );
 }

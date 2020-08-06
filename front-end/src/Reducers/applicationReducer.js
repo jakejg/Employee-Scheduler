@@ -5,8 +5,7 @@ import {
 
 let INITIAL_STATE = {
                         drawer: false, 
-                        token: JSON.parse(localStorage.getItem('token')),
-                        onDashboard: true
+                        token: JSON.parse(localStorage.getItem('token'))
                     }
 
 const applicationReducer = (state=INITIAL_STATE, action) => {
@@ -19,7 +18,6 @@ const applicationReducer = (state=INITIAL_STATE, action) => {
             // update local storage
 
             localStorage.setItem('token', JSON.stringify(action.token))
-            console.log("local storage updated")
             return {...state, token: action.token}
 
         default: 
