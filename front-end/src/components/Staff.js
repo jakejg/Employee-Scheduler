@@ -3,10 +3,13 @@ import {useParams} from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import {getStaffFromAPI} from '../actions/staff';
 import {loadJobsFromAPI} from '../actions/jobs';
-import {Paper, Box, Typography, makeStyles, Grid, List, ListItem, ListItemText, Button } from '@material-ui/core';
+import {Paper, Box, Typography, makeStyles, Grid, List, ListItem, ListItemText, ListItemIcon, Button, Collapse } from '@material-ui/core';
+import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
+import ArrowDropUpIcon from '@material-ui/icons/ArrowDropUp';
 import Loading from './Loading';
 import { decode } from "jsonwebtoken";
 import NotFound from './NotFound';
+import { CompanyAPI } from '../helpers/CompanyApi';
 
 const Staff = () => {
    const { id } = useParams();
@@ -16,8 +19,9 @@ const Staff = () => {
    const [showPast, setShowPast] = useState(false);
    const [showScheduled, setShowScheduled] = useState(false);
    const [error, setError] = useState();
+   const [company, setCompany] = useState({});
    const token = useSelector(state => state.application.token)
-   const loading = !staff
+   const loading = !staff;
   
    useEffect(() => {
     const getData = async () => {
@@ -26,7 +30,9 @@ const Staff = () => {
         let msg = await dispatch(getStaffFromAPI(id));
         if (msg){
             setError(msg)       
-         }
+        }
+        const companyData = await CompanyAPI.getCompany(comp_id);
+        setCompany(companyData)
     }
     getData();
     }, [dispatch, id])
@@ -55,7 +61,7 @@ const Staff = () => {
                         </ListItem>
                         <ListItem>
                             <ListItemText >
-                                <b>Years with "company name": </b> {staff.years_at_company}
+                                <b>Years with {company.name}: </b> {staff.years_at_company}
                             </ListItemText>
                         </ListItem>
                         <ListItem>
@@ -65,11 +71,17 @@ const Staff = () => {
                             </ListItemText>
                          </ListItem>
                 
-                        <ListItem onClick={() => setShowScheduled(!showScheduled)}><b>Scheduled Jobs</b></ListItem> 
-                        {showScheduled &&
-                            <List>
-                                {staff.scheduled_jobs.map(id => <ListItem>{allJobs[id].title}</ListItem>)}
-                            </List>}
+                        <ListItem onClick={() => setShowScheduled(!showScheduled)}>
+                            <ListItemText>
+                                <b>Scheduled Jobs</b>
+                                {showScheduled ?  <ArrowDropUpIcon /> : <ArrowDropDownIcon /> }
+                            </ListItemText>
+                        </ListItem> 
+                        <Collapse in={showScheduled} timeout="auto" >
+                                <List component="div" disablePadding >
+                                    {staff.scheduled_jobs.map(id => <ListItem key={id}>{allJobs[id].title}</ListItem>)}
+                                </List>
+                            </Collapse>
                 
                         <ListItem onClick={() => setShowPast(!showPast)}><b>Work History</b></ListItem> 
                         {showPast &&

@@ -2,11 +2,12 @@ import React, {useEffect, useState} from 'react';
 import {useParams} from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import {getJobFromAPI} from '../actions/jobs';
-import {loadStaffFromAPI} from '../actions/staff';
+import {loadStaffFromAPI, getStaffFromAPI} from '../actions/staff';
 import {Paper, Box, Typography, makeStyles, Grid, List, ListItem, ListItemText, Button, Dialog, DialogTitle } from '@material-ui/core';
 import Loading from './Loading';
 import AddStaffToJob from './AddStaffToJob';
 import NotFound from './NotFound';
+import getTotalCost from '../helpers/totalJobCost';
 
 const Job = () => {
     const { id } = useParams();
@@ -28,11 +29,17 @@ const Job = () => {
         getJob();
     }, [dispatch, id])
 
+
     if (error) return <NotFound msg={error}/>
     if (loading) return <Loading/>
     
-    const staffNames = job.staff.map(staff => `${staff.first_name} ${staff.last_name}`)
- 
+   
+
+
+    
+    const staffNames = job.staff.map(staff => `${staff.first_name} ${staff.last_name}`);
+
+    
     return (
         <>
         <Grid container>
@@ -70,8 +77,9 @@ const Job = () => {
                             </ListItemText>
                         </ListItem>
                         <ListItem>
-                            <b>Total Staffing Cost:</b> 
-                            {/* {getStaffingCost(staffOnJob)} */}
+                            <ListItemText >
+                                <b>Total Staffing Cost: </b> ${getTotalCost(job)}
+                            </ListItemText>
                         </ListItem>
                         <ListItem>
                             <Button variant='outlined'>Edit Job</Button>
