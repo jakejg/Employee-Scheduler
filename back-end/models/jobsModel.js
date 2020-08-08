@@ -2,12 +2,12 @@ const db = require('../db');
 const ExpressError = require('../helpers/expressError');
 
 class Job {
-    constructor({id, title, start_date, end_date, possible_staff, staff_needed, notes, staff, comp_id}) {
+    constructor({id, title, start_date, end_date, staff_filled, staff_needed, notes, staff, comp_id}) {
         this.id = id;
         this.title = title;
         this.start_date = start_date;
         this.end_date = end_date;
-        this.possible_staff = possible_staff
+        this.staff_filled = staff_filled
         this.staff_needed = staff_needed;
         this.notes = notes;
         this.staff= staff;
@@ -19,7 +19,7 @@ class Job {
     static async findAll(comp_id) {
        
         const results = await db.query(
-            `SELECT id, title, start_date, end_date FROM jobs 
+            `SELECT id, title, start_date, end_date, staff_filled FROM jobs 
             WHERE comp_id=$1
             ORDER BY start_date`, [comp_id]
         )
@@ -66,7 +66,7 @@ class Job {
 
         // loop through all properties to update, if the property exists on the job instance, update the instance
         for (let key in updateObj){
-            if (job[key]) {
+            if (job[key] !== undefined) {
                 job[key] = updateObj[key];
             }
         }
@@ -118,10 +118,10 @@ class Job {
         if (!this.id) {
             try{
                 const results = await db.query(`INSERT INTO jobs
-                (title, start_date, end_date, possible_staff, staff_needed, notes, comp_id)
+                (title, start_date, end_date, staff_filled, staff_needed, notes, comp_id)
                 VALUES ($1, $2, $3, $4, $5, $6, $7)
                 RETURNING id`,
-                [this.title, this.start_date, this.end_date, this.possible_staff, this.staff_needed, this.notes, this.comp_id]);
+                [this.title, this.start_date, this.end_date, this.staff_filled, this.staff_needed, this.notes, this.comp_id]);
 
                 this.id = results.rows[0].id;
             }
@@ -131,9 +131,9 @@ class Job {
         }
         else {
              const results = await db.query(
-            `UPDATE jobs SET title=$2, start_date=$3, end_date=$4, possible_staff=$5, staff_needed=$6, notes=$7
+            `UPDATE jobs SET title=$2, start_date=$3, end_date=$4, staff_filled=$5, staff_needed=$6, notes=$7
             WHERE id=$1`, 
-            [this.id, this.title, this.start_date, this.end_date, this.possible_staff, this.staff_needed, this.notes]);
+            [this.id, this.title, this.start_date, this.end_date, this.staff_filled, this.staff_needed, this.notes]);
         
         }
     }

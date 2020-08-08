@@ -27,7 +27,7 @@ CREATE TABLE jobs (
     title TEXT NOT NULL,
     start_date TIMESTAMP,
     end_date TIMESTAMP,
-    possible_staff TEXT,
+    staff_filled boolean default false NOT NULL,
     staff_needed INTEGER,
     notes TEXT,
     comp_id INTEGER NOT NULL REFERENCES companies ON DELETE CASCADE
@@ -42,14 +42,14 @@ CREATE TABLE users_jobs (
 INSERT INTO companies (name) 
 VALUES ('Your Company Name');
 
-INSERT INTO jobs (title, start_date, end_date, possible_staff, staff_needed, notes, comp_id) 
-VALUES ('15 day Mountain', '2020-07-04', '2020-07-19', 'jake', 2, 'test', 1);
+INSERT INTO jobs (title, start_date, end_date, staff_needed, notes, comp_id) 
+VALUES ('15 day Mountain', '2020-07-04', '2020-07-19', 2, 'test', 1);
 
-INSERT INTO jobs (title, start_date, end_date, possible_staff, staff_needed, notes, comp_id) 
-VALUES ('20 day Mountain', '2020-08-10', '2020-08-30', 'jon', 3, 'test2', 1);
+INSERT INTO jobs (title, start_date, end_date, staff_needed, notes, comp_id) 
+VALUES ('20 day Mountain', '2020-08-10', '2020-08-30', 3, 'test2', 1);
 
-INSERT INTO jobs (title, start_date, end_date, possible_staff, staff_needed, notes, comp_id) 
-VALUES ('30 day Mountain', '2020-07-15', '2020-08-15', 'jon', 3, 'test3', 1);
+INSERT INTO jobs (title, start_date, end_date, staff_needed, notes, comp_id) 
+VALUES ('30 day Mountain', '2020-07-15', '2020-08-15', 3, 'test3', 1);
 
 
 INSERT INTO users (username, password, first_name, last_name, is_admin, comp_id) 
@@ -71,13 +71,13 @@ INSERT INTO users (username, password, first_name, last_name, is_admin, comp_id)
 VALUES ('Matt', '$2b$12$/D1ERcrzDjfy3QfHwRUgmO.Dyw091SAw19vWTNr.H4d6.PSn0ytFu', 'Matt', 'Olsen', true, 1);
 
 INSERT INTO users_jobs (job_id, user_id) 
-VALUES (2,1);
-
-INSERT INTO users_jobs (job_id, user_id) 
 VALUES (2,2);
 
 INSERT INTO users_jobs (job_id, user_id) 
-VALUES (1,1);
+VALUES (2,3);
 
 INSERT INTO users_jobs (job_id, user_id) 
-VALUES (3,1);
+VALUES (1,2);
+
+INSERT INTO users_jobs (job_id, user_id) 
+VALUES (3,2);

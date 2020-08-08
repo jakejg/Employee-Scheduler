@@ -3,7 +3,7 @@ const router = new express.Router();
 const Company = require('../models/companyModel')
 const ExpressError = require('../helpers/expressError.js');
 
-/* Route to get company by id */
+/* Route to get all companies */
 
 router.get('/', async (req, res, next) => {
     try{
