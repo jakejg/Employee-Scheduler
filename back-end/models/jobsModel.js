@@ -7,7 +7,7 @@ class Job {
         this.title = title;
         this.start_date = start_date;
         this.end_date = end_date;
-        this.staff_filled = staff_filled
+        this.staff_filled = staff_filled || false;
         this.staff_needed = staff_needed;
         this.notes = notes;
         this.staff= staff;

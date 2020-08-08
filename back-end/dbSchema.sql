@@ -27,7 +27,7 @@ CREATE TABLE jobs (
     title TEXT NOT NULL,
     start_date TIMESTAMP,
     end_date TIMESTAMP,
-    staff_filled boolean default false NOT NULL,
+    staff_filled boolean DEFAULT false,
     staff_needed INTEGER,
     notes TEXT,
     comp_id INTEGER NOT NULL REFERENCES companies ON DELETE CASCADE
