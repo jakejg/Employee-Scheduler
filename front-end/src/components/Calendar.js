@@ -1,9 +1,8 @@
 import React, {useEffect} from 'react';
 import Timeline from 'react-calendar-timeline'
-// make sure you include the timeline stylesheet or the timeline will not be styled
-import 'react-calendar-timeline/lib/Timeline.css'
+import './styles/Calendar.css';
 import { useSelector, useDispatch } from 'react-redux';
-import {Paper, Box, Container, Typography } from '@material-ui/core';
+import {Paper, Box, Container, Typography, makeStyles, List, ListItem, ListItemText } from '@material-ui/core';
 import moment from 'moment'
 import {useHistory} from 'react-router-dom';
 import {editJob} from '../actions/jobs';
@@ -11,9 +10,20 @@ import {JobAPI} from '../helpers/JobApi';
 import { loadJobsFromAPI } from '../actions/jobs';
 import { decode } from 'jsonwebtoken';
 
+const useStyles = makeStyles(() => ({
+    instructions: {
+        margin: '5px'
+    },
+    calendarContainer: {
+        borderRadius: '10px'
+    }
+   
+}))
+
 const Calendar = () => {
     const jobs = useSelector(state => state.jobs);
     const token = useSelector(state => state.application.token);
+    const classes = useStyles();
     const history = useHistory();
     const dispatch = useDispatch();
 
@@ -51,10 +61,22 @@ const Calendar = () => {
 
 return (
     <Container>
-        <Paper>
-            <Typography>Double click on a job to view details</Typography>
+        <Paper className={classes.instructions}>
+            <List>
+                <ListItem>
+                    <ListItemText>
+                        Click on a job to select it
+                    </ListItemText>
+                </ListItem>
+                <ListItem>
+                    <ListItemText>
+                        Double click on a job to view details
+                    </ListItemText>
+                </ListItem>
+            </List>
+            <Typography></Typography>
         </Paper>
-    <Paper>
+        <Paper elevation={4} className={classes.calendarContainer}>
         <Timeline
           groups={groups}
           items={items}
@@ -66,7 +88,7 @@ return (
           defaultTimeStart={moment().add(-30, 'day')}
           defaultTimeEnd={moment().add(30, 'day')}
         />
-    </Paper>
+        </Paper>
     </Container>
 )
 }
