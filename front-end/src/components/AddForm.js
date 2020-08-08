@@ -10,12 +10,14 @@ import {
 import Alert from '@material-ui/lab/Alert';
 import {useHistory} from 'react-router-dom';
 import underscoreName from '../helpers/underscoreName';
+import ButtonGroup from './ButtonGroup';
 
 
 const AddForm = ({  type,
                     fields,
                     doOnSubmit,
-                    redirect
+                    redirect,
+                    closeDialog
                 }) => {
 
     // set up form state and error state from fields passed in
@@ -37,8 +39,6 @@ const AddForm = ({  type,
         const { name, value } = e.target;
         setFormData(formData => ({...formData, [name]: value}))
     }
-
-
     
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -108,7 +108,14 @@ const AddForm = ({  type,
                                                     />
                                     </Grid>)}
                 )}
-                <Button variant="contained" color="primary" type="submit">Add {type}</Button>
+                {type === 'Job' || type === 'Staff' ?
+                <ButtonGroup>
+                    <Button variant="contained" color={type === 'job' ? 'primary' : 'secondary'} type="submit"> Add {type}</Button>
+                    <Button variant="contained" style={{backgroundColor:'#f0ad4e'}} onClick={closeDialog}>Cancel</Button>
+                </ButtonGroup>   
+                :
+                <Button variant="contained" type="submit">{type}</Button>
+                }
                 </Box>
             </Grid> 
             </Paper> 

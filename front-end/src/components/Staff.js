@@ -3,7 +3,7 @@ import {useParams} from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import {getStaffFromAPI} from '../actions/staff';
 import {loadJobsFromAPI} from '../actions/jobs';
-import {Paper, Box, Typography, makeStyles, Grid, List, ListItem, ListItemText, ListItemIcon, Button, Collapse } from '@material-ui/core';
+import {Paper, Chip, Box, Typography, makeStyles, Grid, List, ListItem, ListItemText, ListItemIcon, Button, Collapse } from '@material-ui/core';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import ArrowDropUpIcon from '@material-ui/icons/ArrowDropUp';
 import Loading from './Loading';
@@ -66,30 +66,60 @@ const Staff = () => {
                         </ListItem>
                         <ListItem>
                             <ListItemText>
-                                <b>Current Job:</b> {staff.current_job? allJobs[staff.current_job].title: 
+                                <b>Current Job:</b> {staff.current_job? <Chip 
+                                                            label={allJobs[staff.current_job].title} 
+                                                            component="a" href={`/job/${allJobs[staff.current_job].id}`}
+                                                            color="primary"
+                                                            clickable />: 
                                 <Typography>Not currently working</Typography>} 
                             </ListItemText>
                          </ListItem>
                 
                         <ListItem onClick={() => setShowScheduled(!showScheduled)}>
-                            <ListItemText>
+                            <ListItemText style={{cursor: 'pointer'}}>
                                 <b>Scheduled Jobs</b>
                                 {showScheduled ?  <ArrowDropUpIcon /> : <ArrowDropDownIcon /> }
                             </ListItemText>
                         </ListItem> 
                         <Collapse in={showScheduled} timeout="auto" >
                                 <List component="div" disablePadding >
-                                    {staff.scheduled_jobs.map(id => <ListItem key={id}>{allJobs[id].title}</ListItem>)}
+                                    {staff.scheduled_jobs.map(id => 
+                                                    <ListItem key={id} >
+                                                        <Box >         
+                                                            <Chip 
+                                                            label={allJobs[id].title} 
+                                                            component="a" href={`/job/${id}`}
+                                                            color="primary"
+                                                            clickable />
+                                                        </Box>
+                                                    </ListItem>
+                                )}
                                 </List>
                             </Collapse>
                 
-                        <ListItem onClick={() => setShowPast(!showPast)}><b>Work History</b></ListItem> 
-                        {showPast &&
-                            <List>
-                                {staff.past_jobs.map(id => <ListItem>{allJobs[id].title}</ListItem>)}
-                            </List>}
+                        <ListItem onClick={() => setShowPast(!showPast)}>
+                            <ListItemText style={{cursor: 'pointer'}}>
+                                <b>Work History</b>
+                                {showPast ?  <ArrowDropUpIcon /> : <ArrowDropDownIcon /> }
+                            </ListItemText>
+                        </ListItem> 
+                        <Collapse in={showPast} timeout="auto" >
+                                <List component="div" disablePadding >
+                                    {staff.past_jobs.map(id => 
+                                                    <ListItem key={id} >
+                                                        <Box >         
+                                                            <Chip 
+                                                            label={allJobs[id].title} 
+                                                            component="a" href={`/job/${staff.id}`}
+                                                            color="primary"
+                                                            clickable />
+                                                        </Box>
+                                                    </ListItem>
+                                )}
+                                </List>
+                            </Collapse>
                         <ListItem>
-                            <Button  variant='outlined' color='primary'>Edit Staff</Button>
+                            <Button variant='contained' color='secondary'>Edit Staff</Button>
                         </ListItem>
                                 
                     </List>

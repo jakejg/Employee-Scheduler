@@ -3,12 +3,27 @@ import {useParams} from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import {getJobFromAPI} from '../actions/jobs';
 import {loadStaffFromAPI, getStaffFromAPI} from '../actions/staff';
-import {Paper, Box, Typography, makeStyles, Grid, List, ListItem, ListItemText, Button, Dialog, DialogTitle } from '@material-ui/core';
+import {Paper, 
+    Box, 
+    Typography, 
+    makeStyles, 
+    Grid, 
+    List, 
+    ListItem, 
+    ListItemText, 
+    Button, 
+    Dialog, 
+    DialogTitle,
+    Chip,
+    Collapse } from '@material-ui/core';
+import ArrowDropUpIcon from '@material-ui/icons/ArrowDropUp';
+import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import DoneOutlineRoundedIcon from '@material-ui/icons/DoneOutlineRounded';
 import Loading from './Loading';
 import AddStaffToJob from './AddStaffToJob';
 import NotFound from './NotFound';
 import getTotalCost from '../helpers/totalJobCost';
+import ButtonGroup from './ButtonGroup';
 
 const useStyles = makeStyles(() => ({
     checkMark: {
@@ -25,16 +40,15 @@ const useStyles = makeStyles(() => ({
         margin: '30px'
         
     }
-
-
 }))
   
-
 const Job = () => {
     const { id } = useParams();
     const [isOpen, setIsOpen] = useState(false);
     const [error, setError] = useState();
+    const [showStaff, setShowStaff] = useState();
     const job = useSelector(state => state.jobs[id]);
+
     const dispatch = useDispatch();
     const loading = !job;
     const classes = useStyles();
@@ -84,12 +98,27 @@ const Job = () => {
                                 <b>Staff Needed:</b> {job.staff_needed}
                             </ListItemText>
                         </ListItem>
-                        <ListItem>
-                            <ListItemText>
-                                <b>Staff:</b> {job.staff.length ? staffNames : 
-                                <Typography>None</Typography>}
+                        <ListItem onClick={() => setShowStaff(!showStaff)}>
+                            <ListItemText style={{cursor: 'pointer'}}>
+                                <b>Staff</b>
+                                {showStaff ?  <ArrowDropUpIcon /> : <ArrowDropDownIcon /> }
                             </ListItemText>
-                         </ListItem>
+                        </ListItem> 
+                        <Collapse in={showStaff} timeout="auto" >
+                                <List component="div" disablePadding >
+                                    {job.staff.map(staff => 
+                                                    <ListItem key={staff.id} >
+                                                        <Box >         
+                                                            <Chip 
+                                                            label={`${staff.first_name} ${staff.last_name}`} 
+                                                            component="a" href={`/staff/${id}`}
+                                                            color="secondary"
+                                                            clickable />
+                                                        </Box>
+                                                    </ListItem>
+                                )}
+                                </List>
+                            </Collapse>
                          <ListItem>
                             <ListItemText >
                                 <b>Notes:</b> {job.notes}
@@ -101,8 +130,12 @@ const Job = () => {
                             </ListItemText>
                         </ListItem>
                         <ListItem>
-                            <Button variant='outlined'>Edit Job</Button>
-                            <Button onClick={() => setIsOpen(true)} variant='outlined'>Change Staff</Button>
+                            <Box width='50%'>
+                            <ButtonGroup>
+                                <Button variant='contained' color='primary'>Edit Job</Button>
+                                <Button onClick={() => setIsOpen(true)} color='secondary' variant='contained'>Change Staff</Button>
+                            </ButtonGroup>
+                            </Box>
                         </ListItem>
                     </List>
                     

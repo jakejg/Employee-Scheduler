@@ -144,8 +144,8 @@ return (
                   {['Add Job', 'Add Staff', 'Check Dates'].map((text, index) => (
                     <ListItem button key={text}>
                       <ListItemIcon>
-                        {index === 0 && <WorkIcon /> }
-                        {index === 1 && <PersonAddIcon /> }
+                        {index === 0 && <WorkIcon color="primary" /> }
+                        {index === 1 && <PersonAddIcon color='secondary' /> }
                         {index === 2 && <EventNoteIcon /> }
                         </ListItemIcon>
                       <ListItemText primary={text} />
@@ -166,7 +166,8 @@ return (
                     <DialogTitle><Box textAlign='center' >Add a new {dialog.type}</Box></DialogTitle>
                     <AddForm type={dialog.type}
                       fields={dialog.type === 'Job' ? jobFields : staffFields}
-                      doOnSubmit={dialog.type === 'Job' ? addJobOnAPI : addStaffOnAPI} />
+                      doOnSubmit={dialog.type === 'Job' ? addJobOnAPI : addStaffOnAPI} 
+                      closeDialog={closeDialog}/>
                   </Dialog>
         </div>
 )
