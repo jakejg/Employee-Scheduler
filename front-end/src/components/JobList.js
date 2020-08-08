@@ -1,7 +1,8 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import {Link} from 'react-router-dom';
-import {List, ListItem, ListItemText, Box, Typography, makeStyles } from '@material-ui/core';
+import {List, ListItem, ListItemText, Box, Typography, makeStyles, ListItemIcon } from '@material-ui/core';
+import DoneOutlineRoundedIcon from '@material-ui/icons/DoneOutlineRounded';
 import moment from 'moment';
 
 
@@ -12,6 +13,10 @@ const useStyles = makeStyles(() => ({
       '&:hover': {
         color: 'grey'
       }
+    },
+    checkMark: {
+        color: 'green', 
+        marginLeft: '5px'
     }
 }))
 
@@ -46,8 +51,12 @@ const JobList = () => {
             <List>
                 {Object.keys(scheduled).map(id => <ListItem key={id}>
                                                         <ListItemText align='center'>
+                                                        
                                                         <Link className={classes.link} to={`job/${id}`}>{scheduled[id].title}</Link>
+                                                       
+                                                        {scheduled[id].staff_filled && <DoneOutlineRoundedIcon fontSize='small' className={classes.checkMark}/>}
                                                         </ListItemText>
+                                                        
                                                     </ListItem>)}
             </List>
 

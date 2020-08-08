@@ -31,7 +31,7 @@ export class JobAPI {
         add group property */
         const jobData = {};
         // length: moment.duration(end_time - start_time), 
-        for (let {id, title, start_date, end_date} of data.jobs) {
+        for (let {id, title, start_date, end_date, staff_filled} of data.jobs) {
             let start_time = moment(start_date);
             let end_time = moment(end_date);
             
@@ -41,7 +41,8 @@ export class JobAPI {
                 start_time,
                 end_time,
                 group: id,
-                staff: []
+                staff: [],
+                staff_filled
             }
         }
         return jobData;
