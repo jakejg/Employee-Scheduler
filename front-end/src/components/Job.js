@@ -4,10 +4,31 @@ import { useDispatch, useSelector } from 'react-redux';
 import {getJobFromAPI} from '../actions/jobs';
 import {loadStaffFromAPI, getStaffFromAPI} from '../actions/staff';
 import {Paper, Box, Typography, makeStyles, Grid, List, ListItem, ListItemText, Button, Dialog, DialogTitle } from '@material-ui/core';
+import DoneOutlineRoundedIcon from '@material-ui/icons/DoneOutlineRounded';
 import Loading from './Loading';
 import AddStaffToJob from './AddStaffToJob';
 import NotFound from './NotFound';
 import getTotalCost from '../helpers/totalJobCost';
+
+const useStyles = makeStyles(() => ({
+    checkMark: {
+        color: 'green', 
+        marginLeft: '5px', 
+        marginBottom: '-5px'
+    },
+
+    paper:{
+        margin: '30px'
+    },
+    green: {
+        border: 'solid green 3px',
+        margin: '30px'
+        
+    }
+
+
+}))
+  
 
 const Job = () => {
     const { id } = useParams();
@@ -16,8 +37,7 @@ const Job = () => {
     const job = useSelector(state => state.jobs[id]);
     const dispatch = useDispatch();
     const loading = !job;
-
-
+    const classes = useStyles();
 
     useEffect(() => {
         const getJob = async () => {
@@ -33,11 +53,8 @@ const Job = () => {
     if (error) return <NotFound msg={error}/>
     if (loading) return <Loading/>
     
-   
-
-
-    
     const staffNames = job.staff.map(staff => `${staff.first_name} ${staff.last_name}`);
+    const jobFilled = job.staff.length >= job.staff_needed;
 
     
     return (
@@ -46,9 +63,13 @@ const Job = () => {
             <Grid item xs={1} sm={2}>
             </Grid>
             <Grid item xs={10} sm={8}>
-                <Paper elevation={5}>
-                    <Box m={4} py={2}>
-                    <Typography variant='h5' align='center'>{job.title}</Typography>
+                <Paper elevation={5} className={jobFilled ? classes.green : classes.paper}>
+                    <Box py={3}>
+                        <Box textAlign='center'>
+                            <Typography display="inline" variant="h5">{job.title}</Typography>
+                            {jobFilled &&
+                            <DoneOutlineRoundedIcon fontSize='large' className={classes.checkMark}/>}
+                        </Box>
                     <List>
                         <ListItem>
                             <ListItemText >
