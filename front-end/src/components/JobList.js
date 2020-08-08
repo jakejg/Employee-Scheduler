@@ -1,22 +1,24 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import {Link} from 'react-router-dom';
-import {List, ListItem, ListItemText, Box, Typography, makeStyles, ListItemIcon } from '@material-ui/core';
+import {List, ListItem, ListItemText, Box, Typography, makeStyles, ListItemIcon, Chip } from '@material-ui/core';
 import DoneOutlineRoundedIcon from '@material-ui/icons/DoneOutlineRounded';
 import moment from 'moment';
 
-
 const useStyles = makeStyles(() => ({
-    link: {
-      textDecoration: 'none',
-      color: 'black',
-      '&:hover': {
-        color: 'grey'
-      }
-    },
     checkMark: {
         color: 'green', 
-        marginLeft: '5px'
+        marginLeft: '5px', 
+        marginTop: '5px'
+    },
+    text: {
+        display: 'flex',
+        justifyContent: 'start',
+        width: '125px'
+    },
+    box: {
+        display: 'flex',
+        justifyContent: 'center',
     }
 }))
 
@@ -41,22 +43,30 @@ const JobList = () => {
         <div>
             <Typography variant='h4' align='center'>Jobs in Progress</Typography>
             <List>
-                {Object.keys(inProgress).map(id => <ListItem key={id}>
-                                                        <ListItemText align='center'>
-                                                            <Link className={classes.link} to={`job/${id}`}>{inProgress[id].title}</Link>
-                                                        </ListItemText>
+                {Object.keys(inProgress).map(id => <ListItem key={id} className={classes.box}>
+                                                        <Box  className={classes.text}>         
+                                                            <Chip 
+                                                            label={inProgress[id].title} 
+                                                            component="a" href={`job/${id}`}
+                                                            color="primary"
+                                                            clickable />
+                                                        </Box>
                                                     </ListItem>)}
             </List>
             <Typography variant='h4' align='center'>Jobs Scheduled</Typography>
-            <List>
-                {Object.keys(scheduled).map(id => <ListItem key={id}>
-                                                        <ListItemText align='center'>
+            <List >
+                {Object.keys(scheduled).map(id => <ListItem key={id} className={classes.box}>
+                                                    <Box  className={classes.text}>
+                                                        <Chip 
+                                                            label={scheduled[id].title} 
+                                                            component="a" href={`job/${id}`}
+                                                            color="primary"
+                                                            clickable
+                                                            />
+
                                                         
-                                                        <Link className={classes.link} to={`job/${id}`}>{scheduled[id].title}</Link>
-                                                       
-                                                        {scheduled[id].staff_filled && <DoneOutlineRoundedIcon fontSize='small' className={classes.checkMark}/>}
-                                                        </ListItemText>
-                                                        
+                                                        {scheduled[id].staff_filled ? <DoneOutlineRoundedIcon fontSize='small' className={classes.checkMark}/>: null}
+                                                    </Box> 
                                                     </ListItem>)}
             </List>
 
