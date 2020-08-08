@@ -79,7 +79,7 @@ export class JobAPI {
     static async getJob(ID){
         let data = await this.send('get', `jobs/${ID}`);
 
-        let {id, title, start_date, end_date, possible_staff, staff_needed, notes, staff} = data.job;
+        let {id, title, start_date, end_date, staff_filled, staff_needed, notes, staff} = data.job;
         let start_time = moment(start_date);
         let end_time = moment(end_date);
         let job = {
@@ -87,7 +87,7 @@ export class JobAPI {
             title, 
             start_time,
             end_time,
-            possible_staff,
+            staff_filled,
             staff_needed,
             notes,
             staff,

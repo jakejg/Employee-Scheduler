@@ -14,6 +14,7 @@
 
 #environmental variables
 /back-end/.env
+/back-end/serviceAccount.json
 # misc
 
 .DS_Store

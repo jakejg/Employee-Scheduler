@@ -64,7 +64,8 @@ export const addStaffToJobOnAPI = (jobId, staffId) => {
     return async (dispatch) => {
         try {
             let data = await JobAPI.addStaffToJob(jobId, staffId)
-            dispatch(editJobStaff(jobId, data.staff))
+            console.log(data)
+            dispatch(editJobStaff(jobId, data.staffList, data.staff_filled))
             
         }
         catch(e) {
@@ -77,7 +78,7 @@ export const removeStaffFromJobOnAPI = (jobId, staffId) => {
     return async (dispatch) => {
         try {
             let data = await JobAPI.removeStaffFromJob(jobId, staffId)
-            dispatch(editJobStaff(jobId, data.staff))
+            dispatch(editJobStaff(jobId, data.staffList, data.staff_filled))
             
         }
         catch(e) {
@@ -86,6 +87,6 @@ export const removeStaffFromJobOnAPI = (jobId, staffId) => {
     }
 }
 
-export const editJobStaff = (id, staff) => {
-    return {type: EDIT_JOB_STAFF, id, staff}
+export const editJobStaff = (id, staff, staff_filled) => {
+    return {type: EDIT_JOB_STAFF, id, staff, staff_filled}
 }

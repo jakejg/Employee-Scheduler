@@ -3,6 +3,7 @@ import Timeline from 'react-calendar-timeline'
 // make sure you include the timeline stylesheet or the timeline will not be styled
 import 'react-calendar-timeline/lib/Timeline.css'
 import { useSelector, useDispatch } from 'react-redux';
+import {Paper, Box, Container, Typography } from '@material-ui/core';
 import moment from 'moment'
 import {useHistory} from 'react-router-dom';
 import {editJob} from '../actions/jobs';
@@ -49,16 +50,24 @@ const Calendar = () => {
     
 
 return (
-    <Timeline
-      groups={groups}
-      items={items}
-      canMove={true}
-      itemHeightRatio={0.75}
-      onItemDoubleClick={handleDoubleClick}
-      onItemMove={handleMove}
-      defaultTimeStart={moment().add(-30, 'day')}
-      defaultTimeEnd={moment().add(30, 'day')}
-    />
+    <Container>
+        <Paper>
+            <Typography>Double click on a job to view details</Typography>
+        </Paper>
+    <Paper>
+        <Timeline
+          groups={groups}
+          items={items}
+          canMove={true}
+          itemHeightRatio={0.75}
+          lineHeight={40}
+          onItemDoubleClick={handleDoubleClick}
+          onItemMove={handleMove}
+          defaultTimeStart={moment().add(-30, 'day')}
+          defaultTimeEnd={moment().add(30, 'day')}
+        />
+    </Paper>
+    </Container>
 )
 }
 export default Calendar;

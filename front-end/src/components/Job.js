@@ -54,8 +54,6 @@ const Job = () => {
     if (loading) return <Loading/>
     
     const staffNames = job.staff.map(staff => `${staff.first_name} ${staff.last_name}`);
-    const jobFilled = job.staff.length >= job.staff_needed;
-
     
     return (
         <>
@@ -63,11 +61,11 @@ const Job = () => {
             <Grid item xs={1} sm={2}>
             </Grid>
             <Grid item xs={10} sm={8}>
-                <Paper elevation={5} className={jobFilled ? classes.green : classes.paper}>
+                <Paper elevation={5} className={job.staff_filled ? classes.green : classes.paper}>
                     <Box py={3}>
                         <Box textAlign='center'>
                             <Typography display="inline" variant="h5">{job.title}</Typography>
-                            {jobFilled &&
+                            {job.staff_filled &&
                             <DoneOutlineRoundedIcon fontSize='large' className={classes.checkMark}/>}
                         </Box>
                     <List>
