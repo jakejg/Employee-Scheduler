@@ -18,10 +18,9 @@
         }
     ],
     "required": [
-        "username",
+        "email",
         "first_name",
         "last_name",
-        "is_admin",
         "comp_id"
     ],
     "properties": {

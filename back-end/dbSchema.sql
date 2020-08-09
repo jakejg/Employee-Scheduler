@@ -11,10 +11,11 @@ CREATE TABLE companies (
 CREATE TABLE users (
     id SERIAL PRIMARY KEY,
     username TEXT NOT NULL UNIQUE,
+    email TEXT,
     password TEXT,
     first_name TEXT NOT NULL,
     last_name TEXT NOT NULL,
-    is_admin boolean NOT NULL,
+    is_admin boolean DEFAULT false,
     current_wage INTEGER,
     years_at_company FLOAT,
     comp_id INTEGER REFERENCES companies ON DELETE CASCADE
@@ -52,23 +53,23 @@ INSERT INTO jobs (title, start_date, end_date, staff_needed, notes, comp_id)
 VALUES ('30 day Mountain', '2020-07-15', '2020-08-15', 3, 'test3', 1);
 
 
-INSERT INTO users (username, password, first_name, last_name, is_admin, comp_id) 
-VALUES ('Demo', '$2b$12$/D1ERcrzDjfy3QfHwRUgmO.Dyw091SAw19vWTNr.H4d6.PSn0ytFu', 'Demo', 'User', true, 1);
+INSERT INTO users (username, email, password, first_name, last_name, is_admin, comp_id) 
+VALUES ('Demo', 'demouser@gmail.com', '$2b$12$/D1ERcrzDjfy3QfHwRUgmO.Dyw091SAw19vWTNr.H4d6.PSn0ytFu', 'Demo', 'User', true, 1);
 
-INSERT INTO users (username, first_name, last_name, current_wage, years_at_company, is_admin, comp_id) 
-VALUES ('Jon', 'Jon', 'Martin', 130, 3, false, 1);
+INSERT INTO users (username, email, first_name, last_name, current_wage, years_at_company, comp_id) 
+VALUES ('jon@gmail.com', 'jon@gmail.com', 'Jon', 'Martin', 130, 3, 1);
 
-INSERT INTO users (username, first_name, last_name, current_wage, years_at_company, is_admin, comp_id) 
-VALUES ('Sarah', 'Sarah', 'Brown', 100, 1, false, 1);
+INSERT INTO users (username, email, first_name, last_name, current_wage, years_at_company, comp_id) 
+VALUES ('jarah@gmail.com', 'sarah@gmail.com', 'Sarah', 'Brown', 100, 1, 1);
 
-INSERT INTO users (username, first_name, last_name, current_wage, years_at_company, is_admin, comp_id) 
-VALUES ('Kim', 'Kim', 'Miller', 120, 2, false, 1);
+INSERT INTO users (username, email, first_name, last_name, current_wage, years_at_company, comp_id) 
+VALUES ('kim@gmail.com', 'kim@gmail.com', 'Kim', 'Miller', 120, 2, 1);
 
-INSERT INTO users (username, first_name, last_name, current_wage, years_at_company, is_admin, comp_id) 
-VALUES ('Stacy', 'Stacy', 'Lopez', 140, 4, false, 1);
+INSERT INTO users (username, email, first_name, last_name, current_wage, years_at_company, comp_id) 
+VALUES ('stacy@gmail.com', 'stacy@gmail.com', 'Stacy', 'Lopez', 140, 4, 1);
 
-INSERT INTO users (username, password, first_name, last_name, is_admin, comp_id) 
-VALUES ('Matt', '$2b$12$/D1ERcrzDjfy3QfHwRUgmO.Dyw091SAw19vWTNr.H4d6.PSn0ytFu', 'Matt', 'Olsen', true, 1);
+INSERT INTO users (username, email, password, first_name, last_name, is_admin, comp_id) 
+VALUES ('Matt','Matt@email.com', '$2b$12$/D1ERcrzDjfy3QfHwRUgmO.Dyw091SAw19vWTNr.H4d6.PSn0ytFu', 'Matt', 'Olsen', true, 1);
 
 INSERT INTO users_jobs (job_id, user_id) 
 VALUES (2,2);

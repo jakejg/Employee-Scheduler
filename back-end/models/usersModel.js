@@ -5,15 +5,16 @@ const { BCRYPT_WORK_FACTOR } = require('../config');
 const moment = require('moment');
 
 class User {
-    constructor({id, password, username, first_name, last_name, current_wage, years_at_company, is_admin, jobs, comp_id}) {
+    constructor({id, password, username, email, first_name, last_name, current_wage, years_at_company, is_admin, jobs, comp_id}) {
         this.id = id;
         this.password = password
         this.username = username;
+        this.email = email;
         this.first_name = first_name;
         this.last_name = last_name;
         this.current_wage = current_wage
         this.years_at_company = years_at_company;
-        this.is_admin = is_admin;
+        this.is_admin = is_admin || false;
         this.jobs = jobs;
         this.comp_id = comp_id;
     }
@@ -65,7 +66,8 @@ class User {
             `SELECT id, 
             username, 
             first_name, 
-            last_name, 
+            last_name,
+            email,
             is_admin, 
             current_wage, 
             years_at_company, 
@@ -177,10 +179,10 @@ class User {
         if (!this.id) {
             try{
                 const results = await db.query(`INSERT INTO users
-                (username, password, first_name, last_name, current_wage, years_at_company, is_admin, comp_id)
-                VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
+                (username, password, first_name, last_name, email, current_wage, years_at_company, is_admin, comp_id)
+                VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
                 RETURNING id`,
-                [this.username, this.password, this.first_name, this.last_name, 
+                [this.username, this.password, this.first_name, this.last_name, this.email,
                 this.current_wage, this.years_at_company, this.is_admin, this.comp_id]);
 
                 this.id = results.rows[0].id;
@@ -195,9 +197,9 @@ class User {
         else {
             try {
             const results = await db.query(
-            `UPDATE users SET username=$2, first_name=$3, last_name=$4, current_wage=$5, years_at_company=$6, is_admin=$7, comp_id=$8
+            `UPDATE users SET username=$2, first_name=$3, last_name=$4, current_wage=$5, years_at_company=$6, is_admin=$7, comp_id=$8, email=$9
             WHERE id=$1`, 
-            [this.id, this.username, this.first_name, this.last_name, this.current_wage, this.years_at_company, this.is_admin, this.comp_id]);
+            [this.id, this.username, this.first_name, this.last_name, this.current_wage, this.years_at_company, this.is_admin, this.comp_id, this.email]);
             }
             catch(e){
                 console.log(e)
