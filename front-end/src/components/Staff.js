@@ -3,27 +3,31 @@ import {useParams} from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import {getStaffFromAPI} from '../actions/staff';
 import {loadJobsFromAPI} from '../actions/jobs';
-import {Paper, Chip, Box, Typography, makeStyles, Grid, List, ListItem, ListItemText, ListItemIcon, Button, Collapse } from '@material-ui/core';
-import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
-import ArrowDropUpIcon from '@material-ui/icons/ArrowDropUp';
+import {Paper, TextField, Input, Fab, Chip, Box, Typography, makeStyles, Grid, List, ListItem, ListItemText} from '@material-ui/core';
 import Loading from './Loading';
 import { decode } from "jsonwebtoken";
 import NotFound from './NotFound';
 import { CompanyAPI } from '../helpers/CompanyApi';
+import EditIcon from '@material-ui/icons/Edit';
+import SaveIcon from '@material-ui/icons/Save';
+import DropDownList from './DropDownList';
+import ButtonGroup from './ButtonGroup';
 
 const Staff = () => {
-   const { id } = useParams();
-   const dispatch = useDispatch();
-   const staff = useSelector(state => state.staff[id])
-   const allJobs = useSelector(state => state.jobs);
-   const [showPast, setShowPast] = useState(false);
-   const [showScheduled, setShowScheduled] = useState(false);
-   const [error, setError] = useState();
-   const [company, setCompany] = useState({});
-   const token = useSelector(state => state.application.token)
-   const loading = !staff;
-  
-   useEffect(() => {
+    const { id } = useParams();
+    const dispatch = useDispatch();
+    const staff = useSelector(state => state.staff[id])
+    const allJobs = useSelector(state => state.jobs);
+    const [showPast, setShowPast] = useState(false);
+    const [showScheduled, setShowScheduled] = useState(false);
+    const [error, setError] = useState();
+    const [edit, setEdit] = useState(false)
+    const [company, setCompany] = useState({});
+    const token = useSelector(state => state.application.token)
+    const loading = !staff;
+    const [formData, setFormData] = useState({})
+    
+    useEffect(() => {
     const getData = async () => {
         const { comp_id } = decode(token);
         await dispatch(loadJobsFromAPI(comp_id));
@@ -40,6 +44,27 @@ const Staff = () => {
     if (error)  return <NotFound msg={error}/>
     if (loading) return <Loading />
    
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        console.log(name, value)
+        setFormData(formData => ({...formData, [name]: value}))
+    }
+
+    const handleEditClick = () => {
+        setEdit(edit => !edit)
+        setFormData(formData => ({
+                first_name: staff.first_name,
+                last_name: staff.last_name,
+                email: staff.email, 
+                current_wage: staff.current_wage,
+                years_at_company: staff.years_at_company})
+                )
+    }
+
+    const handleSubmit = () => {
+
+    }
+ 
     return (
             <Grid container>
             <Grid item xs={1} sm={2}>
@@ -47,16 +72,52 @@ const Staff = () => {
             <Grid item xs={10} sm={8}>
                 <Paper elevation={5}>
                     <Box m={4} py={2}>
-                    <Typography variant='h5' align='center'>{staff.first_name} {staff.last_name}</Typography>
+                    <Typography variant='h5' align='center'>
+                    {edit ?
+                        <>  
+                        <Input
+                            value={formData.first_name}
+                            name='first_name'
+                            onChange={handleChange}
+                            margin="none"
+                            size="small"
+                        ></Input>
+                        <Input
+                            value={formData.last_name}
+                            name='last_name'
+                            onChange={handleChange}
+                            margin="none"
+                            size="small"
+                        ></Input>
+                        </> :
+                        <>{staff.first_name} {staff.last_name}</> }
+                    </Typography>
+                    
                     <List>
                         <ListItem>
                             <ListItemText >
-                                <b>Email:</b> {staff.email}
+                                <b>Email:</b> {edit ?  
+                        <Input
+                            value={formData.email}
+                            name='email'
+                            onChange={handleChange}
+                            margin="none"
+                            size="small"
+                        ></Input> :
+                        staff.email}
                             </ListItemText>
                         </ListItem>
                         <ListItem>
                             <ListItemText >
-                                <b>Current Wage:</b> ${staff.current_wage }
+                                <b>Current Wage:</b>  {edit ?  
+                        <Input
+                            value={formData.current_wage}
+                            name='curren_wage'
+                            onChange={handleChange}
+                            margin="none"
+                            size="small"
+                        ></Input> :
+                            <>${staff.current_wage}</>}
                             </ListItemText>
                         </ListItem>
                         <ListItem>
@@ -74,59 +135,36 @@ const Staff = () => {
                                 <Typography>Not currently working</Typography>} 
                             </ListItemText>
                          </ListItem>
-                
-                        <ListItem onClick={() => setShowScheduled(!showScheduled)}>
-                            <ListItemText style={{cursor: 'pointer'}}>
-                                <b>Scheduled Jobs</b>
-                                {showScheduled ?  <ArrowDropUpIcon /> : <ArrowDropDownIcon /> }
-                            </ListItemText>
-                        </ListItem> 
-                        <Collapse in={showScheduled} timeout="auto" >
-                                <List component="div" disablePadding >
-                                    {staff.scheduled_jobs.map(id => 
-                                                    <ListItem key={id} >
-                                                        <Box >         
-                                                            <Chip 
-                                                            label={allJobs[id].title} 
-                                                            component="a" href={`/job/${id}`}
-                                                            color="primary"
-                                                            clickable />
-                                                        </Box>
-                                                    </ListItem>
-                                )}
-                                </List>
-                            </Collapse>
-                
-                        <ListItem onClick={() => setShowPast(!showPast)}>
-                            <ListItemText style={{cursor: 'pointer'}}>
-                                <b>Work History</b>
-                                {showPast ?  <ArrowDropUpIcon /> : <ArrowDropDownIcon /> }
-                            </ListItemText>
-                        </ListItem> 
-                        <Collapse in={showPast} timeout="auto" >
-                                <List component="div" disablePadding >
-                                    {staff.past_jobs.map(id => 
-                                                    <ListItem key={id} >
-                                                        <Box >         
-                                                            <Chip 
-                                                            label={allJobs[id].title} 
-                                                            component="a" href={`/job/${staff.id}`}
-                                                            color="primary"
-                                                            clickable />
-                                                        </Box>
-                                                    </ListItem>
-                                )}
-                                </List>
-                            </Collapse>
+                        <DropDownList 
+                                state={showScheduled} 
+                                setState={setShowScheduled}
+                                title="Scheduled Jobs"
+                                arrayToMap={staff.scheduled_jobs}
+                                allJobs={allJobs}
+                                />
+                        <DropDownList 
+                                state={showPast} 
+                                setState={setShowPast}
+                                title="Work History"
+                                arrayToMap={staff.past_jobs}
+                                allJobs={allJobs}
+                                />
                         <ListItem>
-                            <Button variant='contained' color='secondary'>Edit Staff</Button>
+                            <Box width='50%'>
+                                <ButtonGroup>
+                                    <Fab onClick={handleEditClick} color="secondary" size="medium" aria-label="edit">
+                                        <EditIcon />
+                                    </Fab>
+                                    {edit && <Fab onClick={handleSubmit} color="primary" size="medium" aria-label="save">
+                                        <SaveIcon />
+                                    </Fab>}
+                            </ButtonGroup>
+                            </Box>
+                            
                         </ListItem>
-                                
-                    </List>
-                                
+                    </List>      
                     </Box>
-                </Paper>
-                                
+                </Paper>          
             </Grid>
             <Grid item xs={1} sm={2}>
             </Grid>
