@@ -41,16 +41,12 @@ const useStyles = makeStyles((theme) => ({
 
 const Dashboard = () => {
     const classes = useStyles();
-    const theme = useTheme();
     const open = useSelector(state => state.application.drawer)
     const token = useSelector(state => state.application.token)
     const dispatch = useDispatch();
-    console.log("rendering")
 
     useEffect(() => {
       const getData = async () => {
-          console.log("getting data")
-          console.log(decode(token))
           const { comp_id } = decode(token);
           dispatch(loadJobsFromAPI(comp_id));
           dispatch(loadStaffFromAPI(comp_id));
@@ -59,7 +55,7 @@ const Dashboard = () => {
   }, [dispatch, token])
 
     const jobFields = ['Title', 'Start Date','End Date', 'Staff Needed', 'Notes'];
-    const staffFields = ['Username', 'First Name','Last Name', 'Current Wage', 'Years At Company'];
+    const staffFields = ['Email', 'First Name','Last Name', 'Current Wage', 'Years At Company'];
     
     return (
       <div className={classes.root}>

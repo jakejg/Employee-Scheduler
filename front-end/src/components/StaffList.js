@@ -1,6 +1,7 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import {List, ListItem, ListItemText, Box, Typography, makeStyles, Chip } from '@material-ui/core';
+import Loading from './Loading';
 
 const useStyles = makeStyles(() => ({
     text: {
@@ -18,6 +19,9 @@ const useStyles = makeStyles(() => ({
 const StaffList = () => {
     const staff = useSelector(state => state.staff);
     const classes = useStyles();
+    const loading = !Object.keys(staff).length
+    
+    if (loading) return <Loading />
 
     const working = [];
     const available = [];

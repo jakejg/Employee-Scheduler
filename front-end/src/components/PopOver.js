@@ -10,7 +10,7 @@ import {register} from '../actions/authentication';
 import {login} from '../actions/authentication';
 
 const PopOver = ({dialog, setDialog}) => {
-    const registerFields = ['Company Name', 'Username', 'Password', 'First Name','Last Name'];
+    const registerFields = ['Company Name', 'First Name','Last Name', 'Email', 'Username', 'Password',];
     const loginFields = ['Username', 'Password'];
 
     return (

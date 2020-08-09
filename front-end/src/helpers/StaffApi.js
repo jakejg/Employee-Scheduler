@@ -26,11 +26,10 @@ export class StaffAPI {
         let data = await this.send('get', `users?comp_id=${comp_id}`);
         /* create an object of nested objects with data keyed by id */
         const staffData = {};
-        for (let {id, username, first_name, last_name, isWorking} of data.users) {
+        for (let {id, first_name, last_name, isWorking} of data.users) {
 
             staffData[id] = {
                 id,
-                username,
                 first_name,
                 last_name,
                 isWorking,
@@ -43,11 +42,11 @@ export class StaffAPI {
 
     static async getStaff(ID){
         let data = await this.send('get', `users/${ID}`);
-            let {id, username, first_name, last_name, current_wage, years_at_company, jobs} = data.user
+            let {id, email, first_name, last_name, current_wage, years_at_company, jobs} = data.user
 
             let staff = {
                     id,
-                    username,
+                    email,
                     first_name,
                     last_name,
                     current_wage, 
@@ -65,8 +64,8 @@ export class StaffAPI {
         const {comp_id} = decode(token);
           // add company Id
         staffToAdd.comp_id = comp_id
-         // specify new staff is not an admin
-        staffToAdd.is_admin = false;
+        // set username to email
+        staffToAdd.username = staffToAdd.email;
 
         const data = await this.send('post', `users`, staffToAdd);    
         const {id, username, first_name, last_name} = data.user;

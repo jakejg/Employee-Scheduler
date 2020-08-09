@@ -4,6 +4,7 @@ import {Link} from 'react-router-dom';
 import {List, ListItem, ListItemText, Box, Typography, makeStyles, ListItemIcon, Chip } from '@material-ui/core';
 import DoneOutlineRoundedIcon from '@material-ui/icons/DoneOutlineRounded';
 import moment from 'moment';
+import Loading from './Loading';
 
 const useStyles = makeStyles(() => ({
     checkMark: {
@@ -26,6 +27,9 @@ const useStyles = makeStyles(() => ({
 const JobList = () => {
     const jobs = useSelector(state => state.jobs)
     const classes = useStyles();
+    const loading = !Object.keys(jobs).length
+
+    if (loading) return <Loading />
     
     let inProgress = {};
     let scheduled = {};

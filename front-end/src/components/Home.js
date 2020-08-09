@@ -24,10 +24,6 @@ const Home = () => {
     let error;
     if (state)  error = state.error;
 
-
-    const registerFields = ['Company Name', 'Username', 'Password', 'First Name','Last Name'];
-    const loginFields = ['Username', 'Password'];
-
     const loginDemo = async() => {
         const demoUser = {
             username: "Demo",

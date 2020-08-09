@@ -7,13 +7,7 @@ import {
 const staffReducer = (state={}, action) => {
     switch(action.type){
         case LOAD_STAFF:
-            // // if object exists in store, don't replace it
-            // for (let id of Object.keys(state)){
-            //     if (action.staff[id]) {
-            //         delete action.staff[id]
-            //     }
-            // }
-            return {...state, ...action.staff}
+            return {...action.staff}
 
         case EDIT_STAFF:
             return {...state, 

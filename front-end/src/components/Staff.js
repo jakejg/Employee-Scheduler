@@ -51,7 +51,7 @@ const Staff = () => {
                     <List>
                         <ListItem>
                             <ListItemText >
-                                <b>Username:</b> {staff.username}
+                                <b>Email:</b> {staff.email}
                             </ListItemText>
                         </ListItem>
                         <ListItem>
