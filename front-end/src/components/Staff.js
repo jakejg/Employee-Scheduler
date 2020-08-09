@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
-import {useParams} from 'react-router-dom';
+import {useParams, useHistory} from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import {getStaffFromAPI} from '../actions/staff';
+import {getStaffFromAPI, editStaffOnAPI, deleteStaffOnAPI} from '../actions/staff';
 import {loadJobsFromAPI} from '../actions/jobs';
 import {Paper, TextField, Input, Fab, Chip, Box, Typography, makeStyles, Grid, List, ListItem, ListItemText} from '@material-ui/core';
 import Loading from './Loading';
@@ -10,8 +10,9 @@ import NotFound from './NotFound';
 import { CompanyAPI } from '../helpers/CompanyApi';
 import EditIcon from '@material-ui/icons/Edit';
 import SaveIcon from '@material-ui/icons/Save';
+import DeleteIcon from '@material-ui/icons/Delete';
 import DropDownList from './DropDownList';
-import ButtonGroup from './ButtonGroup';
+import DeleteAlert from './DeleteAlert';
 
 const Staff = () => {
     const { id } = useParams();
@@ -26,6 +27,8 @@ const Staff = () => {
     const token = useSelector(state => state.application.token)
     const loading = !staff;
     const [formData, setFormData] = useState({})
+    const [dialog, setDialog] = useState(false)
+    const history = useHistory()
     
     useEffect(() => {
     const getData = async () => {
@@ -46,7 +49,6 @@ const Staff = () => {
    
     const handleChange = (e) => {
         const { name, value } = e.target;
-        console.log(name, value)
         setFormData(formData => ({...formData, [name]: value}))
     }
 
@@ -61,10 +63,13 @@ const Staff = () => {
                 )
     }
 
-    const handleSubmit = () => {
-
+    const handleSave = () => {
+        dispatch(editStaffOnAPI(id, formData))
+        setEdit(!edit)
     }
- 
+    const handleDelete = () => {
+        setDialog(dialog => true)
+    }
     return (
             <Grid container>
             <Grid item xs={1} sm={2}>
@@ -79,15 +84,11 @@ const Staff = () => {
                             value={formData.first_name}
                             name='first_name'
                             onChange={handleChange}
-                            margin="none"
-                            size="small"
                         ></Input>
                         <Input
                             value={formData.last_name}
                             name='last_name'
                             onChange={handleChange}
-                            margin="none"
-                            size="small"
                         ></Input>
                         </> :
                         <>{staff.first_name} {staff.last_name}</> }
@@ -101,8 +102,7 @@ const Staff = () => {
                             value={formData.email}
                             name='email'
                             onChange={handleChange}
-                            margin="none"
-                            size="small"
+                            type='email'
                         ></Input> :
                         staff.email}
                             </ListItemText>
@@ -112,10 +112,9 @@ const Staff = () => {
                                 <b>Current Wage:</b>  {edit ?  
                         <Input
                             value={formData.current_wage}
-                            name='curren_wage'
+                            name='current_wage'
                             onChange={handleChange}
-                            margin="none"
-                            size="small"
+                            type='number'
                         ></Input> :
                             <>${staff.current_wage}</>}
                             </ListItemText>
@@ -150,17 +149,16 @@ const Staff = () => {
                                 allJobs={allJobs}
                                 />
                         <ListItem>
-                            <Box width='50%'>
-                                <ButtonGroup>
-                                    <Fab onClick={handleEditClick} color="secondary" size="medium" aria-label="edit">
-                                        <EditIcon />
-                                    </Fab>
-                                    {edit && <Fab onClick={handleSubmit} color="primary" size="medium" aria-label="save">
-                                        <SaveIcon />
-                                    </Fab>}
-                            </ButtonGroup>
-                            </Box>
-                            
+                            <Fab style={{margin: '5px'}} onClick={handleEditClick} color="secondary" size="medium" aria-label="edit">
+                                <EditIcon />
+                            </Fab>
+                            <Fab style={{margin: '5px'}} onClick={handleDelete} color="inherit" size="medium" aria-label="edit">
+                                <DeleteIcon />
+                            </Fab>
+                            <DeleteAlert id={id} type="staff" dialog={dialog} setDialog={setDialog}/>
+                            {edit && <Fab style={{margin: '5px'}} onClick={handleSave} color="primary" size="medium" aria-label="save">
+                                <SaveIcon />
+                            </Fab>}
                         </ListItem>
                     </List>      
                     </Box>

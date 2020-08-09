@@ -1,7 +1,8 @@
 import {
     LOAD_STAFF,
     EDIT_STAFF,
-    ADD_STAFF
+    ADD_STAFF,
+    DELETE_STAFF
 } from '../actions/actionTypes';
 
 const staffReducer = (state={}, action) => {
@@ -19,6 +20,11 @@ const staffReducer = (state={}, action) => {
                     }
         case ADD_STAFF:
             return {...state, [action.id]: {...action.staff}}
+
+        case DELETE_STAFF:
+            let staff = { ...state };
+            delete staff[action.id];
+            return staff
     default:
         return state
     }

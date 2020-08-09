@@ -1,7 +1,8 @@
 import { 
     LOAD_STAFF,
     EDIT_STAFF,
-    ADD_STAFF
+    ADD_STAFF,
+    DELETE_STAFF
  } from './actionTypes';
 import { StaffAPI } from '../helpers/StaffApi';
 
@@ -38,6 +39,19 @@ export const getStaffFromAPI = (ID) => {
     }
 }
 
+export const editStaffOnAPI = (id, changedProperties) => {
+
+    return async (dispatch) => {
+        try {
+            const staff = await StaffAPI.editStaff(id, changedProperties);
+            dispatch(editStaff(staff.id, staff))
+        }
+        catch(e) {
+            console.log(e.message)
+        }
+    }
+}
+
 export const editStaff = (id, staff) => {
     return {type: EDIT_STAFF, id, staff}
 }
@@ -59,4 +73,24 @@ export const addStaffOnAPI = (staffToAdd) => {
 
 export const addStaff = (id, staff) => {
     return {type: ADD_STAFF, id, staff}
+}
+
+export const deleteStaffOnAPI = (ID) => {
+    return async (dispatch) => {
+        try {
+            let msg = await StaffAPI.deleteStaff(ID)
+        
+            dispatch(deleteStaff(ID))
+            
+            }
+        catch(e) {
+            console.log(e)
+            return e.message
+
+        }
+    }
+}
+
+export const deleteStaff = (id) => {
+    return {type: DELETE_STAFF, id}
 }

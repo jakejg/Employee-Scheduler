@@ -57,7 +57,25 @@ export class StaffAPI {
                 }
         return staff;
     }
+    static async editStaff(ID, changedProperties){
 
+        const data = await this.send('patch', `users/${ID}`, changedProperties);    
+        let {id, email, first_name, last_name, current_wage, years_at_company, jobs} = data.user
+
+            let staff = {
+                    id,
+                    email,
+                    first_name,
+                    last_name,
+                    current_wage, 
+                    years_at_company,
+                    current_job:  sortJobs(jobs).current,
+                    past_jobs: sortJobs(jobs).past,
+                    scheduled_jobs: sortJobs(jobs).future
+                }
+        return staff;
+    }
+   
     static async addStaff(staffToAdd){
         try{
         const token = JSON.parse(localStorage.getItem('token'))
@@ -77,4 +95,11 @@ export class StaffAPI {
         }
         
     }
-}
+
+    static async deleteStaff(id){
+        
+        const msg = await this.send('delete', `users/${id}`);    
+        return msg
+   
+    }
+}   
