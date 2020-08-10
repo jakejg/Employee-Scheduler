@@ -5,10 +5,21 @@ import {List, ListItem, ListItemText, Box, Typography, makeStyles, ListItemIcon,
 import DoneOutlineRoundedIcon from '@material-ui/icons/DoneOutlineRounded';
 import moment from 'moment';
 import Loading from './Loading';
+import statusToColor from '../helpers/jobColorObj';
 
 const useStyles = makeStyles(() => ({
-    checkMark: {
+    green: {
         color: 'green', 
+        marginLeft: '5px', 
+        marginTop: '5px'
+    },
+    yellow: {
+        color: 'yellow', 
+        marginLeft: '5px', 
+        marginTop: '5px'
+    },
+    red: {
+        color: 'red', 
         marginLeft: '5px', 
         marginTop: '5px'
     },
@@ -28,6 +39,7 @@ const JobList = () => {
     const jobs = useSelector(state => state.jobs)
     const classes = useStyles();
     const loading = !Object.keys(jobs).length
+    const statusColor = statusToColor();
 
     if (loading) return <Loading />
     
@@ -54,6 +66,7 @@ const JobList = () => {
                                                             component="a" href={`job/${id}`}
                                                             color="primary"
                                                             clickable />
+                                                            <DoneOutlineRoundedIcon fontSize='small' className={classes[statusColor[inProgress[id].status]]}/>
                                                         </Box>
                                                     </ListItem>)}
             </List>
@@ -67,9 +80,7 @@ const JobList = () => {
                                                             color="primary"
                                                             clickable
                                                             />
-
-                                                        
-                                                        {scheduled[id].staff_filled ? <DoneOutlineRoundedIcon fontSize='small' className={classes.checkMark}/>: null}
+                                                        <DoneOutlineRoundedIcon fontSize='small' className={classes[statusColor[scheduled[id].status]]}/>
                                                     </Box> 
                                                     </ListItem>)}
             </List>

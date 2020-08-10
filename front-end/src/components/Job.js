@@ -28,6 +28,7 @@ import NotFound from './NotFound';
 import getTotalCost from '../helpers/totalJobCost';
 import DeleteAlert from './DeleteAlert';
 import SaveIcon from '@material-ui/icons/Save';
+import statusToColor from '../helpers/jobColorObj';
 
 
 const useStyles = makeStyles(() => ({
@@ -65,6 +66,7 @@ const Job = () => {
     const loading = !job;
     const classes = useStyles();
     const smallScreen = useMediaQuery('(max-width:400px)');
+    const statusColor = statusToColor();
 
     useEffect(() => {
         const getJob = async () => {
@@ -102,19 +104,15 @@ const Job = () => {
     const handleDelete = () => {
         setDeleteDialog(deleteDialog => true)
     }
+    
 
-    let color;
-    if (job.status === 'under') color = 'yellow';
-    else if (job.status === 'filled') color = 'green';
-    else color = 'red';
-    console.log(job.status)
     return (
         <>
         <Grid container>
             <Grid item xs={false} sm={2}>
             </Grid>
             <Grid item xs={12} sm={8}>
-                <Paper elevation={5} className={classes[color]}>
+                <Paper elevation={5} className={classes[statusColor[job.status]]}>
                     <Box py={3}>
                         <Box textAlign='center'>
                             <Typography display="inline" variant="h5">{job.title}</Typography>
