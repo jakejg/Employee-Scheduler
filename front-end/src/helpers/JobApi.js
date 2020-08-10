@@ -31,7 +31,7 @@ export class JobAPI {
         add group property */
         const jobData = {};
         // length: moment.duration(end_time - start_time), 
-        for (let {id, title, start_date, end_date, staff_filled} of data.jobs) {
+        for (let {id, title, start_date, end_date, status} of data.jobs) {
             let start_time = moment(start_date);
             let end_time = moment(end_date);
             
@@ -42,7 +42,7 @@ export class JobAPI {
                 end_time,
                 group: id,
                 staff: [],
-                staff_filled
+                status
             }
         }
         return jobData;
@@ -79,7 +79,7 @@ export class JobAPI {
     static async getJob(ID){
         let data = await this.send('get', `jobs/${ID}`);
 
-        let {id, title, start_date, end_date, staff_filled, staff_needed, notes, staff} = data.job;
+        let {id, title, start_date, end_date, status, staff_needed, notes, staff} = data.job;
         let start_time = moment(start_date);
         let end_time = moment(end_date);
         let job = {
@@ -87,7 +87,7 @@ export class JobAPI {
             title, 
             start_time,
             end_time,
-            staff_filled,
+            status,
             staff_needed,
             notes,
             staff,
@@ -98,7 +98,7 @@ export class JobAPI {
 
     static async editJob(ID, changedProps){
         let data = await this.send('patch', `jobs/${ID}`, changedProps);
-        let {id, title, start_date, end_date, staff_filled, staff_needed, notes, staff} = data.job;
+        let {id, title, start_date, end_date, status, staff_needed, notes, staff} = data.job;
         let start_time = moment(start_date);
         let end_time = moment(end_date);
         let job = {
@@ -106,7 +106,7 @@ export class JobAPI {
             title, 
             start_time,
             end_time,
-            staff_filled,
+            status,
             staff_needed,
             notes,
             staff,

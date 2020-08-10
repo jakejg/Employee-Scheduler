@@ -18,7 +18,7 @@ const jobsReducer = (state={}, action) => {
         case EDIT_JOB_STAFF:
             return {...state, 
                 [action.id]: {...state[action.id],
-                                staff_filled: action.staff_filled, 
+                                status: action.status, 
                                 staff: [...action.staff]}}                      
             
         case ADD_JOB:

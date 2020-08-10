@@ -76,11 +76,11 @@ router.post('/:id/add_staff', checkAdminStatus, async (req, res, next) => {
     try {
         const staffList = await Job.addStaff(req.params.id, req.body.user_id);
         
-        // update staff_filled, if job is no longer fully staffed 
+        // update status
         const job = await Job.update(req.params.id)
         
-        console.log(job.staff_filled)
-        return res.json({staffList, staff_filled: job.staff_filled})
+        console.log(job.status)
+        return res.json({staffList, status: job.status})
     }
     catch(e){
         return next(e);
@@ -91,10 +91,10 @@ router.post('/:id/remove_staff', checkAdminStatus, async (req, res, next) => {
     try {
         const staffList = await Job.removeStaff(req.params.id, req.body.user_id);
 
-        // update staff_filled, if job is no longer fully staffed 
+        // update status
         const job = await Job.update(req.params.id)
        
-        return res.json({staffList, staff_filled: job.staff_filled})
+        return res.json({staffList, status: job.status})
     }
     catch(e){
         return next(e);

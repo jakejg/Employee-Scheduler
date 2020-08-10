@@ -37,13 +37,17 @@ const useStyles = makeStyles(() => ({
         marginBottom: '-5px'
     },
 
-    paper:{
+    yellow:{
+        border: 'solid yellow 3px',
         margin: '30px'
     },
     green: {
         border: 'solid green 3px',
         margin: '30px'
-        
+    },
+    red: {
+        border: 'solid red 3px',
+        margin: '30px'
     }
 }))
   
@@ -98,17 +102,23 @@ const Job = () => {
     const handleDelete = () => {
         setDeleteDialog(deleteDialog => true)
     }
+
+    let color;
+    if (job.status === 'under') color = 'yellow';
+    else if (job.status === 'filled') color = 'green';
+    else color = 'red';
+    console.log(job.status)
     return (
         <>
         <Grid container>
             <Grid item xs={false} sm={2}>
             </Grid>
             <Grid item xs={12} sm={8}>
-                <Paper elevation={5} className={job.staff_filled ? classes.green : classes.paper}>
+                <Paper elevation={5} className={classes[color]}>
                     <Box py={3}>
                         <Box textAlign='center'>
                             <Typography display="inline" variant="h5">{job.title}</Typography>
-                            {job.staff_filled &&
+                            {job.status === 'filled' &&
                             <DoneOutlineRoundedIcon fontSize='large' className={classes.checkMark}/>}
                         </Box>
                     <List>
@@ -188,7 +198,7 @@ const Job = () => {
                         </ListItem>
                         <ListItem>
                             <Fab style={{margin: '5px'}} onClick={handleEditClick} color="primary" size={smallScreen ? 'small': 'medium'} aria-label="edit">
-                                    <EditIcon font-size='small'/>
+                                    <EditIcon />
                                 </Fab>
                             <Fab style={{margin: '5px'}} onClick={handleDelete} color="inherit" size={smallScreen ? 'small': 'medium'} aria-label="edit">
                                 <DeleteIcon />
