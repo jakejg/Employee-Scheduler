@@ -61,11 +61,11 @@ class Job {
     }
     /* Method to update an existing job */
 
-    static async update(id, updateObj){
+    static async update(id, updateObj={}){
         const job = await this.findOne(id);
 
          // check if job is fully staffed now
-        updateObj.staff_filled = job.staff.length >= updateObj.staff_needed;
+        updateObj.staff_filled = job.staff.length >= (updateObj.staff_needed || job.staff_needed);
 
         // loop through all properties to update, if the property exists on the job instance, update the instance
         for (let key in updateObj){

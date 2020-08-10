@@ -76,14 +76,10 @@ router.post('/:id/add_staff', checkAdminStatus, async (req, res, next) => {
     try {
         const staffList = await Job.addStaff(req.params.id, req.body.user_id);
         
-        // check if job is fully staffed now
-        let job = await Job.findOne(req.params.id);
-        if (job.staff.length >= job.staff_needed){
-            // update staff filled status
-            job = await Job.update(req.params.id, {staff_filled: true});
-            await job.save();
-        }
+        // update staff_filled, if job is no longer fully staffed 
+        const job = await Job.update(req.params.id)
         
+        console.log(job.staff_filled)
         return res.json({staffList, staff_filled: job.staff_filled})
     }
     catch(e){
@@ -95,13 +91,9 @@ router.post('/:id/remove_staff', checkAdminStatus, async (req, res, next) => {
     try {
         const staffList = await Job.removeStaff(req.params.id, req.body.user_id);
 
-        // check if job is no longer fully staffed 
-        let job = await Job.findOne(req.params.id);
-        if (job.staff.length < job.staff_needed){
-            // update staff filled status
-            job = await Job.update(req.params.id, {staff_filled: false});
-            await job.save();
-        }
+        // update staff_filled, if job is no longer fully staffed 
+        const job = await Job.update(req.params.id)
+       
         return res.json({staffList, staff_filled: job.staff_filled})
     }
     catch(e){
