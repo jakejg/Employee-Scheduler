@@ -2,7 +2,8 @@ import {
     LOAD_JOBS,
     EDIT_JOB,
     ADD_JOB,
-    EDIT_JOB_STAFF
+    EDIT_JOB_STAFF,
+    DELETE_JOB
 } from '../actions/actionTypes';
 
 const jobsReducer = (state={}, action) => {
@@ -22,6 +23,11 @@ const jobsReducer = (state={}, action) => {
             
         case ADD_JOB:
             return {...state, [action.id]: {...action.job}}
+
+        case DELETE_JOB:
+            let jobs = { ...state };
+            delete jobs[action.id];
+            return jobs
     
         default:
             return state

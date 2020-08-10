@@ -96,6 +96,25 @@ export class JobAPI {
         return job;
     }
 
+    static async editJob(ID, changedProps){
+        let data = await this.send('patch', `jobs/${ID}`, changedProps);
+        let {id, title, start_date, end_date, staff_filled, staff_needed, notes, staff} = data.job;
+        let start_time = moment(start_date);
+        let end_time = moment(end_date);
+        let job = {
+            id, 
+            title, 
+            start_time,
+            end_time,
+            staff_filled,
+            staff_needed,
+            notes,
+            staff,
+            group: id,
+        }
+        return job;
+    }
+
     static async addStaffToJob(jobId, staffId){
         let data = await this.send('post', `jobs/${jobId}/add_staff`, {user_id: staffId});
         return data
@@ -103,6 +122,11 @@ export class JobAPI {
 
     static async removeStaffFromJob(jobId, staffId){
         let data = await this.send('post', `jobs/${jobId}/remove_staff`, {user_id: staffId});
+        return data
+    }
+
+    static async deleteJob(ID){
+        let data = await this.send('delete', `jobs/${ID}`);
         return data
     }
 }

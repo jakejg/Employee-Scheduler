@@ -2,7 +2,8 @@ import {
     LOAD_JOBS,
     EDIT_JOB, 
     ADD_JOB,
-    EDIT_JOB_STAFF
+    EDIT_JOB_STAFF,
+    DELETE_JOB
  } from './actionTypes';
 import {JobAPI} from '../helpers/JobApi';
 
@@ -41,10 +42,6 @@ export const addJob = (id, job) => {
 }
 
 
-export const editJob = (id, job) => {
-    return {type: EDIT_JOB, id, job}
-}
-
 export const getJobFromAPI = (ID) => {
     return async (dispatch) => {
         try {
@@ -58,7 +55,23 @@ export const getJobFromAPI = (ID) => {
     }
 }
 
+export const editJobOnAPI = (id, changedProps) => {
+    return async (dispatch) => {
+        try {
+            let job = await JobAPI.editJob(id, changedProps)
+            console.log(job)
+            dispatch(editJob(job.id, job))
+        }
+        catch(e) {
+            console.log(e)
+            return e.message
+        }
+    }
+}
 
+export const editJob = (id, job) => {
+    return {type: EDIT_JOB, id, job}
+}
 
 export const addStaffToJobOnAPI = (jobId, staffId) => {
     return async (dispatch) => {
@@ -89,4 +102,21 @@ export const removeStaffFromJobOnAPI = (jobId, staffId) => {
 
 export const editJobStaff = (id, staff, staff_filled) => {
     return {type: EDIT_JOB_STAFF, id, staff, staff_filled}
+}
+
+export const deleteJobOnAPI = (id) => {
+    return async (dispatch) => {
+        try {
+            let msg = await JobAPI.deleteJob(id)
+            dispatch(deleteJob(id))
+        }
+        catch(e) {
+            console.log(e)
+            return e.message
+        }
+    }
+}
+
+export const deleteJob = (id) => {
+    return {type: DELETE_JOB, id}
 }

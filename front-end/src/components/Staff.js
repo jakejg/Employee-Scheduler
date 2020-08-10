@@ -28,7 +28,6 @@ const Staff = () => {
     const loading = !staff;
     const [formData, setFormData] = useState({})
     const [dialog, setDialog] = useState(false)
-    const history = useHistory()
     
     useEffect(() => {
     const getData = async () => {

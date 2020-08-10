@@ -2,6 +2,8 @@ import React from 'react';
 import {useHistory} from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import {deleteStaffOnAPI} from '../actions/staff';
+import {deleteJobOnAPI} from '../actions/jobs';
+
 import {Dialog,
         DialogTitle,
         Box,
@@ -20,7 +22,7 @@ const DeleteAlert = ({ id, type, dialog, setDialog}) => {
             dispatch(deleteStaffOnAPI(id))
         }
         else {
-
+            dispatch(deleteJobOnAPI(id))
         }
         history.push('/dashboard')
         
