@@ -77,10 +77,9 @@ router.post('/:id/add_staff', checkAdminStatus, async (req, res, next) => {
         const staffList = await Job.addStaff(req.params.id, req.body.user_id);
         
         // update status
-        const job = await Job.update(req.params.id)
-        
-        console.log(job.status)
-        return res.json({staffList, status: job.status})
+        const job = await Job.update(req.params.id);
+        await job.save();
+        return res.json({staffList, status: job.status});
     }
     catch(e){
         return next(e);
@@ -92,9 +91,9 @@ router.post('/:id/remove_staff', checkAdminStatus, async (req, res, next) => {
         const staffList = await Job.removeStaff(req.params.id, req.body.user_id);
 
         // update status
-        const job = await Job.update(req.params.id)
-       
-        return res.json({staffList, status: job.status})
+        const job = await Job.update(req.params.id);
+        await job.save();
+        return res.json({staffList, status: job.status});
     }
     catch(e){
         return next(e);

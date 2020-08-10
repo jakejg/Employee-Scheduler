@@ -14,7 +14,7 @@ const useStyles = makeStyles(() => ({
         marginTop: '5px'
     },
     yellow: {
-        color: 'yellow', 
+        color: '#f0ad4e', 
         marginLeft: '5px', 
         marginTop: '5px'
     },
@@ -42,7 +42,7 @@ const JobList = () => {
     const statusColor = statusToColor();
 
     if (loading) return <Loading />
-    
+
     let inProgress = {};
     let scheduled = {};
     for (let key in jobs){

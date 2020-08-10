@@ -55,7 +55,7 @@ export class JobAPI {
         jobToAdd.comp_id = comp_id;
 
         let data = await this.send('post', `jobs`, jobToAdd);
-        const {id, title, start_date, end_date} = data.job;
+        const {id, title, start_date, end_date, status} = data.job;
         let start_time = moment(start_date);
         let end_time = moment(end_date);
         let job = {
@@ -64,16 +64,10 @@ export class JobAPI {
             start_time,
             end_time,
             group: id,
-            staff: []
+            staff: [],
+            status
         }
         return job;
-    }
-
-    static async editJob(ID, jobToEdit) {
-         // change dates to string format for database
-        jobToEdit.start_date = moment(jobToEdit.start_time).format();
-        jobToEdit.end_date = moment(jobToEdit.end_time).format();
-        await this.send('patch', `jobs/${ID}`, jobToEdit );
     }
 
     static async getJob(ID){
@@ -96,8 +90,13 @@ export class JobAPI {
         return job;
     }
 
-    static async editJob(ID, changedProps){
-        let data = await this.send('patch', `jobs/${ID}`, changedProps);
+    static async editJob(ID, jobToEdit){
+         // change dates to string format for database
+        console.log(jobToEdit)
+        jobToEdit.start_date = moment(jobToEdit.start_time).format();
+        jobToEdit.end_date = moment(jobToEdit.end_time).format();
+        console.log(jobToEdit)
+        let data = await this.send('patch', `jobs/${ID}`, jobToEdit);
         let {id, title, start_date, end_date, status, staff_needed, notes, staff} = data.job;
         let start_time = moment(start_date);
         let end_time = moment(end_date);

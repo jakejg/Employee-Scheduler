@@ -63,7 +63,7 @@ class Job {
 
     static async update(id, updateObj={}){
         const job = await this.findOne(id);
-
+        console.log(updateObj)
          // update job status
         if (job.staff.length > (updateObj.staff_needed || job.staff_needed)) {
             updateObj.status = 'over'

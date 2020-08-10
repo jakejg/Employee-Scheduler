@@ -58,9 +58,7 @@ export const getJobFromAPI = (ID) => {
 export const editJobOnAPI = (id, changedProps) => {
     return async (dispatch) => {
         try {
-            console.log(changedProps)
             let job = await JobAPI.editJob(id, changedProps)
-            console.log(job)
             dispatch(editJob(job.id, job))
         }
         catch(e) {

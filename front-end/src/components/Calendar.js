@@ -7,7 +7,7 @@ import moment from 'moment'
 import {useHistory} from 'react-router-dom';
 import {editJob} from '../actions/jobs';
 import {JobAPI} from '../helpers/JobApi';
-import { loadJobsFromAPI } from '../actions/jobs';
+import { loadJobsFromAPI, editJobOnAPI } from '../actions/jobs';
 import { decode } from 'jsonwebtoken';
 
 const useStyles = makeStyles(() => ({
@@ -51,11 +51,11 @@ const Calendar = () => {
         let {start_time, end_time } = job;
         job.end_time = moment(newStartTime + (end_time - start_time));
         job.start_time = moment(newStartTime);
-      
-        //change redux state
-        dispatch(editJob(itemId, job))
+        
         // change in database
-        JobAPI.editJob(itemId, job)
+        dispatch(editJobOnAPI(itemId, job))
+        //change redux state so calendar re-renders smoothly
+        dispatch(editJob(itemId, job))
     }
     
 

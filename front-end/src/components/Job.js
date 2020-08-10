@@ -39,7 +39,7 @@ const useStyles = makeStyles(() => ({
     },
 
     yellow:{
-        border: 'solid yellow 3px',
+        border: 'solid #f0ad4e 3px',
         margin: '30px'
     },
     green: {
@@ -90,8 +90,8 @@ const Job = () => {
     const handleEditClick = () => {
         setEdit(edit => !edit)
         setFormData(formData => ({
-            start_date: job.start_time.format('YYYY-MM-D'),
-            end_date: job.end_time.format('YYYY-MM-D'),
+            start_time: job.start_time.format('YYYY-MM-DD'),
+            end_time: job.end_time.format('YYYY-MM-DD'),
             staff_needed: job.staff_needed,
             notes: job.notes
                })
@@ -105,7 +105,6 @@ const Job = () => {
         setDeleteDialog(deleteDialog => true)
     }
     
-
     return (
         <>
         <Grid container>
@@ -124,8 +123,8 @@ const Job = () => {
                             <ListItemText >
                                 <b>Start:</b> {edit ?  
                             <Input
-                                value={formData.start_date}
-                                name='start_date'
+                                value={formData.start_time}
+                                name='start_time'
                                 onChange={handleChange}
                                 type='date'
                             ></Input>:
@@ -136,8 +135,8 @@ const Job = () => {
                             <ListItemText >
                                 <b>End:</b> {edit ?  
                             <Input
-                                value={formData.end_date}
-                                name='end_date'
+                                value={formData.end_time}
+                                name='end_time'
                                 onChange={handleChange}
                                 type='date'
                             ></Input>:
