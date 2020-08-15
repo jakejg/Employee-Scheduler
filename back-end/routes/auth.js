@@ -16,6 +16,7 @@ router.post('/register', async (req, res, next) => {
            
             const company = Company.create(req.body.company_name);
             await company.save()
+            await company.createCalendar();
             user.comp_id = company.id;
             await user.save()
         }

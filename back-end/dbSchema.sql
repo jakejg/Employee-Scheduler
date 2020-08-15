@@ -5,7 +5,9 @@ DROP TABLE IF EXISTS companies;
 
 CREATE TABLE companies (
     id SERIAL PRIMARY KEY,
-    name TEXT NOT NULL
+    name TEXT NOT NULL,
+    calendar_id TEXT
+
 );
 
 CREATE TABLE users (
@@ -31,7 +33,8 @@ CREATE TABLE jobs (
     status TEXT DEFAULT 'under',
     staff_needed INTEGER,
     notes TEXT,
-    comp_id INTEGER NOT NULL REFERENCES companies ON DELETE CASCADE
+    comp_id INTEGER NOT NULL REFERENCES companies ON DELETE CASCADE,
+    calendar_event_id TEXT
 );
 
 CREATE TABLE users_jobs (
@@ -40,8 +43,8 @@ CREATE TABLE users_jobs (
     user_id INTEGER NOT NULL REFERENCES users ON DELETE CASCADE
 );
 
-INSERT INTO companies (name) 
-VALUES ('Your Company Name');
+INSERT INTO companies (name, calendar_id) 
+VALUES ('Demo Company', 'AAMkAGZlYTI0YjJjLTg2ZjEtNDliNC1hMzEyLTRjZWQ1MTUxZDY0YgBGAAAAAADeU7Uxc9NWSb0_KQxp3SxZBwDOkpB1ICt6TpndDjvJOZEqAAAAAAEGAADOkpB1ICt6TpndDjvJOZEqAAAB5zUmAAA=');
 
 INSERT INTO jobs (title, start_date, end_date, staff_needed, notes, comp_id) 
 VALUES ('15 day Mountain', '2020-07-04', '2020-07-19', 2, 'test', 1);

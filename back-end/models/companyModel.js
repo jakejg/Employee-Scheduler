@@ -1,10 +1,12 @@
 const db = require('../db');
 const ExpressError = require('../helpers/expressError');
+const CalendarAPI = require('../helpers/calendarAPI');
 
 class Company {
-    constructor({id, name}) {
+    constructor({id, name, calendar_id}) {
         this.id = id;
         this.name = name;
+        this.calendar_id = calendar_id
     }
 
 
@@ -24,6 +26,7 @@ class Company {
     /* Method to create a new company instance */
 
     static create(name){
+        
         return new Company({name}) 
     }
     /* Method to update an existing company */
@@ -48,6 +51,24 @@ class Company {
             WHERE id=$1`, [company.id]
         )
 
+    } 
+
+     /* Method to create a calendar for a company on the microsft graph api and save the id in the database */
+
+    async createCalendar(){
+        this.calendar_id = await CalendarAPI.createCalendar(this.id.toString())
+        await this.save();
+      
+    }
+
+    /* Method to get the calendar id for a company*/
+
+    static async getCalendarID(comp_id){
+        const results = await db.query(
+            `SELECT calendar_id from companies
+            WHERE id=$1`, [comp_id]
+        )
+        return results.rows[0].calendar_id
     }
 
     /* Method to add/update instance of company in the database */
@@ -70,9 +91,9 @@ class Company {
         }
         else {
              const results = await db.query(
-            `UPDATE companies SET name=$2
+            `UPDATE companies SET name=$2, calendar_id=$3
             WHERE id=$1`, 
-            [this.id, this.name ]);
+            [this.id, this.name, this.calendar_id ]);
         
         }
     }

@@ -22,7 +22,7 @@ router.get('/', checkAdminStatus, async (req, res, next) => {
 
 router.post('/', checkAdminStatus, validateCreateJobJson, async (req, res, next) => {
     try {
-        const job = Job.create(req.body);
+        const job = await Job.create(req.body);
         await job.save();
         return res.status(201).json({job})
     }
@@ -79,7 +79,13 @@ router.post('/:id/add_staff', checkAdminStatus, async (req, res, next) => {
         // update status
         const job = await Job.update(req.params.id);
         await job.save();
+
+        // update calendar API
+        Job.sendCalendarInvite(req.params.id, req.body.user_id);
+        
         return res.json({staffList, status: job.status});
+
+    
     }
     catch(e){
         return next(e);

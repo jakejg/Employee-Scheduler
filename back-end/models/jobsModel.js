@@ -1,8 +1,11 @@
 const db = require('../db');
 const ExpressError = require('../helpers/expressError');
+const CalendarAPI = require('../helpers/calendarAPI');
+const Company = require('./companyModel');
+const User = require('./usersModel');
 
 class Job {
-    constructor({id, title, start_date, end_date, status, staff_needed, notes, staff, comp_id}) {
+    constructor({id, title, start_date, end_date, status, staff_needed, notes, staff, comp_id, calendar_event_id}) {
         this.id = id;
         this.title = title;
         this.start_date = start_date;
@@ -12,6 +15,7 @@ class Job {
         this.notes = notes;
         this.staff= staff;
         this.comp_id = comp_id;
+        this.calendar_event_id = calendar_event_id
     }
 
     /* Method to retrieve an overview of all jobs */
@@ -54,16 +58,20 @@ class Job {
         return staff.rows;
     }
 
+
     /* Method to create a new job instance */
 
-    static create(jobObj){
+    static async create(jobObj){
+        // get calendar_id from database
+        const calendar_id = await Company.getCalendarID(jobObj.comp_id);
+        // create calendar event on microsft graph api and add id to job object
+        jobObj.calendar_event_id = await CalendarAPI.createEvent(calendar_id, jobObj);
         return new Job(jobObj) 
     }
     /* Method to update an existing job */
 
     static async update(id, updateObj={}){
         const job = await this.findOne(id);
-        console.log(updateObj)
          // update job status
         if (job.staff.length > (updateObj.staff_needed || job.staff_needed)) {
             updateObj.status = 'over'
@@ -75,7 +83,6 @@ class Job {
             updateObj.status = 'filled'
         }
 
-        console.log(updateObj.status)
         // loop through all properties to update, if the property exists on the job instance, update the instance
         for (let key in updateObj){
             if (job[key] !== undefined) {
@@ -104,7 +111,7 @@ class Job {
         VALUES ($1, $2)
         RETURNING id`,
         [job_id, user_id]);
-
+      
         const staffList = await this.findAllStaffWorkingJob(job_id);
         return staffList
 
@@ -120,7 +127,21 @@ class Job {
 
         const staffList = await this.findAllStaffWorkingJob(job_id);
         return staffList
+    }
 
+    static async sendCalendarInvite(jobId, userId){
+        const job = await this.findOne(jobId);
+        const user = await User.findOne(userId);
+        const calendar_id = await Company.getCalendarID(job.comp_id)
+        CalendarAPI.updateEvent(calendar_id, job.calendar_event_id, {  "attendees": [
+            {
+              "emailAddress": {
+                "address": user.email,
+                "name": user.first_name + " " + user.last_name
+              },
+              "type": "required"
+            }
+          ]})
     }
 
     /* Method to add/update instance of job in the database */
@@ -130,10 +151,10 @@ class Job {
         if (!this.id) {
             try{
                 const results = await db.query(`INSERT INTO jobs
-                (title, start_date, end_date, status, staff_needed, notes, comp_id)
-                VALUES ($1, $2, $3, $4, $5, $6, $7)
+                (title, start_date, end_date, status, staff_needed, notes, comp_id, calendar_event_id)
+                VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
                 RETURNING id`,
-                [this.title, this.start_date, this.end_date, this.status, this.staff_needed, this.notes, this.comp_id]);
+                [this.title, this.start_date, this.end_date, this.status, this.staff_needed, this.notes, this.comp_id, this.calendar_event_id]);
 
                 this.id = results.rows[0].id;
             }
