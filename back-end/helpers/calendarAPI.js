@@ -9,7 +9,8 @@ const {
     SCOPE:scope, 
     GRANT_TYPE:grant_type, 
     CLIENT_SECRET:client_secret,
-    SERVICE_USER_ID
+    SERVICE_USER_ID,
+    CALENDAR_GROUP_ID
 } = process.env
 
 const TOKEN_ENDPOINT = `https://login.microsoftonline.com/${tenant}/oauth2/v2.0/token`;
@@ -39,18 +40,18 @@ class CalendarAPI{
             console.log(e.response.data)
         }
     }
-
   
-    static async createCalendar(comp_id){
+    static async createCalendar(company_name){
         try{
             let access_token = await this.getAccessToken();
             let res = await axios.post(`${BASE_URL}/${SERVICE_USER_ID}/calendars`,
             {
-                name: comp_id
+                name: company_name
             },
             {
                 headers: {authorization: access_token}
             })
+            console.log(res.data.id)
             return res.data.id
         }
         catch(e){
@@ -76,6 +77,17 @@ class CalendarAPI{
         }
     }
 
+    static createEventStaff(staffList){
+        const attendees = staffList.map(staff =>  ({
+              "emailAddress": {
+                "address": staff.email,
+                "name": staff.first_name + " " + staff.last_name
+              },
+              "type": "required"
+            }))
+        return attendees
+    }
+
     static async createEvent(calendarID, jobObj){
         try{
             const event = this.createEventBody(jobObj);
@@ -91,12 +103,14 @@ class CalendarAPI{
             console.log(e.response.data)
         }
     }
-    static async updateEvent(calendarID, eventID, updatedEvent){
+    static async updateEvent(calendarID, eventID, staffList){
 
         try{
+            const attendees = this.createEventStaff(staffList);
+            console.log(attendees)
             let access_token = await this.getAccessToken();
-            let res = await axios.patch(`${BASE_URL}/${SERVICE_USER_ID}/calendars/${calendarID}/events/${eventID}`,
-            updatedEvent,
+            await axios.patch(`${BASE_URL}/${SERVICE_USER_ID}/calendars/${calendarID}/events/${eventID}`,
+            {attendees},
             {
                 headers: {authorization: access_token}
             })
@@ -105,8 +119,54 @@ class CalendarAPI{
             console.log(e.response.data)
         }
     }
+
+    static async deleteAllCalendars(){
+        try{
+            let access_token = await this.getAccessToken();
+            let res = await axios.get(`${BASE_URL}/${SERVICE_USER_ID}/calendars/`,
+
+            {
+                headers: {authorization: access_token}
+            })
+            for (let calendar of res.data.value){
+                if (calendar.name !== 'Calendar'){
+                    let res = await axios.delete(`${BASE_URL}/${SERVICE_USER_ID}/calendars/${calendar.id}`,
+                    {
+                        headers: {authorization: access_token}
+                    })
+                    console.log(res.status)
+                }
+            
+            }
+        }
+        catch(e){
+            console.log(e.response.data)
+        }
+    }
+
+    static async getAllCalendars(){
+
+        try{
+            let access_token = await this.getAccessToken();
+            let res = await axios.get(`${BASE_URL}/${SERVICE_USER_ID}/calendars`,
+            {
+                headers: {authorization: access_token}
+            })
+            console.log(res.data)
+        }
+        catch(e){
+            console.log(e.response.data)
+        }
+    }
+   
 }
 
 
 module.exports = CalendarAPI
+
+// CalendarAPI.createEvent('AAMkAGZlYTI0YjJjLTg2ZjEtNDliNC1hMzEyLTRjZWQ1MTUxZDY0YgBGAAAAAADeU7Uxc9NWSb0_KQxp3SxZBwDOkpB1ICt6TpndDjvJOZEqAAAAAAEGAADOkpB1ICt6TpndDjvJOZEqAAAB5zU0AAA=', {title: '20 Day River', start_date: '2020-08-10', end_date: '2020-08-30'})
+
+// CalendarAPI.createEvent('AAMkAGZlYTI0YjJjLTg2ZjEtNDliNC1hMzEyLTRjZWQ1MTUxZDY0YgBGAAAAAADeU7Uxc9NWSb0_KQxp3SxZBwDOkpB1ICt6TpndDjvJOZEqAAAAAAEGAADOkpB1ICt6TpndDjvJOZEqAAAB5zU0AAA=', {title: '15 Day Mountain', start_date: '2020-07-04', end_date: '2020-07-19'})
+
+// CalendarAPI.createEvent('AAMkAGZlYTI0YjJjLTg2ZjEtNDliNC1hMzEyLTRjZWQ1MTUxZDY0YgBGAAAAAADeU7Uxc9NWSb0_KQxp3SxZBwDOkpB1ICt6TpndDjvJOZEqAAAAAAEGAADOkpB1ICt6TpndDjvJOZEqAAAB5zU0AAA=', {title: '30 Day Mountain', start_date: '2020-07-15', end_date: '2020-08-15'})
 
