@@ -24,10 +24,11 @@ class Company {
     }
 
     /* Method to create a new company instance */
+    /* Method to create a calendar for a company on the microsft graph api and save the id in the database */
 
     static create(name){
-        
-        return new Company({name}) 
+        const calendar_id = CalendarAPI.createCalendar(name)
+        return new Company({name, calendar_id}) 
     }
     /* Method to update an existing company */
 
@@ -53,14 +54,6 @@ class Company {
 
     } 
 
-     /* Method to create a calendar for a company on the microsft graph api and save the id in the database */
-
-    async createCalendar(){
-        this.calendar_id = await CalendarAPI.createCalendar(this.id.toString())
-        await this.save();
-      
-    }
-
     /* Method to get the calendar id for a company*/
 
     static async getCalendarID(comp_id){
@@ -78,10 +71,10 @@ class Company {
         if (!this.id) {
             try{
                 const results = await db.query(`INSERT INTO companies
-                (name)
-                VALUES ($1)
+                (name, calendar_id)
+                VALUES ($1, 2$)
                 RETURNING id`,
-                [this.name]);
+                [this.name, this.calendar_id]);
 
                 this.id = results.rows[0].id;
             }
@@ -91,9 +84,9 @@ class Company {
         }
         else {
              const results = await db.query(
-            `UPDATE companies SET name=$2, calendar_id=$3
+            `UPDATE companies SET name=$2, 
             WHERE id=$1`, 
-            [this.id, this.name, this.calendar_id ]);
+            [this.id, this.name]);
         
         }
     }

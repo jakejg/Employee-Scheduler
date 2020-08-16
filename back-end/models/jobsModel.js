@@ -50,7 +50,7 @@ class Job {
     static async findAllStaffWorkingJob(jobId) {
         // join query for users/staff associated with job
         const staff = await db.query(
-            `SELECT users.id, users.first_name, users.last_name, users.current_wage FROM users 
+            `SELECT users.id, users.first_name, users.last_name, users.current_wage, users.email FROM users 
             JOIN users_jobs ON users_jobs.user_id = users.id 
             JOIN jobs ON jobs.id = users_jobs.job_id
             WHERE jobs.id = $1`, [jobId])
@@ -129,19 +129,12 @@ class Job {
         return staffList
     }
 
-    static async sendCalendarInvite(jobId, userId){
+    /* Method to call update calendar event, which adds or removes a job/event from a staff's microsoft calendar*/
+
+    static async sendOrCancelCalendarInvite(jobId, staffList){
         const job = await this.findOne(jobId);
-        const user = await User.findOne(userId);
         const calendar_id = await Company.getCalendarID(job.comp_id)
-        CalendarAPI.updateEvent(calendar_id, job.calendar_event_id, {  "attendees": [
-            {
-              "emailAddress": {
-                "address": user.email,
-                "name": user.first_name + " " + user.last_name
-              },
-              "type": "required"
-            }
-          ]})
+        CalendarAPI.updateEvent(calendar_id, job.calendar_event_id, staffList)
     }
 
     /* Method to add/update instance of job in the database */

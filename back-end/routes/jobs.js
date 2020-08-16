@@ -81,8 +81,8 @@ router.post('/:id/add_staff', checkAdminStatus, async (req, res, next) => {
         await job.save();
 
         // update calendar API
-        Job.sendCalendarInvite(req.params.id, req.body.user_id);
-        
+        Job.sendOrCancelCalendarInvite(req.params.id, staffList);
+
         return res.json({staffList, status: job.status});
 
     
@@ -99,6 +99,10 @@ router.post('/:id/remove_staff', checkAdminStatus, async (req, res, next) => {
         // update status
         const job = await Job.update(req.params.id);
         await job.save();
+
+        // update calendar API
+        Job.sendOrCancelCalendarInvite(req.params.id, staffList);
+        
         return res.json({staffList, status: job.status});
     }
     catch(e){
