@@ -1,7 +1,6 @@
 const axios = require('axios');
 const qs = require('qs');
 require("dotenv").config({path: '../.env'});
-const ExpressError = require('../helpers/expressError');
 
 const { 
     TENANT:tenant, 
@@ -103,8 +102,23 @@ class CalendarAPI{
             console.log(e.response.data)
         }
     }
-    static async updateEvent(calendarID, eventID, staffList){
-
+    static async updateEventDetails(calendarID, eventID, jobObj){
+        try{
+            const updates = this.createEventBody(jobObj);
+            let access_token = await this.getAccessToken();
+            let res = await axios.patch(`${BASE_URL}/${SERVICE_USER_ID}/calendars/${calendarID}/events/${eventID}`,
+            updates,
+            {
+                headers: {authorization: access_token}
+            })
+            console.log(res.data)
+        }
+        catch(e){
+         
+            console.log(e.response.data)
+        }
+    }
+    static async updateEventAttendees(calendarID, eventID, staffList){
         try{
             const attendees = this.createEventStaff(staffList);
             console.log(attendees)

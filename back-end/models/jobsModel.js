@@ -70,7 +70,7 @@ class Job {
     }
     /* Method to update an existing job */
 
-    static async update(id, updateObj={}){
+    static async update(id, updateObj={}, updateCalendar=false){
         const job = await this.findOne(id);
          // update job status
         if (job.staff.length > (updateObj.staff_needed || job.staff_needed)) {
@@ -83,12 +83,21 @@ class Job {
             updateObj.status = 'filled'
         }
 
-        // loop through all properties to update, if the property exists on the job instance, update the instance
+        // loop through all properties to update, if the property exists on the job object, update the instance
         for (let key in updateObj){
             if (job[key] !== undefined) {
                 job[key] = updateObj[key];
             }
+            if (key === 'title' || key === 'start_date' || key === 'end_date'){
+                updateCalendar = true
+            }
         }
+        // update calendar
+        if (updateCalendar){
+            const calendar_id = await Company.getCalendarID(job.comp_id)
+            CalendarAPI.updateEventDetails(calendar_id, job.calendar_event_id, job)
+        }
+
         return job
 
     }
@@ -134,7 +143,7 @@ class Job {
     static async sendOrCancelCalendarInvite(jobId, staffList){
         const job = await this.findOne(jobId);
         const calendar_id = await Company.getCalendarID(job.comp_id)
-        CalendarAPI.updateEvent(calendar_id, job.calendar_event_id, staffList)
+        CalendarAPI.updateEventAttendees(calendar_id, job.calendar_event_id, staffList)
     }
 
     /* Method to add/update instance of job in the database */
