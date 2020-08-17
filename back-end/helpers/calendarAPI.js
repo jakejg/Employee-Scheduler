@@ -175,6 +175,7 @@ class CalendarAPI{
 }
 
 module.exports = CalendarAPI
+// CalendarAPI.getAllCalendars()
 // calls to create events for jobs in demo data
 // CalendarAPI.createEvent('AAMkAGZlYTI0YjJjLTg2ZjEtNDliNC1hMzEyLTRjZWQ1MTUxZDY0YgBGAAAAAADeU7Uxc9NWSb0_KQxp3SxZBwDOkpB1ICt6TpndDjvJOZEqAAAAAAEGAADOkpB1ICt6TpndDjvJOZEqAAAB5zU0AAA=', {title: '20 Day River', start_date: '2020-08-10', end_date: '2020-08-30'})
 

@@ -17,7 +17,7 @@ router.post('/register', async (req, res, next) => {
         // if no company id is sent, create a new company and associate with user
         if (!req.body.comp_id){
            
-            const company = Company.create(req.body.company_name);
+            const company = await Company.create(req.body.company_name);
             await company.save();
             user.comp_id = company.id;
             await user.save()

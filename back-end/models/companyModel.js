@@ -25,8 +25,9 @@ class Company {
 
     /* Method to create a new company instance */
 
-    static create(name){
-        const calendar_id = CalendarAPI.createCalendar(name)
+    static async create(name){
+        const calendar_id = await CalendarAPI.createCalendar(name)
+        console.log(calendar_id)
         return new Company({name, calendar_id}) 
     }
     /* Method to update an existing company */
