@@ -12,6 +12,7 @@ const rootReducer = (state, action) => {
        
         state.jobs = undefined;
         state.staff = undefined;
+        state.application = {};
         return state;
     }
 

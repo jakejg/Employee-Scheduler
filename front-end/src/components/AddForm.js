@@ -1,5 +1,7 @@
-import React, { useState, useContext } from 'react';
-import {useDispatch} from 'react-redux';
+import React, { useState} from 'react';
+import {useSelector, useDispatch} from 'react-redux';
+import { changeNoJobs } from '../actions/application';
+import { changeNoStaff } from '../actions/application';
 import {
     Grid,
     TextField,
@@ -34,6 +36,8 @@ const AddForm = ({  type,
     const [alert, setAlert] = useState();
     const dispatch = useDispatch()
     const history = useHistory();
+    const noJobs = useSelector(state => state.application.noJobs);
+    const noStaff = useSelector(state => state.application.noStaff);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -47,9 +51,16 @@ const AddForm = ({  type,
             if (msg){
                 setAlert(alert => msg)
             }
+            if (noJobs && type === 'Job'){
+                dispatch(changeNoJobs())
+            }
+            if (noStaff && type === 'Staff'){
+                dispatch(changeNoStaff())
+            }
             else{
-                if (redirect) history.push(redirect);
                 closeDialog();
+                if (redirect) history.push(redirect);
+               
             }
         }
         

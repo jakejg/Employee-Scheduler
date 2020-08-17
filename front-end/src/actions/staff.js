@@ -11,6 +11,9 @@ export const loadStaffFromAPI = (comp_id) => {
         try {
             let staffData = await StaffAPI.loadStaff(comp_id);
             dispatch(loadStaff(staffData));
+            if (!Object.keys(staffData).length){
+                return "No staff found"
+            }
         }
         catch(e) {
             console.log(e)

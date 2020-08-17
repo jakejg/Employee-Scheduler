@@ -12,7 +12,10 @@ import JobList from './JobList';
 import StaffList from './StaffList';
 import { loadJobsFromAPI } from '../actions/jobs';
 import { loadStaffFromAPI } from '../actions/staff';
+import { changeNoJobs } from '../actions/application';
+import { changeNoStaff } from '../actions/application';
 import { decode } from "jsonwebtoken";
+import EmptyList from './EmptyList';
 
 const drawerWidth = 240;
 
@@ -44,12 +47,21 @@ const Dashboard = () => {
     const open = useSelector(state => state.application.drawer)
     const token = useSelector(state => state.application.token)
     const dispatch = useDispatch();
+    const noJobs = useSelector(state => state.application.noJobs)
+    const noStaff = useSelector(state => state.application.noStaff)
 
     useEffect(() => {
       const getData = async () => {
           const { comp_id } = decode(token);
-          dispatch(loadJobsFromAPI(comp_id));
-          dispatch(loadStaffFromAPI(comp_id));
+          let jobMsg = await dispatch(loadJobsFromAPI(comp_id));
+          if (jobMsg) {
+              dispatch(changeNoJobs());
+          }
+
+          let staffMsg = await dispatch(loadStaffFromAPI(comp_id));
+          if (staffMsg) {
+              dispatch(changeNoStaff());
+          }
       }
       getData();
   }, [dispatch, token])
@@ -68,12 +80,12 @@ const Dashboard = () => {
                     <Grid container spacing={3} className={classes.drawerHeader} >
                          <Grid item xs>
                              <Paper elevation={3}>
-                                <JobList />
+                                {noJobs ? <EmptyList type="jobs"/> : <JobList />}
                              </Paper >
                          </Grid>
                          <Grid item xs>
                              <Paper elevation={3}>
-                                <StaffList />
+                                {noStaff ? <EmptyList type="Staff"/> : <StaffList />}
                              </Paper>
                          </Grid>
 

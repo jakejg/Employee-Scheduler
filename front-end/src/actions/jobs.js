@@ -12,6 +12,9 @@ export const loadJobsFromAPI = (comp_id) => {
         try {
             const jobData = await JobAPI.loadJobs(comp_id)
             dispatch(loadJobs(jobData));
+            if (!Object.keys(jobData).length){
+                return "No jobs found"
+            }
         }
         catch(e) {
             console.log(e)

@@ -11,7 +11,9 @@ export const EDIT_STAFF = "EDIT_STAFF";
 export const DELETE_STAFF = "DELETE_STAFF";
 
 export const CHANGE_DRAWER = "CHANGE_DRAWER";
-
+export const CHANGE_NO_JOBS = "CHANGE_NO_JOBS";
+export const CHANGE_NO_STAFF = "CHANGE_NO_STAFF";
+ 
 export const ADD_OR_REMOVE_TOKEN = "ADD_OR_REMOVE_TOKEN";
 export const LOG_OUT = "LOG_OUT";
 
