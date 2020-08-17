@@ -13,6 +13,10 @@ const PopOver = ({dialog, setDialog}) => {
     const registerFields = ['Company Name', 'First Name','Last Name', 'Email', 'Username', 'Password',];
     const loginFields = ['Username', 'Password'];
 
+    const closeDialog = () => {
+        setDialog(dialog => ({isOpen: false, type: ""}))
+    }
+
     return (
         <Dialog open={dialog.isOpen} onClose={() => setDialog(dialog => ({isOpen: false, type: ""}))} fullWidth={true}>
             <DialogTitle><Box textAlign='center' >{dialog.type}</Box></DialogTitle>
@@ -20,6 +24,7 @@ const PopOver = ({dialog, setDialog}) => {
                 fields={dialog.type === 'Register' ? registerFields : loginFields}
                 doOnSubmit={dialog.type === 'Register' ? register : login }
                 redirect='/dashboard'
+                closeDialog={closeDialog}
                 />
         </Dialog>
         );

@@ -49,6 +49,7 @@ const AddForm = ({  type,
             }
             else{
                 if (redirect) history.push(redirect);
+                closeDialog();
             }
         }
         

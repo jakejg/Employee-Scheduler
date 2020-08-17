@@ -71,6 +71,7 @@ const NavBar = ({ onDashboard }) => {
     const [dialog, setDialog] = useState({isOpen: false, type:""});
     const dispatch = useDispatch();
     const history = useHistory();
+    console.log(dialog)
     
 
     // show full nav bar if not on the dashboard
