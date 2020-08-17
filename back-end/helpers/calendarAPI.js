@@ -8,8 +8,7 @@ const {
     SCOPE:scope, 
     GRANT_TYPE:grant_type, 
     CLIENT_SECRET:client_secret,
-    SERVICE_USER_ID,
-    CALENDAR_GROUP_ID
+    SERVICE_USER_ID
 } = process.env
 
 const TOKEN_ENDPOINT = `https://login.microsoftonline.com/${tenant}/oauth2/v2.0/token`;
@@ -106,12 +105,11 @@ class CalendarAPI{
         try{
             const updates = this.createEventBody(jobObj);
             let access_token = await this.getAccessToken();
-            let res = await axios.patch(`${BASE_URL}/${SERVICE_USER_ID}/calendars/${calendarID}/events/${eventID}`,
+            await axios.patch(`${BASE_URL}/${SERVICE_USER_ID}/calendars/${calendarID}/events/${eventID}`,
             updates,
             {
                 headers: {authorization: access_token}
             })
-            console.log(res.data)
         }
         catch(e){
          
@@ -134,6 +132,7 @@ class CalendarAPI{
         }
     }
 
+    // delete all calendars except the primary and demo calendar
     static async deleteAllCalendars(){
         try{
             let access_token = await this.getAccessToken();
@@ -143,7 +142,7 @@ class CalendarAPI{
                 headers: {authorization: access_token}
             })
             for (let calendar of res.data.value){
-                if (calendar.name !== 'Calendar'){
+                if (calendar.name !== 'Calendar' && calendar.name !== 'Demo Company'){
                     let res = await axios.delete(`${BASE_URL}/${SERVICE_USER_ID}/calendars/${calendar.id}`,
                     {
                         headers: {authorization: access_token}
@@ -175,9 +174,8 @@ class CalendarAPI{
    
 }
 
-
 module.exports = CalendarAPI
-
+// calls to create events for jobs in demo data
 // CalendarAPI.createEvent('AAMkAGZlYTI0YjJjLTg2ZjEtNDliNC1hMzEyLTRjZWQ1MTUxZDY0YgBGAAAAAADeU7Uxc9NWSb0_KQxp3SxZBwDOkpB1ICt6TpndDjvJOZEqAAAAAAEGAADOkpB1ICt6TpndDjvJOZEqAAAB5zU0AAA=', {title: '20 Day River', start_date: '2020-08-10', end_date: '2020-08-30'})
 
 // CalendarAPI.createEvent('AAMkAGZlYTI0YjJjLTg2ZjEtNDliNC1hMzEyLTRjZWQ1MTUxZDY0YgBGAAAAAADeU7Uxc9NWSb0_KQxp3SxZBwDOkpB1ICt6TpndDjvJOZEqAAAAAAEGAADOkpB1ICt6TpndDjvJOZEqAAAB5zU0AAA=', {title: '15 Day Mountain', start_date: '2020-07-04', end_date: '2020-07-19'})

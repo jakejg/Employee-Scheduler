@@ -83,17 +83,20 @@ class Job {
             updateObj.status = 'filled'
         }
 
-        // loop through all properties to update, if the property exists on the job object, update the instance
+         
+        // loop through all properties to update, if the property exists on the job instance, update the instance
         for (let key in updateObj){
+            // check if calendar needs to be updated
+            if ((key === 'title' || key === 'start_date' || key === 'end_date') && updateObj[key] !== job[key]){
+                updateCalendar = true
+            }
             if (job[key] !== undefined) {
                 job[key] = updateObj[key];
             }
-            if (key === 'title' || key === 'start_date' || key === 'end_date'){
-                updateCalendar = true
-            }
         }
-        // update calendar
-        if (updateCalendar){
+        
+        // update calendar if needed
+        if (updateObj){
             const calendar_id = await Company.getCalendarID(job.comp_id)
             CalendarAPI.updateEventDetails(calendar_id, job.calendar_event_id, job)
         }

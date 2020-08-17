@@ -9,16 +9,22 @@ const Company = require('../models/companyModel.js');
 
 router.post('/register', async (req, res, next) => {
     try{
+        if (await User.checkUsername(req.body.username)) throw new ExpressError("Username is taken", 400);
+        if (await Company.checkCompanyName(req.body.company_name)) throw new ExpressError("A comany with that name already exists", 400);
+        
         const user = await User.create(req.body);
         await user.save();
         // if no company id is sent, create a new company and associate with user
         if (!req.body.comp_id){
            
             const company = Company.create(req.body.company_name);
-            await company.save()
-            await company.createCalendar();
+            await company.save();
             user.comp_id = company.id;
             await user.save()
+
+            // // create new calendar for the company
+            // company.calendar_id = CalendarAPI.createCalendar(company.name)
+            // await company.save()
         }
         const token = createToken(user.username, user.is_admin, user.comp_id);
         return res.json({token});

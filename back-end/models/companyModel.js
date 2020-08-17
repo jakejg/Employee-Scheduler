@@ -6,7 +6,7 @@ class Company {
     constructor({id, name, calendar_id}) {
         this.id = id;
         this.name = name;
-        this.calendar_id = calendar_id
+        this.calendar_id = calendar_id;
     }
 
 
@@ -24,7 +24,6 @@ class Company {
     }
 
     /* Method to create a new company instance */
-    /* Method to create a calendar for a company on the microsft graph api and save the id in the database */
 
     static create(name){
         const calendar_id = CalendarAPI.createCalendar(name)
@@ -64,6 +63,20 @@ class Company {
         return results.rows[0].calendar_id
     }
 
+    /* Method to check if a company name exists*/
+
+    static async checkCompanyName(name){
+        const results = await db.query(
+            `SELECT id
+            FROM companies
+            WHERE name=$1`, [name]
+        )
+        let company = results.rows[0];
+  
+        if (company) return true
+        else return false
+    }
+
     /* Method to add/update instance of company in the database */
 
     async save(){
@@ -72,19 +85,22 @@ class Company {
             try{
                 const results = await db.query(`INSERT INTO companies
                 (name, calendar_id)
-                VALUES ($1, 2$)
+                VALUES ($1, $2)
                 RETURNING id`,
                 [this.name, this.calendar_id]);
 
                 this.id = results.rows[0].id;
             }
             catch(e) {
-                throw new ExpressError(e)
+                console.log(e)
+                if (e.code === '23505'){
+                    throw new ExpressError("A company with that name already exists", 400)
+                }
             }
         }
         else {
              const results = await db.query(
-            `UPDATE companies SET name=$2, 
+            `UPDATE companies SET name=$2
             WHERE id=$1`, 
             [this.id, this.name]);
         

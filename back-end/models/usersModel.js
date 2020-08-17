@@ -140,6 +140,30 @@ class User {
         return await bcrypt.compare(password, dbPassword);
     }
 
+    /* Method to check if username exists*/
+
+    static async checkUsername(username){
+        const results = await db.query(
+            `SELECT id
+            FROM users 
+            WHERE username=$1`, [username]
+        )
+        let user = results.rows[0];
+        if (user) return true
+        else  return false
+
+}
+    // static async checkCompanyName(name){
+    //     const results = await db.query(
+    //         `SELECT id
+    //         FROM companies
+    //         WHERE name=$1`, [name]
+    //     )
+    //     let company = results.rows[0];
+    //     console.log(company)
+    //     if (company) return true
+    //     else return false
+
      /* Method to find user by username */
 
      static async findByUsername(username) {
