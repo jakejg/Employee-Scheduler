@@ -92,10 +92,9 @@ export class JobAPI {
 
     static async editJob(ID, jobToEdit){
          // change dates to string format for database
-        console.log(jobToEdit)
         jobToEdit.start_date = moment(jobToEdit.start_time).format();
         jobToEdit.end_date = moment(jobToEdit.end_time).format();
-        console.log(jobToEdit)
+        
         let data = await this.send('patch', `jobs/${ID}`, jobToEdit);
         let {id, title, start_date, end_date, status, staff_needed, notes, staff} = data.job;
         let start_time = moment(start_date);

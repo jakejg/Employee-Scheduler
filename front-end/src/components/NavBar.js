@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useState} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
 import AppBar from '@material-ui/core/AppBar';
@@ -15,6 +15,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { NavLink, useHistory } from 'react-router-dom';
 import {LOG_OUT} from '../actions/actionTypes';
 import {addOrRemoveToken} from '../actions/authentication'
+import PopOver from './PopOver';
 
 
 const drawerWidth = 240;
@@ -67,6 +68,7 @@ const NavBar = ({ onDashboard }) => {
     const classes = useStyles();
     const open = useSelector(state => state.application.drawer);
     const loggedIn = useSelector(state => state.application.token)
+    const [dialog, setDialog] = useState({isOpen: false, type:""});
     const dispatch = useDispatch();
     const history = useHistory();
     
@@ -95,6 +97,7 @@ const NavBar = ({ onDashboard }) => {
                               <Typography variant="h6" className={classes.title}>
                                 Employee Scheduler 
                               </Typography>
+                              <Typography onClick={()=> setDialog(dialog => ({isOpen: true, type: "Login"}))} className={classes.link}>Login</Typography>
                           
                             </>
     const loggedInView = <>
@@ -133,6 +136,7 @@ const NavBar = ({ onDashboard }) => {
         </Toolbar>
             
           </AppBar>
+          <PopOver dialog={dialog} setDialog={setDialog} />
         </div>
         )
 }
