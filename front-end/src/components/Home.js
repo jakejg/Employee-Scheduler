@@ -28,7 +28,6 @@ const useStyles = makeStyles(() => ({
     },
 
     main : {
-        // border: "solid",
         paddingBottom: '0px',
         fontSize: '50px',
         fontFamily: 'Slack-Larsseit,"Helvetica Neue",Helvetica,"Segoe UI",Tahoma,Arial,sans-serif',
@@ -41,7 +40,6 @@ const useStyles = makeStyles(() => ({
 
     second: {
         paddingTop: '0px',
-        // border: "solid",
         fontSize: '20px',
         fontWeight: '400'
     }
@@ -111,11 +109,3 @@ const Home = () => {
 }
 
 export default Home;
-{/* <div>
-            {error && <Alert severity="warning">You must be logged in as an administrator to view that page</Alert>}
-            <Button variant='contained' onClick={()=> setDialog(dialog => ({isOpen: true, type: "Register"}))}>Register your company</Button>
-            <Button variant='contained' onClick={()=> setDialog(dialog => ({isOpen: true, type: "Login"}))}>Login</Button>
-           
-
-            <PopOver dialog={dialog} setDialog={setDialog} />
-        </div> */}
