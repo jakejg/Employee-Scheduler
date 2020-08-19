@@ -18,6 +18,7 @@ import {
     makeStyles
 } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
+import CloseIcon from '@material-ui/icons/Close';
 import AddIcon from '@material-ui/icons/Add';
 import Loading from './Loading';
 import {loadStaffFromAPI} from '../actions/staff';
@@ -27,14 +28,14 @@ import { decode } from "jsonwebtoken";
 
 const useStyles = makeStyles(() => ({
     purple : {
-        backgroundColor: '#7b00b0',
+        backgroundColor: 'purple',
         "&:hover": {
             backgroundColor: '#6e0491',
         }
     }    
 }))
 
-const AddStaffToJob = ({job}) => {
+const AddStaffToJob = ({job, closeDialog}) => {
     const staff = useSelector(state => state.staff)
     const loading = !staff
     const [staffId, setStaffId] = useState("");
@@ -77,6 +78,16 @@ const AddStaffToJob = ({job}) => {
     // mx={{sm:'auto'}} width={{sm:'40%'}} mt={3}
     return (
         <Box>
+            <Box display='flex' justifyContent='flex-end'>
+                <Box width='100%' mt={1} display='flex' justifyContent='center'>
+                    <Typography align='center' variant='h6' >Add or Remove Staff </Typography>
+                </Box>
+                <IconButton onClick={closeDialog}>
+                        <Tooltip title="Close Window">
+                            <CloseIcon/>
+                        </Tooltip>
+                </IconButton></Box>
+            
         <List>
             {job.staff.map(staff => 
                 <ListItem key={staff.id}>
@@ -120,7 +131,6 @@ const AddStaffToJob = ({job}) => {
                 </form>    
             </ListItem>
         </List>
-        {/* <Typography align='center'>Once added the job will appear on the staff's Microsoft Calendar</Typography> */}
         </Box>
     )
 }

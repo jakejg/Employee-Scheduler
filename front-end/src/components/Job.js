@@ -104,6 +104,10 @@ const Job = () => {
     const handleDelete = () => {
         setDeleteDialog(deleteDialog => true)
     }
+
+    const closeDialog = () => {
+        setIsOpen(false)
+    }
     
     return (
         <>
@@ -215,9 +219,9 @@ const Job = () => {
             <Grid item xs={false} sm={2}>
             </Grid>
         </Grid>
-        <Dialog open={isOpen} onClose={() => setIsOpen(false)} fullWidth={true}>
-            <DialogTitle><Box textAlign='center' >Add or Remove Staff </Box></DialogTitle>
-            <AddStaffToJob job={job} />
+        <Dialog open={isOpen} onClose={closeDialog} fullWidth={true}>
+            <AddStaffToJob job={job}
+                            closeDialog={closeDialog} />
         </Dialog>
         </>
         );
