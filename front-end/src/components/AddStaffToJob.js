@@ -1,7 +1,8 @@
 import React, {useState, useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {
-    Grid,
+    Tooltip,
+    Fab,
     TextField,
     Box,
     Paper,
@@ -13,21 +14,32 @@ import {
     List, 
     IconButton,
     ListItemSecondaryAction,
-    MenuItem
+    MenuItem,
+    makeStyles
 } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
+import AddIcon from '@material-ui/icons/Add';
 import Loading from './Loading';
 import {loadStaffFromAPI} from '../actions/staff';
 import {addStaffToJobOnAPI, removeStaffFromJobOnAPI} from '../actions/jobs';
 import filterStaffOnJob from '../helpers/createOptions';
 import { decode } from "jsonwebtoken";
 
+const useStyles = makeStyles(() => ({
+    purple : {
+        backgroundColor: '#7b00b0',
+        "&:hover": {
+            backgroundColor: '#6e0491',
+        }
+    }    
+}))
+
 const AddStaffToJob = ({job}) => {
     const staff = useSelector(state => state.staff)
     const loading = !staff
     const [staffId, setStaffId] = useState("");
     const token = useSelector(state => state.application.token)
-    // const [errors, setErrors] = useState([]);
+    const classes = useStyles();
     const dispatch = useDispatch()
 
     useEffect(() => {
@@ -70,9 +82,11 @@ const AddStaffToJob = ({job}) => {
                 <ListItem key={staff.id}>
                     <ListItemText primary={`${staff.first_name} ${staff.last_name}`} />
                     <ListItemSecondaryAction>
-                        <IconButton onClick={()=> remove(staff.id)} edge="end" aria-label="delete">
-                          <DeleteIcon />
-                        </IconButton>
+                        <Tooltip title='Remove Staff'>
+                            <IconButton onClick={()=> remove(staff.id)} edge="end" aria-label="delete">
+                              <DeleteIcon />
+                            </IconButton>
+                        </Tooltip>
                     </ListItemSecondaryAction>
                 </ListItem> 
             )}
@@ -87,6 +101,7 @@ const AddStaffToJob = ({job}) => {
                         margin="normal"
                         size="small"
                         fullWidth
+                        helperText = "Once added the job will appear on the staff's Microsoft Calendar"                       
                         >
                     {options.map(staff => 
                     <MenuItem key={staff.id} value={staff.id}>
@@ -95,12 +110,17 @@ const AddStaffToJob = ({job}) => {
                     )}     
                     </TextField>        
                     <ListItemSecondaryAction>
-                        <Button variant="contained" onClick={add}>Add</Button>
+                        <Tooltip title="Add Staff">
+                            <Fab className={classes.purple} aria-label="add" size='small'>
+                                <AddIcon onClick={add} />
+                            </Fab>
+                        </Tooltip>
                     </ListItemSecondaryAction>
                     
                 </form>    
             </ListItem>
         </List>
+        {/* <Typography align='center'>Once added the job will appear on the staff's Microsoft Calendar</Typography> */}
         </Box>
     )
 }
