@@ -1,0 +1,65 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`matches snapshot 1`] = `
+<DocumentFragment>
+  <div>
+    <h4
+      class="MuiTypography-root MuiTypography-h4 MuiTypography-alignCenter"
+    >
+      Staff Currently Working
+    </h4>
+    <ul
+      class="MuiList-root MuiList-padding"
+    />
+    <h4
+      class="MuiTypography-root MuiTypography-h4 MuiTypography-alignCenter"
+    >
+      Available Staff
+    </h4>
+    <ul
+      class="MuiList-root MuiList-padding"
+    >
+      <li
+        class="MuiListItem-root makeStyles-box-6 MuiListItem-gutters"
+      >
+        <div
+          class="MuiBox-root MuiBox-root-7 makeStyles-text-5"
+        >
+          <a
+            class="MuiChip-root MuiChip-colorSecondary MuiChip-clickableColorSecondary MuiChip-clickable"
+            href="staff/1"
+            role="button"
+            tabindex="0"
+          >
+            <span
+              class="MuiChip-label"
+            >
+              Stacey Lopez
+            </span>
+          </a>
+        </div>
+      </li>
+      <li
+        class="MuiListItem-root makeStyles-box-6 MuiListItem-gutters"
+      >
+        <div
+          class="MuiBox-root MuiBox-root-8 makeStyles-text-5"
+        >
+          <a
+            class="MuiChip-root MuiChip-colorSecondary MuiChip-clickableColorSecondary MuiChip-clickable"
+            href="staff/2"
+            role="button"
+            tabindex="0"
+          >
+            <span
+              class="MuiChip-label"
+            >
+              Jon Martin
+            </span>
+          </a>
+        </div>
+      </li>
+    </ul>
+  </div>
+</DocumentFragment>
+`;

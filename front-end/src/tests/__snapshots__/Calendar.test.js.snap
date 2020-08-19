@@ -1,0 +1,175 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`matches snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="MuiContainer-root MuiContainer-maxWidthLg"
+  >
+    <div
+      class="MuiPaper-root makeStyles-instructions-3 MuiPaper-elevation1 MuiPaper-rounded"
+    >
+      <ul
+        class="MuiList-root MuiList-padding"
+      >
+        <li
+          class="MuiListItem-root MuiListItem-gutters"
+        >
+          <div
+            class="MuiListItemText-root"
+          >
+            <span
+              class="MuiTypography-root MuiListItemText-primary MuiTypography-body1 MuiTypography-displayBlock"
+            >
+              Click on a job to select it
+            </span>
+          </div>
+        </li>
+        <li
+          class="MuiListItem-root MuiListItem-gutters"
+        >
+          <div
+            class="MuiListItemText-root"
+          >
+            <span
+              class="MuiTypography-root MuiListItemText-primary MuiTypography-body1 MuiTypography-displayBlock"
+            >
+              Double click on a job to view details
+            </span>
+          </div>
+        </li>
+      </ul>
+      <p
+        class="MuiTypography-root MuiTypography-body1"
+      />
+    </div>
+    <div
+      class="MuiPaper-root makeStyles-calendarContainer-4 MuiPaper-elevation4 MuiPaper-rounded"
+    >
+      <div
+        class="react-calendar-timeline "
+      >
+        <div
+          class="rct-header-root"
+          style="display: flex; width: 100%;"
+        >
+          <div
+            style="width: 150px;"
+          />
+          <div
+            class="rct-calendar-header"
+            style="overflow: hidden;"
+          >
+            <div
+              style="height: 30px; position: relative; width: -450px;"
+            >
+              <div
+                class="rct-dateHeader rct-dateHeader-primary"
+                style="left: 351.29734285300924px; width: -915px; position: absolute;"
+              >
+                <span>
+                  20
+                </span>
+              </div>
+            </div>
+            <div
+              style="height: 30px; position: relative; width: -450px;"
+            >
+              <div
+                class="rct-dateHeader "
+                style="left: 351.29734285300924px; width: -915px; position: absolute;"
+              >
+                <span>
+                  20
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="rct-outer"
+          style="height: 80px;"
+        >
+          <div
+            class="rct-sidebar"
+            style="width: 150px; height: 80px;"
+          >
+            <div
+              style="width: 150px;"
+            >
+              <div
+                class="rct-sidebar-row rct-sidebar-row-even"
+                style="height: 40px; line-height: 40px;"
+              >
+                20 Day River
+              </div>
+              <div
+                class="rct-sidebar-row rct-sidebar-row-odd"
+                style="height: 40px; line-height: 40px;"
+              >
+                15 Day Mountain
+              </div>
+            </div>
+          </div>
+          <div
+            class="rct-scroll"
+            style="width: -150px; height: 100px; cursor: default; position: relative;"
+          >
+            <div
+              style="position: absolute; left: 0px; right: 0px; top: 0px; bottom: 0px;"
+            >
+              <div
+                class="rct-vertical-lines"
+              >
+                <div
+                  class="rct-vl"
+                  style="pointer-events: none; top: 0px; left: 351.29734285300924px; width: -915px; height: 80px;"
+                />
+              </div>
+              <div
+                class="rct-horizontal-lines"
+              >
+                <div
+                  class="rct-hl-even "
+                  style="width: -450px; height: 40px;"
+                />
+                <div
+                  class="rct-hl-odd "
+                  style="width: -450px; height: 40px;"
+                />
+              </div>
+              <div
+                class="rct-items"
+              >
+                <div
+                  class="rct-item "
+                  style="font-size: 12px; color: white; cursor: pointer; background: rgb(33, 150, 243); border: 1px solid #1a6fb3; z-index: 80; position: absolute; box-sizing: border-box; left: -212.49997517361112px; top: 45px; width: 12.5px; height: 30px; line-height: 30px;"
+                  title="20 Day River"
+                >
+                  <div
+                    class="rct-item-content"
+                    style="max-height: 30;"
+                  >
+                    20 Day River
+                  </div>
+                </div>
+                <div
+                  class="rct-item "
+                  style="font-size: 12px; color: white; cursor: pointer; background: rgb(33, 150, 243); border: 1px solid #1a6fb3; z-index: 80; position: absolute; box-sizing: border-box; left: -212.49997517361112px; top: 45px; width: 12.5px; height: 30px; line-height: 30px;"
+                  title="15 Day Mountain"
+                >
+                  <div
+                    class="rct-item-content"
+                    style="max-height: 30;"
+                  >
+                    15 Day Mountain
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

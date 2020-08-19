@@ -138,7 +138,7 @@ const Job = () => {
                                 value={formData.end_time}
                                 name='end_time'
                                 onChange={handleChange}
-                                type='date'
+                                type ='date'
                             ></Input>:
                             job.end_time.format("dddd, MMMM Do YYYY, h:mm:ss a")}
                             </ListItemText>

@@ -1,0 +1,293 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`matches snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="makeStyles-root-24"
+  >
+    <div
+      class="makeStyles-root-27"
+    >
+      <div
+        class="MuiDrawer-root MuiDrawer-docked makeStyles-drawer-32"
+      >
+        <div
+          class="MuiPaper-root MuiDrawer-paper makeStyles-drawerPaper-33 MuiDrawer-paperAnchorLeft MuiDrawer-paperAnchorDockedLeft MuiPaper-elevation0"
+          style="visibility: hidden; webkit-transform: translateX(-0px); transform: translateX(-0px);"
+        >
+          <div
+            class="makeStyles-drawerHeader-34"
+          >
+            <button
+              class="MuiButtonBase-root MuiIconButton-root"
+              tabindex="0"
+              type="button"
+            >
+              <span
+                class="MuiIconButton-label"
+              >
+                <svg
+                  aria-hidden="true"
+                  class="MuiSvgIcon-root"
+                  focusable="false"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"
+                  />
+                </svg>
+              </span>
+              <span
+                class="MuiTouchRipple-root"
+              />
+            </button>
+          </div>
+          <hr
+            class="MuiDivider-root"
+          />
+          <ul
+            class="MuiList-root MuiList-padding"
+          >
+            <div
+              aria-disabled="false"
+              class="MuiButtonBase-root MuiListItem-root MuiListItem-gutters MuiListItem-button"
+              role="button"
+              tabindex="0"
+            >
+              <div
+                class="MuiListItemIcon-root"
+              >
+                <svg
+                  aria-hidden="true"
+                  class="MuiSvgIcon-root MuiSvgIcon-colorPrimary"
+                  focusable="false"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    d="M20 6h-4V4c0-1.11-.89-2-2-2h-4c-1.11 0-2 .89-2 2v2H4c-1.11 0-1.99.89-1.99 2L2 19c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V8c0-1.11-.89-2-2-2zm-6 0h-4V4h4v2z"
+                  />
+                </svg>
+              </div>
+              <div
+                class="MuiListItemText-root"
+              >
+                <span
+                  class="MuiTypography-root MuiListItemText-primary MuiTypography-body1 MuiTypography-displayBlock"
+                >
+                  Add Job
+                </span>
+              </div>
+              <span
+                class="MuiTouchRipple-root"
+              />
+            </div>
+            <div
+              aria-disabled="false"
+              class="MuiButtonBase-root MuiListItem-root MuiListItem-gutters MuiListItem-button"
+              role="button"
+              tabindex="0"
+            >
+              <div
+                class="MuiListItemIcon-root"
+              >
+                <svg
+                  aria-hidden="true"
+                  class="MuiSvgIcon-root MuiSvgIcon-colorSecondary"
+                  focusable="false"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    d="M15 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm-9-2V7H4v3H1v2h3v3h2v-3h3v-2H6zm9 4c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"
+                  />
+                </svg>
+              </div>
+              <div
+                class="MuiListItemText-root"
+              >
+                <span
+                  class="MuiTypography-root MuiListItemText-primary MuiTypography-body1 MuiTypography-displayBlock"
+                >
+                  Add Staff
+                </span>
+              </div>
+              <span
+                class="MuiTouchRipple-root"
+              />
+            </div>
+            <div
+              aria-disabled="false"
+              class="MuiButtonBase-root MuiListItem-root MuiListItem-gutters MuiListItem-button"
+              role="button"
+              tabindex="0"
+            >
+              <div
+                class="MuiListItemIcon-root"
+              >
+                <svg
+                  aria-hidden="true"
+                  class="MuiSvgIcon-root"
+                  focusable="false"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    d="M17 10H7v2h10v-2zm2-7h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zm-5-5H7v2h7v-2z"
+                  />
+                </svg>
+              </div>
+              <div
+                class="MuiListItemText-root"
+              >
+                <span
+                  class="MuiTypography-root MuiListItemText-primary MuiTypography-body1 MuiTypography-displayBlock"
+                >
+                  Check Dates
+                </span>
+              </div>
+              <span
+                class="MuiTouchRipple-root"
+              />
+            </div>
+          </ul>
+          <hr
+            class="MuiDivider-root"
+          />
+          <ul
+            class="MuiList-root MuiList-padding"
+          >
+            <div
+              aria-disabled="false"
+              class="MuiButtonBase-root MuiListItem-root MuiListItem-gutters MuiListItem-button"
+              role="button"
+              tabindex="0"
+            >
+              <div
+                class="MuiListItemIcon-root"
+              >
+                <svg
+                  aria-hidden="true"
+                  class="MuiSvgIcon-root"
+                  focusable="false"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    d="M17 12h-5v5h5v-5zM16 1v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2h-1V1h-2zm3 18H5V8h14v11z"
+                  />
+                </svg>
+              </div>
+              <div
+                class="MuiListItemText-root"
+              >
+                <span
+                  class="MuiTypography-root MuiListItemText-primary MuiTypography-body1 MuiTypography-displayBlock"
+                >
+                  View Calendar
+                </span>
+              </div>
+              <span
+                class="MuiTouchRipple-root"
+              />
+            </div>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div
+      class="makeStyles-content-25"
+    >
+      <div
+        class="MuiContainer-root MuiContainer-maxWidthLg"
+      >
+        <div
+          class="MuiBox-root MuiBox-root-37"
+        >
+          <div
+            class="MuiPaper-root MuiPaper-elevation3 MuiPaper-rounded"
+          >
+            <h3
+              class="MuiTypography-root MuiTypography-h3 MuiTypography-alignCenter"
+            >
+              Dashboard
+            </h3>
+          </div>
+        </div>
+        <div
+          class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-3"
+        >
+          <div
+            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-true"
+          >
+            <div
+              class="MuiPaper-root MuiPaper-elevation3 MuiPaper-rounded"
+            >
+              <div
+                class="MuiBox-root MuiBox-root-43"
+              >
+                <div
+                  class="MuiCircularProgress-root MuiCircularProgress-colorPrimary MuiCircularProgress-indeterminate"
+                  role="progressbar"
+                  style="width: 40px; height: 40px;"
+                >
+                  <svg
+                    class="MuiCircularProgress-svg"
+                    viewBox="22 22 44 44"
+                  >
+                    <circle
+                      class="MuiCircularProgress-circle MuiCircularProgress-circleIndeterminate"
+                      cx="44"
+                      cy="44"
+                      fill="none"
+                      r="20.2"
+                      stroke-width="3.6"
+                    />
+                  </svg>
+                </div>
+                <h3
+                  class="MuiTypography-root MuiTypography-h3"
+                >
+                  Loading
+                </h3>
+              </div>
+            </div>
+          </div>
+          <div
+            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-true"
+          >
+            <div
+              class="MuiPaper-root MuiPaper-elevation3 MuiPaper-rounded"
+            >
+              <div
+                class="MuiBox-root MuiBox-root-46"
+              >
+                <div
+                  class="MuiCircularProgress-root MuiCircularProgress-colorPrimary MuiCircularProgress-indeterminate"
+                  role="progressbar"
+                  style="width: 40px; height: 40px;"
+                >
+                  <svg
+                    class="MuiCircularProgress-svg"
+                    viewBox="22 22 44 44"
+                  >
+                    <circle
+                      class="MuiCircularProgress-circle MuiCircularProgress-circleIndeterminate"
+                      cx="44"
+                      cy="44"
+                      fill="none"
+                      r="20.2"
+                      stroke-width="3.6"
+                    />
+                  </svg>
+                </div>
+                <h3
+                  class="MuiTypography-root MuiTypography-h3"
+                >
+                  Loading
+                </h3>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

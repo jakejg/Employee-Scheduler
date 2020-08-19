@@ -58,9 +58,11 @@ const AddForm = ({  type,
                 dispatch(changeNoStaff())
             }
             else{
-                closeDialog();
-                if (redirect) history.push(redirect);
-               
+                
+                if (redirect) {
+                    closeDialog();
+                    history.push(redirect);
+                }
             }
         }
         

@@ -6,7 +6,6 @@ import {Paper, Box, Container, Typography, makeStyles, List, ListItem, ListItemT
 import moment from 'moment'
 import {useHistory} from 'react-router-dom';
 import {editJob} from '../actions/jobs';
-import {JobAPI} from '../helpers/JobApi';
 import { loadJobsFromAPI, editJobOnAPI } from '../actions/jobs';
 import { decode } from 'jsonwebtoken';
 
