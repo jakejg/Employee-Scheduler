@@ -1,7 +1,6 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import {Link} from 'react-router-dom';
-import {List, ListItem, ListItemText, Box, Typography, makeStyles, ListItemIcon, Chip } from '@material-ui/core';
+import {List, ListItem, ListItemText, Box, Typography, makeStyles, ListItemIcon, Chip, Tooltip } from '@material-ui/core';
 import DoneOutlineRoundedIcon from '@material-ui/icons/DoneOutlineRounded';
 import moment from 'moment';
 import Loading from './Loading';
@@ -52,8 +51,21 @@ const JobList = () => {
         else if (jobs[key].end_time > moment()){
             inProgress[key] = jobs[key]
         }
-        
     }
+    const getText = (type,id) => {
+        let toolTipText;
+        if (type[id].status === 'under'){
+            toolTipText = 'Need Staff';
+        }
+        else if (type[id].status === 'filled'){
+            toolTipText = 'Staff Filled';
+        }
+        else {
+            toolTipText = 'Over Staffed';
+        }
+        return toolTipText;
+    }
+ 
     
     return (
         <div>
@@ -66,7 +78,9 @@ const JobList = () => {
                                                             component="a" href={`job/${id}`}
                                                             color="primary"
                                                             clickable />
-                                                            <DoneOutlineRoundedIcon fontSize='small' className={classes[statusColor[inProgress[id].status]]}/>
+                                                            <Tooltip title={getText(inProgress, id)}>
+                                                                <DoneOutlineRoundedIcon fontSize='small' className={classes[statusColor[inProgress[id].status]]}/>
+                                                            </Tooltip>
                                                         </Box>
                                                     </ListItem>)}
             </List>
@@ -80,7 +94,9 @@ const JobList = () => {
                                                             color="primary"
                                                             clickable
                                                             />
-                                                        <DoneOutlineRoundedIcon fontSize='small' className={classes[statusColor[scheduled[id].status]]}/>
+                                                            <Tooltip title={getText(scheduled, id)}>
+                                                                <DoneOutlineRoundedIcon fontSize='small' className={classes[statusColor[scheduled[id].status]]}/>
+                                                            </Tooltip>
                                                     </Box> 
                                                     </ListItem>)}
             </List>
