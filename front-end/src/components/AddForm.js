@@ -48,8 +48,15 @@ const AddForm = ({  type,
         e.preventDefault();
         if (!validate()){
             let msg = await dispatch(doOnSubmit(formData));
+
             if (msg){
                 setAlert(alert => msg)
+            }
+            else{
+                if (redirect) {
+                    closeDialog();
+                    history.push(redirect);
+                }
             }
             if (noJobs && type === 'Job'){
                 dispatch(changeNoJobs())
@@ -57,13 +64,7 @@ const AddForm = ({  type,
             if (noStaff && type === 'Staff'){
                 dispatch(changeNoStaff())
             }
-            else{
-                
-                if (redirect) {
-                    closeDialog();
-                    history.push(redirect);
-                }
-            }
+            
         }
         
     }
