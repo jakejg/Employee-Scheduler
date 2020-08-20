@@ -149,8 +149,8 @@ class Job {
         // if calendar_event_id does not exist for a job create one
         if (!job.calendar_event_id){
             // create calendar event on microsft graph api and add id to job object
-            job.calendar_event_id = await CalendarAPI.createEvent(calendar_id, jobObj);
-            const updatedJob = Job.update(job.id, job);
+            job.calendar_event_id = await CalendarAPI.createEvent(calendar_id, job);
+            const updatedJob = await Job.update(job.id, job);
             updatedJob.save();
         }
         CalendarAPI.updateEventAttendees(calendar_id, job.calendar_event_id, staffList)

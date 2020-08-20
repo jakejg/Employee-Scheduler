@@ -80,9 +80,9 @@ class Company {
     /* Method to create a calendar for an existing company if a calendar does not exist*/
 
     static async checkCalendar(id){
-        const calendarId = await this.getCalendarID(user.comp_id);
+        const calendarId = await this.getCalendarID(id);
         if (!calendarId) {
-            const company = await this.findOne(user.comp_id);
+            const company = await this.findOne(id);
             const calendar_id = await CalendarAPI.createCalendar(company.name);
             const updatedCompany = await this.update(company.id, {calendar_id});
             updatedCompany.save();
