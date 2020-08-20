@@ -5,6 +5,7 @@ const {createToken} = require('../helpers/createToken');
 const User = require('../models/usersModel');
 const Company = require('../models/companyModel.js');
 
+
 /* Route to register a new user */
 
 router.post('/register', async (req, res, next) => {
@@ -13,7 +14,6 @@ router.post('/register', async (req, res, next) => {
         if (await Company.checkCompanyName(req.body.company_name)) throw new ExpressError("A comany with that name already exists", 400);
         
         const user = await User.create(req.body);
-        await user.save();
         // if no company id is sent, create a new company and associate with user
         if (!req.body.comp_id){
            
@@ -21,10 +21,6 @@ router.post('/register', async (req, res, next) => {
             await company.save();
             user.comp_id = company.id;
             await user.save()
-
-            // // create new calendar for the company
-            // company.calendar_id = CalendarAPI.createCalendar(company.name)
-            // await company.save()
         }
         const token = createToken(user.username, user.is_admin, user.comp_id);
         return res.json({token});
@@ -44,7 +40,11 @@ router.post('/login', async (req, res, next) => {
 
         if (!isAuthorized) throw new ExpressError("Password and username do not match", 400);
 
-        const user = await User.findByUsername(username)
+        const user = await User.findByUsername(username);
+
+         // check if a calendar exists for a company
+        Company.checkCalendar(user.comp_id)
+       
         const token = createToken(user.username, user.is_admin, user.comp_id)
 
         return res.json({token});

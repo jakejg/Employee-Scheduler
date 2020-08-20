@@ -21,6 +21,7 @@ const postData = {
     client_id
 }
 
+
 class CalendarAPI{
     /*
     This method will get called before every request to the msgraph server.
@@ -28,6 +29,7 @@ class CalendarAPI{
      */
     static async getAccessToken(){
         try{
+            
             let res = await axios.post(TOKEN_ENDPOINT, qs.stringify(postData),
             {
                 headers: {'Content-Type': 'application/x-www-form-urlencoded'}
@@ -35,13 +37,18 @@ class CalendarAPI{
             return res.data.access_token
         }
         catch (e){
-            console.log(e.response.data)
+            console.log("Error Retrieving Token")
+            if (e.response){
+                console.log(e.response.data)
+            }
+            else console.log(e)
         }
     }
-  
+
     static async createCalendar(company_name){
         try{
             let access_token = await this.getAccessToken();
+            if (!access_token) throw new Error("No Token")
             let res = await axios.post(`${BASE_URL}/${SERVICE_USER_ID}/calendars`,
             {
                 name: company_name
@@ -49,11 +56,14 @@ class CalendarAPI{
             {
                 headers: {authorization: access_token}
             })
-            console.log(res.data.id)
+            console.log('created calendar id')
             return res.data.id
         }
         catch(e){
-            console.log(e.response.data)
+            if (e.response){
+                console.log(e.response.data)
+            }
+            else console.log(e)
         }
     }
 
@@ -90,6 +100,7 @@ class CalendarAPI{
         try{
             const event = this.createEventBody(jobObj);
             let access_token = await this.getAccessToken();
+            if (!access_token) throw new Error("No Token")
             let res = await axios.post(`${BASE_URL}/${SERVICE_USER_ID}/calendars/${calendarID}/events`,
             event,
             {
@@ -98,13 +109,18 @@ class CalendarAPI{
             return res.data.id
         }
         catch(e){
-            console.log(e.response.data)
+            if (e.response){
+                console.log(e.response.data)
+            }
+            else console.log(e)
+            
         }
     }
     static async updateEventDetails(calendarID, eventID, jobObj){
         try{
             const updates = this.createEventBody(jobObj);
             let access_token = await this.getAccessToken();
+            if (!access_token) throw new Error("No Token")
             await axios.patch(`${BASE_URL}/${SERVICE_USER_ID}/calendars/${calendarID}/events/${eventID}`,
             updates,
             {
@@ -112,15 +128,17 @@ class CalendarAPI{
             })
         }
         catch(e){
-         
-            console.log(e.response.data)
+            if (e.response){
+                console.log(e.response.data)
+            }
+            else console.log(e)
         }
     }
     static async updateEventAttendees(calendarID, eventID, staffList){
         try{
             const attendees = this.createEventStaff(staffList);
-            console.log(attendees)
             let access_token = await this.getAccessToken();
+            if (!access_token) throw new Error("No Token")
             await axios.patch(`${BASE_URL}/${SERVICE_USER_ID}/calendars/${calendarID}/events/${eventID}`,
             {attendees},
             {
@@ -128,7 +146,10 @@ class CalendarAPI{
             })
         }
         catch(e){
-            console.log(e.response.data)
+            if (e.response){
+                console.log(e.response.data)
+            }
+            else console.log(e)
         }
     }
 

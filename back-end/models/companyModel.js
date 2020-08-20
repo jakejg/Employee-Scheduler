@@ -27,7 +27,6 @@ class Company {
 
     static async create(name){
         const calendar_id = await CalendarAPI.createCalendar(name)
-        console.log(calendar_id)
         return new Company({name, calendar_id}) 
     }
     /* Method to update an existing company */
@@ -37,7 +36,7 @@ class Company {
 
         // loop through all properties to update, if the property exists on the company instance, update the instance
         for (let key in updateObj){
-            if (company[key]) {
+            if (company[key] !== undefined) {
                 company[key] = updateObj[key];
             }
         }
@@ -77,6 +76,18 @@ class Company {
         if (company) return true
         else return false
     }
+    
+    /* Method to create a calendar for an existing company if a calendar does not exist*/
+
+    static async checkCalendar(id){
+        const calendarId = await this.getCalendarID(user.comp_id);
+        if (!calendarId) {
+            const company = await this.findOne(user.comp_id);
+            const calendar_id = await CalendarAPI.createCalendar(company.name);
+            const updatedCompany = await this.update(company.id, {calendar_id});
+            updatedCompany.save();
+        }
+    }
 
     /* Method to add/update instance of company in the database */
 
@@ -101,9 +112,9 @@ class Company {
         }
         else {
              const results = await db.query(
-            `UPDATE companies SET name=$2
+            `UPDATE companies SET name=$2, calendar_id=$3
             WHERE id=$1`, 
-            [this.id, this.name]);
+            [this.id, this.name, this.calendar_id]);
         
         }
     }
