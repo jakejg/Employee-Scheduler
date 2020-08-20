@@ -20,8 +20,9 @@ router.post('/register', async (req, res, next) => {
             const company = await Company.create(req.body.company_name);
             await company.save();
             user.comp_id = company.id;
-            await user.save()
+           
         }
+        await user.save()
         const token = createToken(user.username, user.is_admin, user.comp_id);
         return res.json({token});
     }
