@@ -96,7 +96,7 @@ class Job {
         }
         
         // update calendar if needed
-        if (updateObj){
+        if (updateCalendar){
             const calendar_id = await Company.getCalendarID(job.comp_id)
             CalendarAPI.updateEventDetails(calendar_id, job.calendar_event_id, job)
         }
@@ -146,6 +146,13 @@ class Job {
     static async sendOrCancelCalendarInvite(jobId, staffList){
         const job = await this.findOne(jobId);
         const calendar_id = await Company.getCalendarID(job.comp_id)
+        // if calendar_event_id does not exist for a job create one
+        if (!job.calendar_event_id){
+            // create calendar event on microsft graph api and add id to job object
+            job.calendar_event_id = await CalendarAPI.createEvent(calendar_id, jobObj);
+            const updatedJob = Job.update(job.id, job);
+            updatedJob.save();
+        }
         CalendarAPI.updateEventAttendees(calendar_id, job.calendar_event_id, staffList)
     }
 
@@ -169,9 +176,9 @@ class Job {
         }
         else {
              const results = await db.query(
-            `UPDATE jobs SET title=$2, start_date=$3, end_date=$4, status=$5, staff_needed=$6, notes=$7
+            `UPDATE jobs SET title=$2, start_date=$3, end_date=$4, status=$5, staff_needed=$6, notes=$7, calendar_event_id=$8
             WHERE id=$1`, 
-            [this.id, this.title, this.start_date, this.end_date, this.status, this.staff_needed, this.notes]);
+            [this.id, this.title, this.start_date, this.end_date, this.status, this.staff_needed, this.notes, this.calendar_event_id]);
         
         }
     }
