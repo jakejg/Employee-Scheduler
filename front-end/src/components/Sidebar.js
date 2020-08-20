@@ -94,7 +94,7 @@ const useStyles = makeStyles((theme) => ({
     }    
 }));
 
-const Sidebar = ({jobFields, staffFields}) => {
+const Sidebar = () => {
     const open = useSelector(state => state.application.drawer)
     const [dialog, setDialog] = useState({isOpen: false, type:""}) 
     const classes = useStyles();
@@ -128,6 +128,9 @@ const Sidebar = ({jobFields, staffFields}) => {
     const closeDialog = () => {
         setDialog(dialog => ({isOpen: false, type: ""}))
     }
+
+    const jobFields = ['Title', 'Start Date','End Date', 'Staff Needed', 'Notes'];
+    const staffFields = ['Email', 'First Name','Last Name', 'Current Wage', 'Years At Company'];
 
 return (
         <div className={classes.root}>

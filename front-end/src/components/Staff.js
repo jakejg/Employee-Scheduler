@@ -13,6 +13,33 @@ import SaveIcon from '@material-ui/icons/Save';
 import DeleteIcon from '@material-ui/icons/Delete';
 import DropDownList from './DropDownList';
 import DeleteAlert from './DeleteAlert';
+import clsx from 'clsx';
+import Sidebar from './Sidebar';
+import { drawerWidth } from '../config';
+
+
+const useStyles = makeStyles((theme) => ({
+    root: {
+      display: 'flex',
+    },
+  
+    content: {
+      flexGrow: 1,
+      padding: theme.spacing(3),
+      transition: theme.transitions.create('margin', {
+        easing: theme.transitions.easing.sharp,
+        duration: theme.transitions.duration.leavingScreen,
+      }),
+      marginLeft: -drawerWidth,
+    },
+    contentShift: {
+      transition: theme.transitions.create('margin', {
+        easing: theme.transitions.easing.easeOut,
+        duration: theme.transitions.duration.enteringScreen,
+      }),
+      marginLeft: 0,
+    },
+  }));
 
 const Staff = () => {
     const { id } = useParams();
@@ -28,7 +55,9 @@ const Staff = () => {
     const loading = !staff;
     const [formData, setFormData] = useState({})
     const [dialog, setDialog] = useState(false)
-    
+    const classes = useStyles();
+    const open = useSelector(state => state.application.drawer)
+
     useEffect(() => {
     const getData = async () => {
         const { comp_id } = decode(token);
@@ -69,7 +98,14 @@ const Staff = () => {
     const handleDelete = () => {
         setDialog(dialog => true)
     }
+
+
     return (
+        <div className={classes.root}>
+            <Sidebar />
+            <div className={clsx(classes.content, {
+                [classes.contentShift]: open,
+             })} >
             <Grid container>
             <Grid item xs={1} sm={2}>
             </Grid>
@@ -166,6 +202,8 @@ const Staff = () => {
             <Grid item xs={1} sm={2}>
             </Grid>
       </Grid>
+      </div>
+      </div>
         );
 }
 

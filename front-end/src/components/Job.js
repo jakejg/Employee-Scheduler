@@ -29,9 +29,32 @@ import getTotalCost from '../helpers/totalJobCost';
 import DeleteAlert from './DeleteAlert';
 import SaveIcon from '@material-ui/icons/Save';
 import statusToColor from '../helpers/jobColorObj';
+import { drawerWidth } from '../config';
+import clsx from 'clsx';
+import Sidebar from './Sidebar';
 
+const useStyles = makeStyles((theme) => ({
+    root: {
+      display: 'flex',
+    },
 
-const useStyles = makeStyles(() => ({
+    content: {
+      flexGrow: 1,
+      padding: theme.spacing(3),
+      transition: theme.transitions.create('margin', {
+        easing: theme.transitions.easing.sharp,
+        duration: theme.transitions.duration.leavingScreen,
+      }),
+      marginLeft: -drawerWidth,
+    },
+    contentShift: {
+      transition: theme.transitions.create('margin', {
+        easing: theme.transitions.easing.easeOut,
+        duration: theme.transitions.duration.enteringScreen,
+      }),
+      marginLeft: 0,
+    },
+
     checkMark: {
         color: 'green', 
         marginLeft: '5px', 
@@ -61,6 +84,7 @@ const Job = () => {
     const [edit, setEdit] = useState(false);
     const [formData, setFormData] = useState({})
     const job = useSelector(state => state.jobs[id]);
+    const open = useSelector(state => state.application.drawer)
 
     const dispatch = useDispatch();
     const loading = !job;
@@ -110,7 +134,11 @@ const Job = () => {
     }
     
     return (
-        <>
+        <div className={classes.root}>
+            <Sidebar/>
+            <div className={clsx(classes.content, {
+                [classes.contentShift]: open,
+        })} >
         <Grid container>
             <Grid item xs={false} sm={2}>
             </Grid>
@@ -223,7 +251,8 @@ const Job = () => {
             <AddStaffToJob job={job}
                             closeDialog={closeDialog} />
         </Dialog>
-        </>
+        </div>
+        </div>
         );
 }
 

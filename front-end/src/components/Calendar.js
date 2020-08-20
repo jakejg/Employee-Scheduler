@@ -8,8 +8,35 @@ import {useHistory} from 'react-router-dom';
 import {editJob} from '../actions/jobs';
 import { loadJobsFromAPI, editJobOnAPI } from '../actions/jobs';
 import { decode } from 'jsonwebtoken';
+import clsx from 'clsx';
+import Sidebar from './Sidebar';
+import { drawerWidth } from '../config';
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme) => ({
+    root: {
+        display: 'flex',
+     
+      },
+    
+      content: {
+        flexGrow: 1,
+        padding: theme.spacing(3),
+        transition: theme.transitions.create('margin', {
+          easing: theme.transitions.easing.sharp,
+          duration: theme.transitions.duration.leavingScreen,
+        }),
+        marginLeft: -drawerWidth,
+        maxWidth: '95vw'
+
+      },
+      contentShift: {
+        transition: theme.transitions.create('margin', {
+          easing: theme.transitions.easing.easeOut,
+          duration: theme.transitions.duration.enteringScreen,
+        }),
+        marginLeft: 0,
+        maxWidth: '78vw'
+      },
     instructions: {
         margin: '5px'
     },
@@ -20,6 +47,7 @@ const useStyles = makeStyles(() => ({
 }))
 
 const Calendar = () => {
+    const open = useSelector(state => state.application.drawer)
     const jobs = useSelector(state => state.jobs);
     const token = useSelector(state => state.application.token);
     const classes = useStyles();
@@ -59,6 +87,11 @@ const Calendar = () => {
     
 
 return (
+    <div className={classes.root}>
+            <Sidebar/>
+        <div className={clsx(classes.content, {
+            [classes.contentShift]: open,
+            })} >
     <Container>
         <Paper className={classes.instructions}>
             <List>
@@ -89,6 +122,8 @@ return (
         />
         </Paper>
     </Container>
+    </div>
+</div>
 )
 }
 export default Calendar;

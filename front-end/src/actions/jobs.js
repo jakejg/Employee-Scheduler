@@ -3,9 +3,12 @@ import {
     EDIT_JOB, 
     ADD_JOB,
     EDIT_JOB_STAFF,
-    DELETE_JOB
+    DELETE_JOB,
+    ADD_SCHEDULED_JOB,
+    REMOVE_SCHEDULED_JOB
  } from './actionTypes';
 import {JobAPI} from '../helpers/JobApi';
+import { editStaff } from './staff';
 
 export const loadJobsFromAPI = (comp_id) => {
     return async (dispatch) => {
@@ -79,14 +82,18 @@ export const addStaffToJobOnAPI = (jobId, staffId) => {
     return async (dispatch) => {
         try {
             let data = await JobAPI.addStaffToJob(jobId, staffId)
-            console.log(data)
             dispatch(editJobStaff(jobId, data.staffList, data.status))
+            dispatch(addScheduledJob(staffId, jobId))
             
         }
         catch(e) {
             console.log(e)
         }
     }
+}
+
+export const addScheduledJob = (id, jobId ) => {
+    return {type: ADD_SCHEDULED_JOB, id, jobId}
 }
 
 export const removeStaffFromJobOnAPI = (jobId, staffId) => {
@@ -94,6 +101,7 @@ export const removeStaffFromJobOnAPI = (jobId, staffId) => {
         try {
             let data = await JobAPI.removeStaffFromJob(jobId, staffId)
             dispatch(editJobStaff(jobId, data.staffList, data.status))
+            dispatch(removeScheduledJob(staffId, jobId))
             
         }
         catch(e) {
@@ -101,7 +109,9 @@ export const removeStaffFromJobOnAPI = (jobId, staffId) => {
         }
     }
 }
-
+export const removeScheduledJob = (id, jobId ) => {
+    return {type: REMOVE_SCHEDULED_JOB, id, jobId}
+}
 export const editJobStaff = (id, staff, status) => {
     return {type: EDIT_JOB_STAFF, id, staff, status}
 }

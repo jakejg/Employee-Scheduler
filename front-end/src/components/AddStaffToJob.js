@@ -25,6 +25,7 @@ import {loadStaffFromAPI} from '../actions/staff';
 import {addStaffToJobOnAPI, removeStaffFromJobOnAPI} from '../actions/jobs';
 import filterStaffOnJob from '../helpers/createOptions';
 import { decode } from "jsonwebtoken";
+import { StaffAPI } from '../helpers/StaffApi';
 
 const useStyles = makeStyles(() => ({
     purple : {
@@ -36,7 +37,7 @@ const useStyles = makeStyles(() => ({
 }))
 
 const AddStaffToJob = ({job, closeDialog}) => {
-    const staff = useSelector(state => state.staff)
+    const [staff, setStaff] = useState({});
     const loading = !staff
     const [staffId, setStaffId] = useState("");
     const token = useSelector(state => state.application.token)
@@ -47,7 +48,8 @@ const AddStaffToJob = ({job, closeDialog}) => {
 
         const getData = async () => {
             const { comp_id } = decode(token);
-            dispatch(loadStaffFromAPI(comp_id))
+            let data = await StaffAPI.loadStaff(comp_id);
+            setStaff(staff => data);
         }
         getData();
     }, [dispatch])

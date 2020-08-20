@@ -16,8 +16,7 @@ import { changeNoJobs } from '../actions/application';
 import { changeNoStaff } from '../actions/application';
 import { decode } from "jsonwebtoken";
 import EmptyList from './EmptyList';
-
-const drawerWidth = 240;
+import { drawerWidth } from '../config';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -65,13 +64,10 @@ const Dashboard = () => {
       }
       getData();
   }, [dispatch, token])
-
-    const jobFields = ['Title', 'Start Date','End Date', 'Staff Needed', 'Notes'];
-    const staffFields = ['Email', 'First Name','Last Name', 'Current Wage', 'Years At Company'];
     
     return (
       <div className={classes.root}>
-            <Sidebar jobFields={jobFields} staffFields={staffFields}/>
+            <Sidebar/>
         <div className={clsx(classes.content, {
             [classes.contentShift]: open,
           })} >

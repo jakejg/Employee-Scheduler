@@ -72,10 +72,10 @@ const NavBar = ({ onDashboard }) => {
     const dispatch = useDispatch();
     const history = useHistory();
     
-    // show full nav bar if not on the dashboard
-      if (window.location.pathname !== '/dashboard' && open) {
-        dispatch(changeDrawer());
-      }
+    // // show full nav bar if not on the dashboard
+    //   if (window.location.pathname !== '/dashboard' && open) {
+    //     dispatch(changeDrawer());
+    //   }
 
 
     const handleDrawerOpen = () => {
@@ -100,7 +100,7 @@ const NavBar = ({ onDashboard }) => {
                           
                             </>
     const loggedInView = <>
-                            {onDashboard &&
+                      
                             <IconButton
                               color="inherit"
                               aria-label="open drawer"
@@ -109,7 +109,7 @@ const NavBar = ({ onDashboard }) => {
                               className={clsx(classes.menuButton, open && classes.hide)}
                             >
                               <MenuIcon />
-                            </IconButton>}
+                            </IconButton>
                             < PermContactCalendarIcon fontSize="large" />
                             <Typography variant="h6" className={classes.title}>
                                 Employee Scheduler

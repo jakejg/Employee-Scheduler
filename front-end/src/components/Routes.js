@@ -27,7 +27,7 @@ const Routes = () => {
                 <ProtectedRoute Component={Job} />
             </Route>
             <Route exact path='/staff/:id'>
-                <NavBar/>
+                <NavBar onDashboard={true}/>
                 <ProtectedRoute Component={Staff} />
             </Route> 
             <Route exact path='/dashboard'>

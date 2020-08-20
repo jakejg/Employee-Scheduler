@@ -9,6 +9,8 @@ export const LOAD_STAFF = "LOAD_STAFF";
 export const ADD_STAFF = "ADD_STAFF";
 export const EDIT_STAFF = "EDIT_STAFF";
 export const DELETE_STAFF = "DELETE_STAFF";
+export const REMOVE_SCHEDULED_JOB = "REMOVE_SCHEDULED_JOB";
+export const ADD_SCHEDULED_JOB = "ADD_SCHEDULED_JOB";
 
 export const CHANGE_DRAWER = "CHANGE_DRAWER";
 export const CHANGE_NO_JOBS = "CHANGE_NO_JOBS";

@@ -2,7 +2,9 @@ import {
     LOAD_STAFF,
     EDIT_STAFF,
     ADD_STAFF,
-    DELETE_STAFF
+    DELETE_STAFF,
+    ADD_SCHEDULED_JOB,
+    REMOVE_SCHEDULED_JOB
 } from '../actions/actionTypes';
 
 const staffReducer = (state={}, action) => {
@@ -20,6 +22,21 @@ const staffReducer = (state={}, action) => {
                     }
         case ADD_STAFF:
             return {...state, [action.id]: {...action.staff}}
+
+        case ADD_SCHEDULED_JOB:
+            return {...state,
+                [action.id]: { 
+                    ...state[action.id],
+                    scheduled_jobs: [...state[action.id].scheduled_jobs, action.jobId]
+                }
+            }
+        case REMOVE_SCHEDULED_JOB:
+            return {...state,
+                [action.id]: { 
+                    ...state[action.id],
+                    scheduled_jobs: state[action.id].scheduled_jobs.filter(id => id !== action.jobId)
+                }
+            }
 
         case DELETE_STAFF:
             let staff = { ...state };
