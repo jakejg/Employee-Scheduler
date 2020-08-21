@@ -1,9 +1,9 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 import Calendar from './Calendar';
-import Job from './Job';
+import Job from './jobComponents/Job';
 import Dashboard from './Dashboard';
-import Staff from './Staff';
+import Staff from './staffComponents/Staff';
 import Home from './Home'
 import NavBar from './NavBar';
 import ProtectedRoute from './ProtectedRoute';
@@ -27,11 +27,11 @@ const Routes = () => {
                 <ProtectedRoute Component={Job} />
             </Route>
             <Route exact path='/staff/:id'>
-                <NavBar onDashboard={true}/>
+                <NavBar />
                 <ProtectedRoute Component={Staff} />
             </Route> 
             <Route exact path='/dashboard'>
-                <NavBar onDashboard={true} />
+                <NavBar  />
                 <ProtectedRoute Component={Dashboard} />
             </Route>
             <Route>

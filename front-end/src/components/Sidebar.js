@@ -14,7 +14,6 @@ import {
         DialogTitle,
         Box
                 }from '@material-ui/core';
-import MenuIcon from '@material-ui/icons/Menu';
 import PeopleIcon from '@material-ui/icons/People';
 import EventIcon from '@material-ui/icons/Event';
 import PersonAddIcon from '@material-ui/icons/PersonAdd';
@@ -179,16 +178,7 @@ return (
               </Drawer>
               <Dialog open={dialog.isOpen} onClose={closeDialog} fullWidth={true}>
                     {dialog.type === 'StaffToJob' ?
-                      <>
-                        <Box display='flex' justifyContent='flex-end'>
-                          <IconButton onClick={closeDialog}>
-                              <Tooltip title="Close Window">
-                                  <CloseIcon/>
-                              </Tooltip>
-                          </IconButton>
-                        </Box>
                       <SelectJob closeDialog={closeDialog}/>
-                      </>
                       :
                       <>
                         <DialogTitle>

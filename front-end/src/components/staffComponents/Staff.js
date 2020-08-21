@@ -1,21 +1,21 @@
 import React, {useEffect, useState} from 'react';
-import {useParams, useHistory} from 'react-router-dom';
+import {useParams} from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import {getStaffFromAPI, editStaffOnAPI, deleteStaffOnAPI} from '../actions/staff';
-import {loadJobsFromAPI} from '../actions/jobs';
-import {Paper, TextField, Input, Fab, Chip, Box, Typography, makeStyles, Grid, List, ListItem, ListItemText} from '@material-ui/core';
-import Loading from './Loading';
+import {getStaffFromAPI, editStaffOnAPI} from '../../actions/staff';
+import {loadJobsFromAPI} from '../../actions/jobs';
+import {Paper, Input, Fab, Chip, Box, Typography, makeStyles, Grid, List, ListItem, ListItemText} from '@material-ui/core';
+import Loading from '../Loading';
 import { decode } from "jsonwebtoken";
-import NotFound from './NotFound';
-import { CompanyAPI } from '../helpers/CompanyApi';
+import NotFound from '../NotFound';
+import { CompanyAPI } from '../../api/CompanyApi';
 import EditIcon from '@material-ui/icons/Edit';
 import SaveIcon from '@material-ui/icons/Save';
 import DeleteIcon from '@material-ui/icons/Delete';
-import DropDownList from './DropDownList';
-import DeleteAlert from './DeleteAlert';
+import DropDownList from '../DropDownList';
+import DeleteAlert from '../DeleteAlert';
 import clsx from 'clsx';
-import Sidebar from './Sidebar';
-import { drawerWidth } from '../config';
+import Sidebar from '../Sidebar';
+import { drawerWidth } from '../../config';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -70,7 +70,7 @@ const Staff = () => {
         setCompany(companyData)
     }
     getData();
-    }, [dispatch, id])
+    }, [dispatch, id, token])
 
     if (error)  return <NotFound msg={error}/>
     if (loading) return <Loading />

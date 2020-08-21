@@ -1,10 +1,10 @@
 import React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import {List, ListItem, ListItemText, Box, Typography, makeStyles, ListItemIcon, Chip, Tooltip } from '@material-ui/core';
+import { useSelector} from 'react-redux';
+import {List, ListItem, Box, Typography, makeStyles, Chip, Tooltip } from '@material-ui/core';
 import DoneOutlineRoundedIcon from '@material-ui/icons/DoneOutlineRounded';
 import moment from 'moment';
-import Loading from './Loading';
-import statusToColor from '../helpers/jobColorObj';
+import Loading from '../Loading';
+import statusToColor from '../../helpers/jobColorObj';
 
 const useStyles = makeStyles(() => ({
     green: {

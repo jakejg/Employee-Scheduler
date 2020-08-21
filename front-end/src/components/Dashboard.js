@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
 import clsx from 'clsx';
-import { makeStyles, useTheme } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import { useSelector, useDispatch } from 'react-redux';
 import {Container,
         Grid,
@@ -8,8 +8,8 @@ import {Container,
         Typography,
         Box } from '@material-ui/core';
 import Sidebar from './Sidebar';
-import JobList from './JobList';
-import StaffList from './StaffList';
+import JobList from './jobComponents/JobList';
+import StaffList from './staffComponents/StaffList';
 import { loadJobsFromAPI } from '../actions/jobs';
 import { loadStaffFromAPI } from '../actions/staff';
 import { changeNoJobs } from '../actions/application';

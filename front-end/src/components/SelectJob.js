@@ -3,24 +3,19 @@ import {useDispatch, useSelector} from 'react-redux';
 import { decode } from "jsonwebtoken";
 import {
     Tooltip,
-    Fab,
     TextField,
     Box,
-    Paper,
     Button,
     ListItem,
-    ListItemIcon,
-    ListItemText,
-    Typography,
     List, 
     IconButton,
     ListItemSecondaryAction,
     MenuItem,
-    makeStyles
 } from '@material-ui/core';
 import AddStaffToJob from './AddStaffToJob';
 import {getJobFromAPI} from '../actions/jobs';
-import { JobAPI } from '../helpers/JobApi';
+import { JobAPI } from '../api/JobApi';
+import CloseIcon from '@material-ui/icons/Close';
 
 const SelectJob = ({closeDialog}) => {
     const [jobs, setJobs] = useState({});
@@ -38,7 +33,7 @@ const SelectJob = ({closeDialog}) => {
             setJobs(jobs => data);
         }
         getData();
-    }, [dispatch])
+    }, [dispatch, token])
 
     const handleChange = (e) => {
         setJobId(e.target.value)
@@ -62,6 +57,13 @@ const SelectJob = ({closeDialog}) => {
         {selected ?  <AddStaffToJob job={job} closeDialog={closeDialog} /> 
         :
         <Box>
+            <Box display='flex' justifyContent='flex-end'>
+                              <IconButton onClick={closeDialog}>
+                                  <Tooltip title="Close Window">
+                                      <CloseIcon/>
+                                  </Tooltip>
+                              </IconButton>
+                          </Box>
             <List>
                 <ListItem>
                     <form>

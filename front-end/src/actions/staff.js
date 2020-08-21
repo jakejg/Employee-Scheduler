@@ -4,7 +4,7 @@ import {
     ADD_STAFF,
     DELETE_STAFF
  } from './actionTypes';
-import { StaffAPI } from '../helpers/StaffApi';
+import { StaffAPI } from '../api/StaffApi';
 
 export const loadStaffFromAPI = (comp_id) => {
     return async (dispatch) => {
@@ -81,7 +81,7 @@ export const addStaff = (id, staff) => {
 export const deleteStaffOnAPI = (ID) => {
     return async (dispatch) => {
         try {
-            let msg = await StaffAPI.deleteStaff(ID)
+            await StaffAPI.deleteStaff(ID)
         
             dispatch(deleteStaff(ID))
             

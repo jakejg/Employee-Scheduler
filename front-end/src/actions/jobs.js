@@ -7,8 +7,7 @@ import {
     ADD_SCHEDULED_JOB,
     REMOVE_SCHEDULED_JOB
  } from './actionTypes';
-import {JobAPI} from '../helpers/JobApi';
-import { editStaff } from './staff';
+import {JobAPI} from '../api/JobApi';
 
 export const loadJobsFromAPI = (comp_id) => {
     return async (dispatch) => {
@@ -119,7 +118,7 @@ export const editJobStaff = (id, staff, status) => {
 export const deleteJobOnAPI = (id) => {
     return async (dispatch) => {
         try {
-            let msg = await JobAPI.deleteJob(id)
+            await JobAPI.deleteJob(id)
             dispatch(deleteJob(id))
         }
         catch(e) {

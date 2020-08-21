@@ -4,7 +4,6 @@ import clsx from 'clsx';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-import Box from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import PermContactCalendarIcon from '@material-ui/icons/PermContactCalendar';
 import MenuIcon from '@material-ui/icons/Menu';
@@ -72,7 +71,7 @@ const useStyles = makeStyles((theme) => ({
 
 }));
 
-const NavBar = ({ onDashboard }) => {
+const NavBar = () => {
     const classes = useStyles();
     const open = useSelector(state => state.application.drawer);
     const loggedIn = useSelector(state => state.application.token)
@@ -124,9 +123,6 @@ const NavBar = ({ onDashboard }) => {
                             <IconButton  onClick={logout} color='inherit'><ExitToAppIcon/></IconButton>
                             <Typography onClick={logout} className={classes.link}>Logout</Typography>
                         </>
-
-
-
     return (
         <div>
         <AppBar

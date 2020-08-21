@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {useParams} from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import {getJobFromAPI, editJobOnAPI} from '../actions/jobs';
+import {getJobFromAPI, editJobOnAPI} from '../../actions/jobs';
 import {Paper, 
     Fab,
     Box, 
@@ -13,7 +13,6 @@ import {Paper,
     ListItemText, 
     Input, 
     Dialog, 
-    DialogTitle,
     Chip,
     Collapse,
     useMediaQuery } from '@material-ui/core';
@@ -22,16 +21,16 @@ import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import EditIcon from '@material-ui/icons/Edit';
 import DoneOutlineRoundedIcon from '@material-ui/icons/DoneOutlineRounded';
 import DeleteIcon from '@material-ui/icons/Delete';
-import Loading from './Loading';
-import AddStaffToJob from './AddStaffToJob';
-import NotFound from './NotFound';
-import getTotalCost from '../helpers/totalJobCost';
-import DeleteAlert from './DeleteAlert';
+import Loading from '../Loading';
+import AddStaffToJob from '../AddStaffToJob';
+import NotFound from '../NotFound';
+import getTotalCost from '../../helpers/totalJobCost';
+import DeleteAlert from '../DeleteAlert';
 import SaveIcon from '@material-ui/icons/Save';
-import statusToColor from '../helpers/jobColorObj';
-import { drawerWidth } from '../config';
+import statusToColor from '../../helpers/jobColorObj';
+import { drawerWidth } from '../../config';
 import clsx from 'clsx';
-import Sidebar from './Sidebar';
+import Sidebar from '../Sidebar';
 
 const useStyles = makeStyles((theme) => ({
     root: {

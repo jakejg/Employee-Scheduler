@@ -5,8 +5,6 @@ import {deleteStaffOnAPI} from '../actions/staff';
 import {deleteJobOnAPI} from '../actions/jobs';
 
 import {Dialog,
-        DialogTitle,
-        Box,
         DialogContent,
         DialogContentText,
         DialogActions,

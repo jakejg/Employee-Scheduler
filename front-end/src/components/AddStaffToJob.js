@@ -5,10 +5,7 @@ import {
     Fab,
     TextField,
     Box,
-    Paper,
-    Button,
     ListItem,
-    ListItemIcon,
     ListItemText,
     Typography,
     List, 
@@ -21,11 +18,10 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import CloseIcon from '@material-ui/icons/Close';
 import AddIcon from '@material-ui/icons/Add';
 import Loading from './Loading';
-import {loadStaffFromAPI} from '../actions/staff';
 import {addStaffToJobOnAPI, removeStaffFromJobOnAPI} from '../actions/jobs';
 import filterStaffOnJob from '../helpers/createOptions';
 import { decode } from "jsonwebtoken";
-import { StaffAPI } from '../helpers/StaffApi';
+import { StaffAPI } from '../api/StaffApi';
 
 const useStyles = makeStyles(() => ({
     purple : {
@@ -52,7 +48,7 @@ const AddStaffToJob = ({job, closeDialog}) => {
             setStaff(staff => data);
         }
         getData();
-    }, [dispatch])
+    }, [dispatch, token])
 
     if (loading) return <Loading />
 

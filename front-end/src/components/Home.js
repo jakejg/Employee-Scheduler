@@ -3,18 +3,13 @@ import dashboard from '../images/dashboard.png';
 import {
     Button,
     Box,
-    Dialog,
-    DialogTitle,
     Grid,
     Paper,
-    ListItemText,
     List,
     ListItem,
     makeStyles
 } from '@material-ui/core'
 import Alert from '@material-ui/lab/Alert';
-import AddForm from './AddForm';
-import {register} from '../actions/authentication';
 import PopOver from './PopOver';
 import {login} from '../actions/authentication';
 import { useDispatch } from 'react-redux';
@@ -96,7 +91,7 @@ const Home = () => {
                 </Grid>
                 <Grid item xs={12} sm={6}>
                     <Box  m={3}>
-                        <img src={dashboard} className={classes.img}/>
+                        <img src={dashboard} className={classes.img} alt='Dashboard screenshot'/>
                     </Box>
  
                 </Grid>

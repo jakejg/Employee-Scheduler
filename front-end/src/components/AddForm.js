@@ -12,8 +12,6 @@ import {
 import Alert from '@material-ui/lab/Alert';
 import {useHistory} from 'react-router-dom';
 import underscoreName from '../helpers/underscoreName';
-import ButtonGroup from './ButtonGroup';
-
 
 const AddForm = ({  type,
                     fields,

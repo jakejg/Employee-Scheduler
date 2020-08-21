@@ -2,7 +2,7 @@ import React, {useEffect} from 'react';
 import Timeline from 'react-calendar-timeline'
 import './styles/Calendar.css';
 import { useSelector, useDispatch } from 'react-redux';
-import {Paper, Box, Container, Typography, makeStyles, List, ListItem, ListItemText } from '@material-ui/core';
+import {Paper, Container, Typography, makeStyles, List, ListItem, ListItemText } from '@material-ui/core';
 import moment from 'moment'
 import {useHistory} from 'react-router-dom';
 import {editJob} from '../actions/jobs';
@@ -60,7 +60,7 @@ const Calendar = () => {
             dispatch(loadJobsFromAPI(comp_id));
         }
         getData();
-    }, [dispatch])
+    }, [dispatch, token])
 
     // calender takes two props an array of events/item objects and array of grouping
     let items = Object.keys(jobs).map(id => jobs[id]);

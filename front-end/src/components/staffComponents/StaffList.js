@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import {List, ListItem, ListItemText, Box, Typography, makeStyles, Chip } from '@material-ui/core';
-import Loading from './Loading';
+import {List, ListItem, Box, Typography, makeStyles, Chip } from '@material-ui/core';
+import Loading from '../Loading';
 
 const useStyles = makeStyles(() => ({
     text: {
