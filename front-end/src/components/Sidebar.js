@@ -1,5 +1,4 @@
 import React, {useState} from 'react';
-import {Link} from 'react-router-dom';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import {
         Drawer,
@@ -164,7 +163,7 @@ return (
                 </List>
                 <Divider />
                 <List onClick={handleSideBarClick}>
-                    {['View Calendar', 'Check Dates'].map((text, index) => (
+                    {['View Calendar'].map((text, index) => (
                         <ListItem button key={text}>
                           <ListItemIcon>
                               {index === 0 && <EventIcon /> }
