@@ -124,10 +124,7 @@ const AddForm = ({  type,
                                     </Grid>)}
                 )}
                 {type === 'Job' || type === 'Staff' ?
-                <ButtonGroup>
-                    <Button variant="contained" color={type === 'job' ? 'primary' : 'secondary'} type="submit"> Add {type}</Button>
-                    <Button variant="contained" style={{backgroundColor:'#f0ad4e'}} onClick={closeDialog}>Cancel</Button>
-                </ButtonGroup>   
+                <Button variant="contained" color={type === 'job' ? 'primary' : 'secondary'} type="submit"> Add {type}</Button> 
                 :
                 <Button variant="contained" type="submit">{type}</Button>
                 }

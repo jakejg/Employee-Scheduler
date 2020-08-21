@@ -5,6 +5,8 @@ import {
         List,
         Divider,
         IconButton,
+        Tooltip,
+        Typography,
         ListItem,
         ListItemIcon,
         ListItemText,
@@ -27,6 +29,7 @@ import {addStaffOnAPI} from '../actions/staff'
 import AddForm from './AddForm'
 import { useHistory } from 'react-router-dom';
 import SelectJob from './SelectJob';
+import CloseIcon from '@material-ui/icons/Close';
 
 
 
@@ -176,10 +179,30 @@ return (
               </Drawer>
               <Dialog open={dialog.isOpen} onClose={closeDialog} fullWidth={true}>
                     {dialog.type === 'StaffToJob' ?
+                      <>
+                        <Box display='flex' justifyContent='flex-end'>
+                          <IconButton onClick={closeDialog}>
+                              <Tooltip title="Close Window">
+                                  <CloseIcon/>
+                              </Tooltip>
+                          </IconButton>
+                        </Box>
                       <SelectJob closeDialog={closeDialog}/>
+                      </>
                       :
                       <>
-                        <DialogTitle><Box textAlign='center' >Add a new {dialog.type}</Box></DialogTitle>
+                        <DialogTitle>
+                          <Box display='flex' justifyContent='flex-end'>
+                            <Box width='100%' mt={1} display='flex' justifyContent='center'>
+                                <Typography align='center' variant='h6' >Add a new {dialog.type}</Typography>
+                            </Box>
+                              <IconButton onClick={closeDialog}>
+                                  <Tooltip title="Close Window">
+                                      <CloseIcon/>
+                                  </Tooltip>
+                              </IconButton>
+                          </Box>
+                          </DialogTitle>
                         <AddForm type={dialog.type}
                           fields={dialog.type === 'Job' ? jobFields : staffFields}
                           doOnSubmit={dialog.type === 'Job' ? addJobOnAPI : addStaffOnAPI} 
