@@ -1,10 +1,11 @@
 const express = require('express');
 const router = new express.Router();
-const User = require('../models/usersModel')
+const User = require('../models/usersModel');
+const Job = require('../models/jobsModel');
 const {validateCreateUserJson} = require('../middleware/jsonValidation');
 const { checkAdminStatus } = require('../middleware/auth.js');
-const ExpressError = require('../helpers/expressError.js');
 const verify = require('../helpers/verify');
+const moment = require('moment');
 
 /* Route to get overview of all users for a company that aren't admin*/
 
@@ -61,7 +62,20 @@ router.patch('/:id', checkAdminStatus, async (req, res, next) => {
 
 router.delete('/:id', checkAdminStatus, async (req, res, next) => {
     try {
+   
+        const jobs = await User.findJobsForUser(req.params.id)
         await User.delete(req.params.id);
+
+        // update all job status user is associated with
+        for (job of jobs){
+            if (moment(job.end_date) > moment()){
+              
+                const updatedJob = await Job.update(job.id);
+                updatedJob.save();
+            }
+        }
+       
+         
         return res.json(`User with id ${req.params.id} deleted`)
     }
     catch(e){
