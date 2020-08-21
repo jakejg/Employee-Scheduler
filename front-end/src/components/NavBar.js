@@ -49,8 +49,15 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: 'bold',
     color: 'white',
     '&:hover': {
-      color: 'grey'
+      color: 'grey',
     },
+    cursor: 'pointer',
+    fontSize: '16px'
+  },
+  iconLink :  {
+    textDecoration: 'none',
+    fontWeight: 'bold',
+    color: 'white',
     cursor: 'pointer',
     fontSize: '16px'
   },
@@ -59,7 +66,8 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: '10px'
   },
   dashboard: {
-    marginRight: '20px'
+    marginRight: '20px',
+    fontWeight: 'bold',
   }
 
 }));
@@ -71,11 +79,6 @@ const NavBar = ({ onDashboard }) => {
     const [dialog, setDialog] = useState({isOpen: false, type:""});
     const dispatch = useDispatch();
     const history = useHistory();
-    
-    // // show full nav bar if not on the dashboard
-    //   if (window.location.pathname !== '/dashboard' && open) {
-    //     dispatch(changeDrawer());
-    //   }
 
 
     const handleDrawerOpen = () => {
@@ -114,9 +117,11 @@ const NavBar = ({ onDashboard }) => {
                             <Typography variant="h6" className={classes.title}>
                                 Employee Scheduler
                             </Typography>
-                            <IconButton color='inherit'><DashboardIcon/></IconButton>
-                            <Typography  className={`${classes.link} ${classes.dashboard}`} ><NavLink className={classes.link} to='/dashboard'>Dashboard </NavLink></Typography>
-                            <IconButton color='inherit'><ExitToAppIcon/></IconButton>
+                            <NavLink className={classes.iconLink} to='/dashboard'>
+                              <IconButton color='inherit'><DashboardIcon/></IconButton>
+                            </NavLink>  
+                              <Typography className={`${classes.link} ${classes.dashboard}`}><NavLink className={classes.link} to='/dashboard'>Dashboard</NavLink> </Typography>
+                            <IconButton  onClick={logout} color='inherit'><ExitToAppIcon/></IconButton>
                             <Typography onClick={logout} className={classes.link}>Logout</Typography>
                         </>
 
