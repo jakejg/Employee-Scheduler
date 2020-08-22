@@ -29,10 +29,8 @@ import AddForm from './AddForm'
 import { useHistory } from 'react-router-dom';
 import SelectJob from './SelectJob';
 import CloseIcon from '@material-ui/icons/Close';
+import {drawerWidth} from '../config'
 
-
-
-const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -42,14 +40,6 @@ const useStyles = makeStyles((theme) => ({
     transition: theme.transitions.create(['margin', 'width'], {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
-    }),
-  },
-  appBarShift: {
-    width: `calc(100% - ${drawerWidth}px)`,
-    marginLeft: drawerWidth,
-    transition: theme.transitions.create(['margin', 'width'], {
-      easing: theme.transitions.easing.easeOut,
-      duration: theme.transitions.duration.enteringScreen,
     }),
   },
   menuButton: {

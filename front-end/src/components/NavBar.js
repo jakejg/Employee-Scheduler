@@ -1,9 +1,12 @@
 import React, {useState} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
+import {AppBar,
+        Box,
+        Toolbar,
+        Typography,
+        Menu,
+        MenuItem} from '@material-ui/core';
 import IconButton from '@material-ui/core/IconButton';
 import PermContactCalendarIcon from '@material-ui/icons/PermContactCalendar';
 import MenuIcon from '@material-ui/icons/Menu';
@@ -15,9 +18,9 @@ import { NavLink, useHistory } from 'react-router-dom';
 import {LOG_OUT} from '../actions/actionTypes';
 import {addOrRemoveToken} from '../actions/authentication'
 import PopOver from './PopOver';
+import {drawerWidth} from '../config';
+import MoreIcon from '@material-ui/icons/MoreVert';
 
-
-const drawerWidth = 240;
 const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
@@ -60,6 +63,13 @@ const useStyles = makeStyles((theme) => ({
     cursor: 'pointer',
     fontSize: '16px'
   },
+  menuLink : {
+    textDecoration: 'none',
+    fontWeight: 'bold',
+    color: 'black',
+    cursor: 'pointer',
+    fontSize: '16px'
+  },
   title: {
     flexGrow: 1,
     marginLeft: '10px'
@@ -76,6 +86,7 @@ const NavBar = () => {
     const open = useSelector(state => state.application.drawer);
     const loggedIn = useSelector(state => state.application.token)
     const [dialog, setDialog] = useState({isOpen: false, type:""});
+    const [anchorEl, setAnchorEl] = useState(null);
     const dispatch = useDispatch();
     const history = useHistory();
 
@@ -84,6 +95,10 @@ const NavBar = () => {
       dispatch(changeDrawer())
     };
 
+    const openMenu = (e) => {
+      setAnchorEl(e.currentTarget)
+    }
+
     const logout = () => {
     
         dispatch(addOrRemoveToken(null))
@@ -91,6 +106,34 @@ const NavBar = () => {
         
         history.push('/')
     }
+
+    const smallScreenView =  <>     
+                            <IconButton onClick={openMenu} color='inherit'>
+                                <MoreIcon />
+                            </IconButton>
+                            <Menu open={Boolean(anchorEl)} anchorEl={anchorEl} onClose={() => setAnchorEl(null)}>
+                              <MenuItem>
+                                <NavLink className={classes.menuLink} to='/dashboard'>Dashboard</NavLink> 
+                              </MenuItem>
+                              <MenuItem>
+                                <Typography className={classes.menuLink} onClick={logout}>Logout</Typography> 
+                              </MenuItem>
+                            </Menu>
+                          </>
+    const standardScreenView =  <>
+                                  <Box display='flex' alignItems='center'>
+                                    <NavLink className={classes.iconLink} to='/dashboard'>
+                                      <IconButton color='inherit'><DashboardIcon/></IconButton>
+                                    </NavLink> 
+                                    <Typography className={`${classes.link} ${classes.dashboard}`}>
+                                    <NavLink className={classes.link} to='/dashboard'>Dashboard</NavLink> 
+                                    </Typography>
+                                  </Box>
+                                  <Box display='flex' alignItems='center'>
+                                    <IconButton  onClick={logout} color='inherit'><ExitToAppIcon/></IconButton>
+                                    <Typography onClick={logout} className={classes.link}>Logout</Typography>
+                                  </Box>
+                                </>
     const loggedOutView = <>
                             
                             <PermContactCalendarIcon fontSize='large' />
@@ -116,12 +159,12 @@ const NavBar = () => {
                             <Typography variant="h6" className={classes.title}>
                                 Employee Scheduler
                             </Typography>
-                            <NavLink className={classes.iconLink} to='/dashboard'>
-                              <IconButton color='inherit'><DashboardIcon/></IconButton>
-                            </NavLink>  
-                              <Typography className={`${classes.link} ${classes.dashboard}`}><NavLink className={classes.link} to='/dashboard'>Dashboard</NavLink> </Typography>
-                            <IconButton  onClick={logout} color='inherit'><ExitToAppIcon/></IconButton>
-                            <Typography onClick={logout} className={classes.link}>Logout</Typography>
+                            <Box display={{xs:'none', sm: 'flex'}}>
+                              {standardScreenView}
+                            </Box>
+                            <Box display={{xs:'block', sm: 'none'}}>
+                              {smallScreenView}
+                            </Box>
                         </>
     return (
         <div>
