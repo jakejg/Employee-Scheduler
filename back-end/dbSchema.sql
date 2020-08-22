@@ -53,7 +53,13 @@ INSERT INTO jobs (title, start_date, end_date, staff_needed, notes, comp_id, cal
 VALUES ('20 day River', '2020-08-10', '2020-08-30', 3, 'test2', 1, 'AAMkAGZlYTI0YjJjLTg2ZjEtNDliNC1hMzEyLTRjZWQ1MTUxZDY0YgBGAAAAAADeU7Uxc9NWSb0_KQxp3SxZBwDOkpB1ICt6TpndDjvJOZEqAAAB5y1mAADOkpB1ICt6TpndDjvJOZEqAAAB54uZAAA=');
 
 INSERT INTO jobs (title, start_date, end_date, staff_needed, notes, comp_id, calendar_event_id) 
-VALUES ('30 day Mountain', '2020-07-15', '2020-08-15', 3, 'test3', 1, 'AAMkAGZlYTI0YjJjLTg2ZjEtNDliNC1hMzEyLTRjZWQ1MTUxZDY0YgBGAAAAAADeU7Uxc9NWSb0_KQxp3SxZBwDOkpB1ICt6TpndDjvJOZEqAAAB5y1mAADOkpB1ICt6TpndDjvJOZEqAAAB54uYAAA=');
+VALUES ('30 day Canyon', '2020-07-15', '2020-08-15', 3, 'test3', 1, 'AAMkAGZlYTI0YjJjLTg2ZjEtNDliNC1hMzEyLTRjZWQ1MTUxZDY0YgBGAAAAAADeU7Uxc9NWSb0_KQxp3SxZBwDOkpB1ICt6TpndDjvJOZEqAAAB5y1mAADOkpB1ICt6TpndDjvJOZEqAAAB54uYAAA=');
+
+INSERT INTO jobs (title, start_date, end_date, staff_needed, notes, comp_id, calendar_event_id) 
+VALUES ('Warehouse Cleaning', '2020-07-15', '2020-08-15', 3, 'test3', 1, '');
+
+INSERT INTO jobs (title, start_date, end_date, staff_needed, notes, comp_id, calendar_event_id) 
+VALUES ('Grant Proposal', '2020-07-15', '2020-08-15', 3, 'test3', 1, '');
 
 
 INSERT INTO users (username, email, password, first_name, last_name, is_admin, comp_id) 
