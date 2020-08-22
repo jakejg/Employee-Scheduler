@@ -84,7 +84,8 @@ const AddStaffToJob = ({job, closeDialog}) => {
                         <Tooltip title="Close Window">
                             <CloseIcon/>
                         </Tooltip>
-                </IconButton></Box>
+                </IconButton>
+            </Box>
             
         <List>
             {job.staff.map(staff => 

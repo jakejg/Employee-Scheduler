@@ -12,6 +12,7 @@ import {
     ListItemSecondaryAction,
     MenuItem,
 } from '@material-ui/core';
+import Alert from '@material-ui/lab/Alert';
 import AddStaffToJob from './AddStaffToJob';
 import {getJobFromAPI} from '../actions/jobs';
 import { JobAPI } from '../api/JobApi';
@@ -24,6 +25,7 @@ const SelectJob = ({closeDialog}) => {
     const [selected, setSelected] = useState(false);
     const token = useSelector(state => state.application.token)
     const dispatch = useDispatch();
+    const [error, setError] = useState();
 
     useEffect(() => {
 
@@ -41,8 +43,13 @@ const SelectJob = ({closeDialog}) => {
   
     const select = async (e) => {
         e.preventDefault();
-        await getJob(jobId);
-        setSelected(true);
+        if (jobId) {
+            await getJob(jobId);
+            setSelected(true);
+        }
+        else {
+            setError(true);
+        }
     }
 
     const getJob = async (id) => {
@@ -58,12 +65,15 @@ const SelectJob = ({closeDialog}) => {
         :
         <Box>
             <Box display='flex' justifyContent='flex-end'>
-                              <IconButton onClick={closeDialog}>
-                                  <Tooltip title="Close Window">
-                                      <CloseIcon/>
-                                  </Tooltip>
-                              </IconButton>
-                          </Box>
+                {error &&   <Box width='100%' display='flex' justifyContent='center'>
+                                <Alert severity="info">Please select a Job from the list</Alert>
+                            </Box>}
+                            <IconButton onClick={closeDialog}>
+                                <Tooltip title="Close Window">
+                                    <CloseIcon/>
+                                </Tooltip>
+                            </IconButton>
+            </Box>
             <List>
                 <ListItem>
                     <form>
