@@ -76,7 +76,7 @@ const Dashboard = () => {
                     <Grid container spacing={3} className={classes.drawerHeader} >
                          <Grid item xs>
                              <Paper elevation={3}>
-                                {noJobs ? <EmptyList type="jobs"/> : <JobList />}
+                                {noJobs ? <EmptyList type="Job"/> : <JobList />}
                              </Paper >
                          </Grid>
                          <Grid item xs>
