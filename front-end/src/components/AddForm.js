@@ -70,9 +70,10 @@ const AddForm = ({  type,
     // check that every field is filled out
     const validate = () => {
         let foundErrors = false;
+        let notRequiredFields = new Set(["notes"])
         const updated = formFields.map(field => {
-            
-            if (!formData[underscoreName(field.name)]) {
+            const name = underscoreName(field.name)
+            if (formData[name] === "" && !notRequiredFields.has(name)) {
                 field.error = "This field is required";
                 foundErrors = true;
             }
@@ -100,8 +101,12 @@ const AddForm = ({  type,
                                     let type = "text";
                                     if (field.name.endsWith('Date')) type = "date";
                                     if (field.name === "Password") type = "password";
-                                    if (field.name.endsWith('Wage')) type = "number";
-                                    if (field.name.endsWith('Company')) type = "number";
+                                    if (field.name.endsWith('Wage') ||
+                                        field.name.endsWith('Company') ||
+                                        field.name.endsWith('Needed')){
+                                            type = "number";
+                                        }
+                
                                     return (<Grid item key={field.name}> 
                                         <TextField 
                                                     error={field.error ? true: false}
