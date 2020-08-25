@@ -15,12 +15,12 @@ const DeleteAlert = ({ id, type, dialog, setDialog}) => {
     const dispatch = useDispatch()
     const history = useHistory()
 
-    const yes = () => {
+    const yes = async () => {
         if (type === "staff") {
-            dispatch(deleteStaffOnAPI(id))
+            await dispatch(deleteStaffOnAPI(id))
         }
         else {
-            dispatch(deleteJobOnAPI(id))
+            await dispatch(deleteJobOnAPI(id))
         }
         history.push('/dashboard')
         

@@ -27,7 +27,6 @@ const EmptyList = ({type}) => {
     const dispatch = useDispatch();
     const isOpen = useSelector(state => state.application.drawer)
     const [dialog, setDialog] = useState(false);
-    console.log(type)
     
     const closeDialog = () => {
         setDialog(!dialog)
