@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSelector} from 'react-redux';
-import {List, ListItem, Box, Typography, makeStyles, Chip, Tooltip } from '@material-ui/core';
+import {List, ListItem, Box, Typography, makeStyles, Chip, Tooltip} from '@material-ui/core';
 import DoneOutlineRoundedIcon from '@material-ui/icons/DoneOutlineRounded';
 import moment from 'moment';
 import Loading from '../Loading';
@@ -65,19 +65,30 @@ const JobList = () => {
         }
         return toolTipText;
     }
- 
+
+    const getStaffNames = (staffList) => {
+        if (!staffList.length) return ""
+
+        return (<List disablePadding={true}>
+                    {staffList.map(staff => <ListItem key={staff.id} dense={true}>
+                                                {`${staff.first_name} ${staff.last_name}`}
+                                            </ListItem>)}
+                </List>)
+    }
     
     return (
         <div>
             <Typography variant='h4' align='center'>Jobs in Progress</Typography>
             <List>
                 {Object.keys(inProgress).map(id => <ListItem key={id} className={classes.box}>
-                                                        <Box  className={classes.text}>         
-                                                            <Chip 
-                                                            label={inProgress[id].title} 
-                                                            component="a" href={`job/${id}`}
-                                                            color="primary"
-                                                            clickable />
+                                                        <Box  className={classes.text}> 
+                                                            <Tooltip title={getStaffNames(inProgress[id].staff)} placement="left">    
+                                                                <Chip 
+                                                                label={inProgress[id].title} 
+                                                                component="a" href={`job/${id}`}
+                                                                color="primary"
+                                                                clickable />
+                                                            </Tooltip>    
                                                             <Tooltip title={getText(inProgress, id)}>
                                                                 <DoneOutlineRoundedIcon fontSize='small' className={classes[statusColor[inProgress[id].status]]}/>
                                                             </Tooltip>
@@ -87,17 +98,19 @@ const JobList = () => {
             <Typography variant='h4' align='center'>Jobs Scheduled</Typography>
             <List >
                 {Object.keys(scheduled).map(id => <ListItem key={id} className={classes.box}>
-                                                    <Box  className={classes.text}>
-                                                        <Chip 
-                                                            label={scheduled[id].title} 
-                                                            component="a" href={`job/${id}`}
-                                                            color="primary"
-                                                            clickable
-                                                            />
+                                                        <Box  className={classes.text}>
+                                                            <Tooltip title={getStaffNames(scheduled[id].staff)} placement="left">
+                                                                <Chip 
+                                                                    label={scheduled[id].title} 
+                                                                    component="a" href={`job/${id}`}
+                                                                    color="primary"
+                                                                    clickable
+                                                                    />
+                                                            </Tooltip>
                                                             <Tooltip title={getText(scheduled, id)}>
                                                                 <DoneOutlineRoundedIcon fontSize='small' className={classes[statusColor[scheduled[id].status]]}/>
                                                             </Tooltip>
-                                                    </Box> 
+                                                        </Box> 
                                                     </ListItem>)}
             </List>
 

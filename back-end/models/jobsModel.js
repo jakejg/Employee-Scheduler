@@ -27,7 +27,14 @@ class Job {
             WHERE comp_id=$1
             ORDER BY start_date`, [comp_id]
         )
-        return results.rows
+        
+        const jobs = results.rows;
+        
+        for (let job of jobs){
+            job.staff = await this.findAllStaffWorkingJob(job.id)
+        }
+        
+        return jobs
     }
 
     /* Method to retrieve details for one job */
