@@ -36,6 +36,7 @@ const AddForm = ({  type,
     const history = useHistory();
     const noJobs = useSelector(state => state.application.noJobs);
     const noStaff = useSelector(state => state.application.noStaff);
+    console.log(formData)
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -48,7 +49,16 @@ const AddForm = ({  type,
             let msg = await dispatch(doOnSubmit(formData));
 
             if (msg){
-                setAlert(alert => msg)
+                setAlert(alert => msg);
+                //reset form data
+                if (msg.message.includes('created Successfully')){
+                Array.from(document.querySelectorAll("input")).forEach(
+                    input => (input.value = "")
+                  );
+                setFormData(formData => INITIAL_FORM_STATE);
+                }
+               
+               
             }
             else{
                 if (redirect) {
