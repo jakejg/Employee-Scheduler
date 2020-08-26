@@ -25,7 +25,6 @@ const useStyles = makeStyles(() => ({
     main : {
         paddingBottom: '0px',
         fontSize: '50px',
-        fontFamily: 'Slack-Larsseit,"Helvetica Neue",Helvetica,"Segoe UI",Tahoma,Arial,sans-serif',
         fontWeight: '700'
     },
 

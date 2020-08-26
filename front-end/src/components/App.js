@@ -3,10 +3,18 @@ import Routes from './Routes';
 import {
     makeStyles
 } from '@material-ui/core';
+import { createMuiTheme } from '@material-ui/core/styles';
+import { ThemeProvider } from '@material-ui/styles';
+
+const theme = createMuiTheme({
+  typography: {
+    fontFamily: [
+        'Roboto,Open Sans,Helvetica,Arial'].join(','),
+  }
+});
 
 const useStyles = makeStyles(() => ({
     body: {
-        fontFamily: 'Slack-Larsseit,"Helvetica Neue",Helvetica,"Segoe UI",Tahoma,Arial,sans-serif',
         height:'100vh',
         backgroundColor: '#F6F5F0'
     }
@@ -16,9 +24,11 @@ const App = () => {
     const classes = useStyles()
 
     return (
-        <div className={classes.body}>
-            <Routes />      
-        </div>
+        <ThemeProvider theme={theme}>
+            <div className={classes.body}>
+                <Routes />      
+            </div>
+        </ThemeProvider>
         );
 }
 
