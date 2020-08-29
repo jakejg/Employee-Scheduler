@@ -90,6 +90,11 @@ const NavBar = () => {
     const dispatch = useDispatch();
     const history = useHistory();
 
+    let showSideBar = true;
+    // don't show option to open side bar if on home page
+    if (window.location.pathname === '/'){
+      showSideBar = false;
+    }
 
     const handleDrawerOpen = () => {
       dispatch(changeDrawer())
@@ -145,16 +150,15 @@ const NavBar = () => {
                           
                             </>
     const loggedInView = <>
-                      
-                            <IconButton
+                            {showSideBar && <IconButton
                               color="inherit"
                               aria-label="open drawer"
                               onClick={handleDrawerOpen}
                               edge="start"
                               className={clsx(classes.menuButton, open && classes.hide)}
                             >
-                              <MenuIcon />
-                            </IconButton>
+                                <MenuIcon />
+                            </IconButton>}
                             < PermContactCalendarIcon fontSize="large" />
                             <Typography variant="h6" className={classes.title}>
                                 Employee Scheduler
