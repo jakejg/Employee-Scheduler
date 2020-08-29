@@ -36,7 +36,6 @@ const AddForm = ({  type,
     const history = useHistory();
     const noJobs = useSelector(state => state.application.noJobs);
     const noStaff = useSelector(state => state.application.noStaff);
-    console.log(formData)
 
     const handleChange = (e) => {
         const { name, value } = e.target;
