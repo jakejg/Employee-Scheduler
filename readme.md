@@ -1,7 +1,6 @@
 # Employee Scheduler
 Employee Scheduler is an application for organizations to manage contracts and short term work agreements for staff.
 Organization administrators can assign staff to jobs, keep track of which jobs/tasks still need to be filled, and view all the jobs on a calendar. When a staff is assigned to a job, a notification will be sent to the staff member and the job will appear on their Google or Microsoft calendar.
-Vist https://employee-scheduler1.herokuapp.com and register your company or view the demo version to see how it works.
 
 ## Using the Website
 After registering, open the left side bar on the dashboard page and click on 'Add Job' to add jobs/tasks/events. The job status will be shown as a colored check mark, next to the job. yellow = still need staff, green = staff filled, red = too many staff. Click on 'Add Staff' to add employees/staff. Click on 'Change Staff on a Job' to add staff to a job. When a staff if added, an email will be sent to them, and the job will appear on their Google or Microsoft calendar. Clicking on a staff or job from the dashboard will show details, which can be changed if needed. Click on 'View Calendar in the sidebar to view all the jobs in a calendar. Jobs can be moved by drag and drop on the calendar page.
